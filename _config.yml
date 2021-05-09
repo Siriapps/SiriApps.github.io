@@ -1,8 +1,0 @@
-# Site settings
-title: Siri
-author:
-  name: A.Lakshmi Siri
-  email: siriapps3@gmail.com
-
-# Build settings
-remote_theme: jekyll/minima
