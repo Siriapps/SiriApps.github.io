@@ -1,9 +1,8 @@
 # Site settings
-title: Great New Blog Title
+title: Siri
 author:
-  name: Evan Will
-  email: your-email@domain.com
-description: "Great site about Jekyll on GH-Pages."
+  name: A.Lakshmi Siri
+  email: siriapps3@gmail.com
 
 # Build settings
 remote_theme: jekyll/minima
