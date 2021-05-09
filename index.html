@@ -11,24 +11,168 @@
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/42bd7f8334.js" crossorigin="anonymous"></script>
+
+    <style>
+        #homePage
+        {
+            background-image: url('HomeImage.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        h2
+        {
+            font-family:"Arial Black",Montserrat, "Helvetica Neue";
+            font-weight: bold;
+            color: #321d58;
+        }
+        p {
+            font-family:"Roboto Slab";
+            font-size: 20px;
+        }
+        .social-buttons {
+            font-size: 30px;
+            line-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            transition: all 0.3s;
+            color: white;
+            border-radius: 100%;
+            outline: none;
+            background-color: #212529;
+            text-decoration: none;
+        }
+        .social-buttons:hover {
+            background-color: #562777;
+            color: white;
+        }
+        .project-caption {
+            font-family:Montserrat, "Helvetica Neue";
+            font-weight: bold;
+            color: white;
+        }
+        #projects {
+            background-image: url('projectBg.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
-    <div class="">
-        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning px-2 py-2">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link text-dark" href="#"><b>Home</b></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-dark" href="#"><b>About</b></a>
-              </li>
+    <nav class="navbar navbar-expand-lg navbar-dark px-3" style="background-color:#000033;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="font-family: Forte; font-size: 35px;">Lakshmi Siri</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav" style="font-size:17px;color:white;">
+          <ul class="navbar-nav" style='font-family:"Yu Gothic UI Semibold";'>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" href="#aboutPage">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" href="Resume.pdf" target="_blank">Resume</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" href="#projects">Projects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" href="#education">Education</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" href="#aboutPage">Skills</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" href="#aboutPage">Interests</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+        <div id="homePage" class="jumbotron text-light my-auto mx-auto p-5" style="text-align:center;">
+            <h1><b>Lakshmi Siri</b></h1>
+            <button class="btn btn-warning" href="#aboutPage">Know More</button>
+        </div>
+        <div id="aboutPage">
+            <div class="mt-5 py-2">
+                <div class="row text-center mb-3">
+                    <h2>ABOUT</h2>
+                </div>
+                <div class="row text-center px-5 py-4">
+                    <p><b>An autodidact and an Inquisitive high schooler</b> who has always been passionate to do big in this technical world and be a part of the new advancements. I love to be a <b>techie</b> and am extremely motivated to constantly horn my skills and grow technically.</p>
+
+                <a class="social-buttons mx-auto">
+                    <i class="fa fa-github"></i>
+                </a>
+                </div>
             </div>
-          </div>
-        </nav>
+        </div>
     </div>
+    <section id="projects" class="my-4 py-2 bg-light ">
+        <div class="container px-5">
+            <div class="row text-center mb-4">
+                <h2 style="color:white;">PROJECTS</h2>
+            </div>
+            <div class="row px-5">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="TechieJr.png" class="d-block w-100" alt="..." style="opacity:0.6;" height="500px">
+                      <div class="carousel-caption text-light">
+                        <h3 class="h3-responsive project-caption">Techie Jr</h3>
+                        <h6>Naturally Curious!</h6>
+                        <p>A publishing website built to develop the early career of the young techies. I believe that through this platform many Jr. techies will get inspired by the stories of their peers and help each other by sharing about the opportunities they come across.</p>
+                        <button class="btn btn-warning">Know More</button>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="IASPA.jpg" class="d-block w-100" alt="..." style="opacity:0.4;" height="500px">
+                      <div class="carousel-caption text-light">
+                        <h3 class="h3-responsive project-caption">IASPA</h3>
+                        <p>Contributed in developing the website's membership section and built the basic website design. Maintained the website together with a group of Btech-students.</p>
+                        <button class="btn btn-warning">Know More</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div id="education">
+            <div class="mt-5 py-2">
+                <div class="row text-center mb-3">
+                    <h2>ABOUT</h2>
+                </div>
+                <div class="row text-center px-5 py-4">
+                    <p><b>An autodidact and an Inquisitive high schooler</b> who has always been passionate to do big in this technical world and be a part of the new advancements. I love to be a <b>techie</b> and am extremely motivated to constantly horn my skills and grow technically.</p>
+
+                <a class="social-buttons mx-auto">
+                    <i class="fa fa-github"></i>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
