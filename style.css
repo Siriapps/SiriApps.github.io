@@ -1,0 +1,55 @@
+#homePage
+{
+    background-image: url('static/HomeImage.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+h2
+{
+    font-family:"Arial Black",Montserrat, "Helvetica Neue";
+    font-weight: bold;
+    color: #321d58;
+}
+p {
+    font-family:"Roboto Slab";
+    font-size: 20px;
+}
+.social-buttons {
+    font-size: 30px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    transition: all 0.3s;
+    color: white;
+    border-radius: 100%;
+    outline: none;
+    background-color: #212529;
+    text-decoration: none;
+}
+.social-buttons:hover {
+    background-color: #562777;
+    color: white;
+}
+.project-caption {
+    font-family:Montserrat, "Helvetica Neue";
+    font-weight: bold;
+    color: white;
+}
+#projects {
+    background-image: url('static/projectBg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.card-title {
+    font-size : 30px;
+    font-family : "Calibri";
+    font-weight : bold;
+}
+
+.icon {
+    font-size: 50px;
+}
