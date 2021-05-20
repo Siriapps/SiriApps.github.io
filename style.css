@@ -39,9 +39,9 @@ p {
     color: white;
 }
 #projects {
-    background-image: url('static/projectBg.jpg');
+    background-image: url('https://ak.picdn.net/shutterstock/videos/1047669631/thumb/1.jpg?ip=x480');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 .card-title {
@@ -52,4 +52,22 @@ p {
 
 .icon {
     font-size: 50px;
+}
+@media screen and (max-width:1023px) {
+    .carousel-caption
+    {
+        display: none;
+    }
+}
+
+@media screen and (min-width:1024px) {
+    .carousel-img
+    {
+        height: 500px;
+        opacity: 0.5;
+    }
+    .carousel-text
+    {
+        display: none;
+    }
 }
