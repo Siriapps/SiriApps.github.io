@@ -1,44 +1,75 @@
-## Welcome to My Personal Website
+# React + TypeScript + Vite
 
-The code is Simple and built with HTML, CSS and Bootstrap.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-This is my personal portfolio website built with React, Vite, and Tailwind CSS.
+Currently, two official plugins are available:
 
-## About Me
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-I am a Computer Science Honors student at The University of Texas at Dallas (Class of '29) and a recipient of the prestigious AES Full Scholarship. I'm a Qiskit Advocate and an active researcher in cryptography and quantum materials.
+## React Compiler
 
-## Tech Stack
+The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
 
-- React 18
-- Vite
-- Tailwind CSS
-- Lucide React (Icons)
+Note: This will impact Vite dev & build performances.
 
-## Getting Started
+## Expanding the ESLint configuration
 
-### Install Dependencies
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```bash
-npm install
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-### Development
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```bash
-npm run dev
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-### Deploy to GitHub Pages
-
-```bash
-npm run deploy
-```
-
-This will build the project and deploy it to the `gh-pages` branch, which GitHub Pages will automatically serve.
