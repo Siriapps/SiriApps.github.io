@@ -1,8 +1,44 @@
-## Welcome to My personal Website
-Personal Website - https://siriapps.github.io/ <br>
-This is my personal website where you can find all things about me here in one place.
+## Welcome to My Personal Website
 
-The code is Simple and built with only HTML and CSS.
+Personal Website - https://siriapps.github.io/
 
-# About me
-I am an autodidact and an Inquisitive high schooler who has always been passionate to do big in this technical world and be a part of the new advancements. I love to be a techie and am extremely motivated to constantly horn my skills and grow technically.
+This is my personal portfolio website built with React, Vite, and Tailwind CSS.
+
+## About Me
+
+I am a Computer Science Honors student at The University of Texas at Dallas (Class of '29) and a recipient of the prestigious AES Full Scholarship. I'm a Qiskit Advocate and an active researcher in cryptography and quantum materials.
+
+## Tech Stack
+
+- React 18
+- Vite
+- Tailwind CSS
+- Lucide React (Icons)
+
+## Getting Started
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Deploy to GitHub Pages
+
+```bash
+npm run deploy
+```
+
+This will build the project and deploy it to the `gh-pages` branch, which GitHub Pages will automatically serve.
