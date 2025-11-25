@@ -1,6 +1,6 @@
 ## Welcome to My Personal Website
 
-Personal Website - https://siriapps.github.io/
+The code is Simple and built with HTML, CSS and Bootstrap.
 
 This is my personal portfolio website built with React, Vite, and Tailwind CSS.
 
