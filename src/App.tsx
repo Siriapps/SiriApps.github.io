@@ -25,12 +25,16 @@ import {
   Heart,
   Sparkles,
   MapPin,
-  Atom
+  Atom,
+  Calendar,
+  Zap,
+  Rocket,
+  Medal,
+  Lightbulb
 } from 'lucide-react';
 
 // --- Utility Components & Hooks ---
 
-// Hook for intersection observer animations
 const useOnScreen = (options) => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -103,9 +107,9 @@ const Navigation = ({ activeSection }) => {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
+    { name: 'Awards', href: '#awards' },
     { name: 'Experience', href: '#experience' },
+    { name: 'Projects', href: '#projects' },
     { name: 'Updates', href: '#updates' },
   ];
 
@@ -178,28 +182,31 @@ const Hero = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           
           <div className="md:w-1/2 text-center md:text-left z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm mb-6 animate-pulse">
-              <span className="w-2 h-2 rounded-full bg-blue-400"></span>
-              CS Honors @ UTD
+            {/* Status Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-semibold mb-8 animate-fade-in-up">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              </span>
+              Looking for Jobs / Internships
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white leading-tight">
               Lakshmi Siri <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 animate-gradient-x">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient-x">
                 Appalaneni
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl mb-8 max-w-lg mx-auto md:mx-0 text-slate-400 leading-relaxed">
-              Preferred Name: <span className="text-white font-semibold">Siri</span>. 
-              <br/>
-              AES Scholar and Full Stack Developer crafting intelligent AI, Quantum, and Web solutions.
+            <p className="text-lg md:text-xl mb-8 max-w-lg mx-auto md:mx-0 text-slate-300 leading-relaxed font-light">
+              <span className="text-white font-semibold">2x Hackathon Winner & AI Researcher</span> bridging the gap between Quantum Computing and interactive web experiences. 
+              Currently building intelligent systems at the intersection of Deep Learning and Full Stack Engineering.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <a href="#projects" className="group relative px-8 py-4 rounded-full bg-white text-slate-950 font-bold overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
                 <span className="relative z-10 flex items-center gap-2">
-                  View Work <Briefcase size={18} />
+                  View Work <Rocket size={18} />
                 </span>
               </a>
               <a href="#contact" className="px-8 py-4 rounded-full border border-white/10 bg-white/5 text-white font-medium hover:bg-white/10 backdrop-blur-sm transition-all hover:scale-105">
@@ -227,7 +234,7 @@ const Hero = () => {
             </div>
             
             <div className="mt-6 flex items-center gap-2 text-slate-500 text-sm justify-center md:justify-start">
-              <MapPin size={16} /> Dallas, TX
+              <MapPin size={16} /> Based in Dallas, TX
             </div>
           </div>
           
@@ -245,7 +252,7 @@ const Hero = () => {
                      <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
                      <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                      <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-                     <div className="ml-auto px-2 py-1 rounded bg-white/5 text-xs text-slate-500 font-mono">profile.tsx</div>
+                     <div className="ml-auto px-2 py-1 rounded bg-white/5 text-xs text-slate-500 font-mono">dev_status.tsx</div>
                    </div>
 
                    {/* Card Content */}
@@ -257,25 +264,21 @@ const Hero = () => {
                        <span className="text-yellow-300 ml-2">{`{`}</span>
                      </div>
                      <div className="pl-4">
-                       <span className="text-slate-500 mr-2">university:</span>
-                       <span className="text-green-400">"UT Dallas"</span>,
+                       <span className="text-slate-500 mr-2">education:</span>
+                       <span className="text-green-400">"UT Dallas, Honors, AES Scholar"</span>,
                      </div>
                      <div className="pl-4">
-                       <span className="text-slate-500 mr-2">major:</span>
-                       <span className="text-green-400">"CS Honors"</span>,
-                     </div>
-                     <div className="pl-4">
-                       <span className="text-slate-500 mr-2">focus:</span>
+                       <span className="text-slate-500 mr-2">expertise:</span>
                        <span className="text-yellow-300">[</span>
-                       <span className="text-green-400">"Quantum"</span>, <span className="text-green-400">"AI/ML"</span>, <span className="text-green-400">"Full Stack"</span>
+                       <span className="text-green-400">"Quantum Encryption"</span>, <span className="text-green-400">"AI Agents"</span>, <span className="text-green-400">"React"</span>
                        <span className="text-yellow-300">]</span>,
                      </div>
                      <div className="pl-4">
-                        <span className="text-slate-500 mr-2">scholarship:</span>
-                        <span className="text-green-400">"AES Full Ride"</span>,
+                        <span className="text-slate-500 mr-2">hackathonsWon:</span>
+                        <span className="text-orange-400">2</span>,
                      </div>
                      <div className="pl-8 text-slate-400 italic">
-                        // 2029 Expected Graduation 🎓
+                        // Ready to ship code 🚀
                      </div>
                      <div className="pl-4">
                         <span className="text-yellow-300">{'}'}</span>
@@ -288,23 +291,17 @@ const Hero = () => {
                    <div className="mt-auto pt-6 border-t border-white/5">
                      <div className="flex items-center gap-3">
                        <div className="p-2 rounded bg-blue-500/20 text-blue-400">
-                         <Atom size={20} />
+                         <Zap size={20} />
                        </div>
                        <div>
-                         <div className="text-xs text-slate-500">Current Status</div>
-                         <div className="text-sm font-medium text-white">Researcher @ ACM Qryptik</div>
+                         <div className="text-xs text-slate-500">Latest Achievement</div>
+                         <div className="text-sm font-medium text-white">1st Place - ACM Research Symposium</div>
                        </div>
                      </div>
                    </div>
                 </div>
              </div>
           </div>
-        </div>
-        
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:block animate-bounce">
-          <a href="#about" className="text-slate-500 hover:text-white transition-colors">
-            <ChevronDown size={24} />
-          </a>
         </div>
       </div>
     </section>
@@ -322,70 +319,278 @@ const About = () => {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <AnimatedSection className="delay-100">
-            <div className="space-y-6 text-lg text-slate-400 leading-relaxed">
+            <div className="space-y-6 text-lg text-slate-300 leading-relaxed font-light">
               <p>
-                I am a <span className="text-white font-medium">Computer Science Honors student</span> at The University of Texas at Dallas (Class of '29) and a recipient of the prestigious <span className="text-white font-medium">AES Full Scholarship</span>.
+                I’m a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">self-taught developer</span> and a <span className="text-white font-semibold">Computer Science Honors student at UT Dallas</span> who learns best by building things that feel meaningful.
               </p>
               <p>
-                My academic journey is maintained with a <span className="text-green-400 font-bold">3.9 GPA</span>, focusing on coursework such as CS II (Java/Data Structures), Discrete Math, and Engineering & CS.
+                Most of my work sits at the intersection of AI, quantum computing, and practical product design, and I’ve grown through hackathons, research teams, and student organizations where I get to experiment, iterate, and actually ship ideas.
               </p>
               <p>
-                Beyond the classroom, I am a <span className="text-blue-400">Qiskit Advocate</span> and an active researcher in cryptography and quantum materials. Whether it's winning hackathons like <span className="text-white">HackUTD</span> or simulating photonic upconversion, I strive to bridge the gap between complex theory and impactful application.
+                I’ve worked on projects ranging from post-quantum cryptography research to AI-powered tools built in fast-paced environments like HackUTD. I enjoy creating systems that solve real problems, collaborating with people who are just as curious, and finding ways to turn complex technical ideas into something useful and accessible.
+              </p>
+              <p>
+                Currently, I'm particularly interested in <span className="text-white font-medium">AI Agents</span> and building autonomous systems that can perform complex tasks.
               </p>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 mt-8">
-              {[
-                { number: "1st", label: "ACM Symposium", icon: Trophy, color: "text-yellow-400" },
-                { number: "10+", label: "Projects Shipped", icon: Code2, color: "text-blue-400" },
-                { number: "3.9", label: "GPA (Honors)", icon: GraduationCap, color: "text-green-400" },
-                { number: "2029", label: "Class of", icon: Briefcase, color: "text-purple-400" }
-              ].map((stat, idx) => (
-                <div key={idx} className="p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-                  <div className="flex items-center gap-3 mb-2">
-                    <stat.icon size={20} className={stat.color} />
-                    <h3 className="text-2xl font-bold text-white">{stat.number}</h3>
-                  </div>
-                  <p className="text-sm text-slate-400">{stat.label}</p>
-                </div>
-              ))}
+            <div className="flex flex-wrap gap-4 mt-8">
+               <div className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-slate-300 hover:bg-white/10 transition-colors cursor-default">
+                 Quantum Enthusiast
+               </div>
+               <div className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-slate-300 hover:bg-white/10 transition-colors cursor-default">
+                 AI Enthusiast
+               </div>
+               <div className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-slate-300 hover:bg-white/10 transition-colors cursor-default">
+                 Competitive Hacker
+               </div>
             </div>
           </AnimatedSection>
           
           <AnimatedSection className="delay-200">
-             <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25"></div>
-                <div className="relative p-8 rounded-2xl bg-slate-900/90 backdrop-blur-xl border border-white/10">
-                  <h3 className="text-xl font-bold mb-6 text-white flex items-center gap-2">
-                    <Award className="text-purple-400" /> Honors & Awards
-                  </h3>
-                  <div className="space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
-                     {[
-                       { title: "1st Place - ACM Research Symposium 2025", desc: "For Qryptik project", date: "2025" },
-                       { title: "BlueQubit Winner - Yale YQHack 2025", desc: "Quantum Computing Challenge", date: "2025" },
-                       { title: "HackUTD T-Mobile Challenge (3rd Place)", desc: "2025", date: "2025" },
-                       { title: "Invited Attendee", desc: "IBM Quantum Developer Conference", date: "2025" },
-                       { title: "ICPC AlgoQueen Gold Medal", desc: "Competitive Programming", date: "2023" },
-                       { title: "AES Scholarship Recipient", desc: "Full Academic Scholarship", date: "2025-2029" },
-                       { title: "Qiskit Advocate Recognition", desc: "IBM Quantum Community", date: "2023-Present" }
-                     ].map((honor, i) => (
-                       <div key={i} className="flex gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-white/20">
-                         <div className="mt-1">
-                           <div className="w-2 h-2 rounded-full bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.5)]"></div>
-                         </div>
-                         <div>
-                           <h4 className="font-semibold text-white">{honor.title}</h4>
-                           <p className="text-sm text-slate-400">{honor.desc}</p>
-                           <p className="text-xs text-slate-500 mt-1">{honor.date}</p>
-                         </div>
-                       </div>
-                     ))}
-                  </div>
+             <div className="grid grid-cols-2 gap-4">
+                <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-white/10 flex flex-col items-center justify-center text-center">
+                   <Trophy size={40} className="text-yellow-400 mb-4" />
+                   <h3 className="text-3xl font-bold text-white">2x</h3>
+                   <p className="text-slate-400 text-sm">Hackathon Winner</p>
+                </div>
+                <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-white/10 flex flex-col items-center justify-center text-center">
+                   <Code2 size={40} className="text-emerald-400 mb-4" />
+                   <h3 className="text-3xl font-bold text-white">10+</h3>
+                   <p className="text-slate-400 text-sm">Projects Shipped</p>
+                </div>
+                <div className="p-6 rounded-2xl bg-gradient-to-br from-orange-600/20 to-red-600/20 border border-white/10 flex flex-col items-center justify-center text-center">
+                   <Briefcase size={40} className="text-orange-400 mb-4" />
+                   <h3 className="text-3xl font-bold text-white">4+</h3>
+                   <p className="text-slate-400 text-sm">Research Roles</p>
+                </div>
+                <div className="p-6 rounded-2xl bg-gradient-to-br from-pink-600/20 to-rose-600/20 border border-white/10 flex flex-col items-center justify-center text-center group hover:bg-white/5 transition-colors">
+                   <Lightbulb size={40} className="text-pink-400 mb-4 group-hover:scale-110 transition-transform" />
+                   <h3 className="text-3xl font-bold text-white">AI</h3>
+                   <p className="text-slate-400 text-sm">Agent Innovator</p>
                 </div>
              </div>
           </AnimatedSection>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- New Dedicated Hackathon Section ---
+const Awards = () => {
+  return (
+    <section id="awards" className="py-24 relative bg-slate-900/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimatedSection>
+           <div className="text-center mb-16">
+              <span className="text-yellow-400 font-bold tracking-wider text-sm uppercase mb-2 block">Hall of Fame</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white">Hackathons & Awards</h2>
+           </div>
+        </AnimatedSection>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+           {/* Card 1 */}
+           <AnimatedSection className="delay-0">
+             <div className="group relative h-full p-8 rounded-3xl bg-gradient-to-b from-slate-800 to-slate-900 border border-white/10 overflow-hidden hover:border-yellow-500/50 transition-all duration-500">
+                <div className="absolute top-0 right-0 p-3 bg-yellow-500/20 text-yellow-400 rounded-bl-2xl">
+                   <Trophy size={24} />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">1st Place Winner</h3>
+                <p className="text-blue-400 font-medium mb-4">ACM Research Symposium 2025</p>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                   Awarded for "Qryptik" - A Deep Learning-Driven tamper detection system for Post-Quantum Cryptography. Beating out dozens of other research teams.
+                </p>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+             </div>
+           </AnimatedSection>
+
+           {/* Card 2 */}
+           <AnimatedSection className="delay-100">
+             <div className="group relative h-full p-8 rounded-3xl bg-gradient-to-b from-slate-800 to-slate-900 border border-white/10 overflow-hidden hover:border-blue-500/50 transition-all duration-500">
+                <div className="absolute top-0 right-0 p-3 bg-blue-500/20 text-blue-400 rounded-bl-2xl">
+                   <Award size={24} />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">BlueQubit Winner</h3>
+                <p className="text-purple-400 font-medium mb-4">Yale YQHack 2025</p>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                   Recognized for excellence in the Quantum Computing Challenge. Developed a hybrid quantum-classical solution for optimization problems.
+                </p>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+             </div>
+           </AnimatedSection>
+
+           {/* Card 3 */}
+           <AnimatedSection className="delay-200">
+             <div className="group relative h-full p-8 rounded-3xl bg-gradient-to-b from-slate-800 to-slate-900 border border-white/10 overflow-hidden hover:border-pink-500/50 transition-all duration-500">
+                <div className="absolute top-0 right-0 p-3 bg-pink-500/20 text-pink-400 rounded-bl-2xl">
+                   <Zap size={24} />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-pink-400 transition-colors">3rd Place (T-Mobile)</h3>
+                <p className="text-pink-400 font-medium mb-4">HackUTD 2025</p>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                   Built "HarmoniQ", an AI-powered dashboard. Recognized by T-Mobile judges for best use of predictive analytics and user experience.
+                </p>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-rose-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+             </div>
+           </AnimatedSection>
+        </div>
+        
+        <div className="mt-8 text-center">
+           <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-slate-400 text-sm">
+             <span className="flex items-center gap-2"><Trophy size={14} className="text-yellow-500"/> ICPC AlgoQueen Gold Medal</span>
+             <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+             <span className="flex items-center gap-2"><Atom size={14} className="text-blue-500"/> Qiskit Advocate</span>
+             <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+             <span className="flex items-center gap-2"><Code2 size={14} className="text-purple-500"/> IBM Quantum Challenge</span>
+           </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Experience = () => {
+  const [activeTab, setActiveTab] = useState('2025');
+
+  const experiences = [
+    // 2025 Data
+    {
+      year: '2025',
+      company: "Qiskit Advocate",
+      role: "Community Contributor",
+      period: "Sep 2025 – Present",
+      description: "Supporting localization and documentation. Assisting learners in workshops and participating in yearly IBM Quantum challenges."
+    },
+    {
+      year: '2025',
+      company: "ACM Research (Qryptik)",
+      role: "Researcher / Cryptography + AI Developer",
+      period: "Aug 2024 – Dec 2025 (Completed)",
+      description: "Developed a Deep Learning-Driven tamper detection system for RLCE. Implemented GF(2^8) Gauss-Jordan inverses and built a CNN-based validator. Won 1st Place at Fall 2025 ACM Research Symposium."
+    },
+    {
+      year: '2025',
+      company: "Nebula Labs",
+      role: "Engineering Division",
+      period: "2024 - 2025",
+      description: "Developed 'Notebook', a knowledge-sharing platform, and contributed to 'HarmoniQ', an AI productivity dashboard using React, Next.js, and Auth0."
+    },
+    {
+      year: '2025',
+      company: "Collective Qubits",
+      role: "Project Associate (Quantum + ML)",
+      period: "2024 - 2025",
+      description: "Worked on quantum-enhanced DNA sequence classification using Quanvolutional Neural Networks. Developed hybrid quantum-classical frameworks."
+    },
+    {
+      year: '2025',
+      company: "QAMP 2025",
+      role: "Quantum Materials Researcher",
+      period: "2025",
+      description: "Built Q-UCSpec, a simulator for photonic upconversion materials. Modeled defect-level energy transitions and provided visualization outputs."
+    },
+    // 2024 Data
+    {
+      year: '2024',
+      company: "Quantum High School Organization",
+      role: "Research Assistant",
+      period: "Feb 2024 – Present",
+      description: "Explored Quantum Generative Adversarial Networks (QGANs) and simulated calorimeter work using ATLAS dataset. Curated datasets and trained hybrid QGAN models."
+    },
+    {
+      year: '2024',
+      company: "University of Texas at Dallas",
+      role: "Research Intern (Quantum Lab)",
+      period: "June 2024 – Aug 2024",
+      description: "Worked with latest Qiskit 1.x under Dr. Basu. Researched solutions for critical bugs in pyZX (ZX Calculus software) and added configurations for missing gates."
+    },
+    {
+      year: '2024',
+      company: "The Coding School",
+      role: "AI Research Cohort",
+      period: "2023 – 2024",
+      description: "Selected among top global applicants. Built 'StreamSign', an AI pipeline converting video speech into Indian Sign Language animations."
+    },
+    // 2023 Data
+    {
+      year: '2023',
+      company: "Incognito Blueprints",
+      role: "Safe-navigation Researcher",
+      period: "May 2023 – July 2023",
+      description: "Collaborated with international team to develop a safety model for travelers. Implemented Ax Algorithm to predict safest routes based on crime rate and lighting."
+    },
+    {
+      year: '2023',
+      company: "New York Academy of Sciences",
+      role: "Young Researcher",
+      period: "2023 – 2024",
+      description: "Built 'WasteWatch', an AI project for efficient waste sorting. Led data processing and dataset creation meetings for international team."
+    }
+  ];
+
+  const filteredExperiences = experiences.filter(exp => exp.year === activeTab);
+
+  return (
+    <section id="experience" className="py-24 relative">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimatedSection>
+          <div className="mb-12 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">Experience</h2>
+            
+            {/* Tab Navigation */}
+            <div className="inline-flex p-1 rounded-xl bg-slate-900 border border-white/10">
+               {['2025', '2024', '2023'].map((year) => (
+                 <button
+                   key={year}
+                   onClick={() => setActiveTab(year)}
+                   className={`px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                     activeTab === year 
+                     ? 'bg-blue-600 text-white shadow-lg' 
+                     : 'text-slate-400 hover:text-white hover:bg-white/5'
+                   }`}
+                 >
+                   {year === '2025' ? 'Recent / 2025' : year}
+                 </button>
+               ))}
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <div className="space-y-8 min-h-[400px]">
+          {filteredExperiences.map((exp, index) => (
+            <AnimatedSection key={`${activeTab}-${index}`} className={`delay-${index * 100}`}>
+              <div className="relative pl-8 md:pl-0">
+                {/* Timeline Line (Desktop) */}
+                <div className="hidden md:block absolute left-[50%] top-0 bottom-0 w-px bg-slate-800 transform -translate-x-1/2"></div>
+                
+                <div className={`md:flex items-center justify-between ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} group`}>
+                   
+                   {/* Center Dot */}
+                   <div className="absolute left-[-5px] md:left-[50%] top-0 w-3 h-3 rounded-full bg-blue-500 transform md:-translate-x-1/2 mt-2 z-10 group-hover:scale-150 group-hover:bg-cyan-400 transition-all duration-300 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+
+                   {/* Content Card */}
+                   <div className="md:w-[45%] mb-2 md:mb-0">
+                      <div className="p-6 rounded-2xl bg-slate-900/50 backdrop-blur-sm border border-white/5 hover:border-white/20 transition-all duration-300 hover:shadow-xl relative overflow-hidden group-hover:-translate-y-1">
+                        <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-500/10 rounded-full">
+                          {exp.period}
+                        </span>
+                        <h3 className="text-xl font-bold text-white mb-1">{exp.role}</h3>
+                        <div className="text-purple-400 font-medium mb-3">{exp.company}</div>
+                        <p className="text-slate-400 text-sm leading-relaxed">
+                          {exp.description}
+                        </p>
+                      </div>
+                   </div>
+                   
+                   {/* Empty space for the other side */}
+                   <div className="md:w-[45%]"></div>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
         </div>
       </div>
     </section>
@@ -585,6 +790,30 @@ const SocialUpdates = () => {
       id: 1,
       author: "Lakshmi Siri Appalaneni",
       role: "Student @ UTD",
+      date: "1 week ago",
+      content: `Thrilled to share that I had an amazing time at the IBM Developer Conference! 🚀 The sessions on Quantum Computing and AI Ethics were incredibly insightful. It was great connecting with industry leaders and discussing the future of secure encryption. Can't wait to apply these learnings to my research on RLCE schemes! #IBM #QuantumComputing #AI #Developer
+
+#IBMDeveloper #QuantumSafe #Networking`,
+      likes: 245,
+      comments: 42,
+      tags: ["#IBMDeveloper", "#QuantumSafe", "#Networking"]
+    },
+    {
+      id: 2,
+      author: "Lakshmi Siri Appalaneni",
+      role: "Student @ UTD",
+      date: "1 month ago",
+      content: `Just wrapped up an intense 36 hours at HackUTD! 💻 Proud to announce that our team took home 3rd place in the T-Mobile challenge. We built an IoT solution that helps optimize network traffic using edge computing. Huge shoutout to my teammates! 🏆 #HackUTD #Hackathon #Innovation
+
+#HackUTD2025 #Winner #TeamWork`,
+      likes: 189,
+      comments: 28,
+      tags: ["#HackUTD", "#TMobile", "#TeamHarmoniQ", "#AI"]
+    },
+    {
+      id: 3,
+      author: "Lakshmi Siri Appalaneni",
+      role: "Student @ UTD",
       date: "1 day ago",
       content: `🌟 Qryptik Wins 1st Place at the Fall 2025 @ACM Research Symposium! 🌟
 
@@ -600,43 +829,6 @@ Special thank you to our team lead Sai Chauhan and my teammates! Onward. 🚀�
       likes: 33,
       comments: 3,
       tags: ["#ACMResearch", "#QuantumSafe", "#DeepLearning"]
-    },
-    {
-      id: 2,
-      author: "Lakshmi Siri Appalaneni",
-      role: "Student @ UTD",
-      date: "6 days ago",
-      content: `🌟 My First Conference Ever: IBM Quantum Developer Conference 2025 🌟
-
-If you had told 13 year old me, the girl learning her first Qiskit circuit, that she would one day be invited to the IBM Quantum Developer Conference, she would not have believed it. But last week, it became real!
-
-The theme “Quantum Advantage Together” came alive across three days. Hearing Jay Gambetta and the IBM Quantum team present breakthroughs set the tone for an inspiring week.
-
-Highlights:
-🔹 Nighthawk QPU with 120 qubits and Loon QPU updates.
-🔹 Meeting people from Classiq, Qunova Computing, and Q-CTRL.
-🔹 Connecting with PhD students from across the world.
-
-Thank you to the IBM Quantum team for making my first conference such a positive experience! Onward to quantum advantage together. 💙`,
-      likes: 258,
-      comments: 10,
-      tags: ["#QDC25", "#IBMQuantum", "#Qiskit", "#QuantumComputing"]
-    },
-    {
-      id: 3,
-      author: "Lakshmi Siri Appalaneni",
-      role: "Student @ UTD",
-      date: "1 week ago",
-      content: `✨ HarmoniQ hits a high note at HackUTD 2025 — the largest 24-hour hackathon in North America!!
-
-Thrilled to share that Team HarmoniQ won 3rd place in the T-Mobile Challenge and the MLH Award for Best Use of Auth0 at HackUTD 2025!
-
-Our project, HarmoniQ, is an AI-powered dashboard designed for T-mobile product managers. It combines ML models to forecast outages, live sentiment analytics from Reddit/X, and Gemini AI for recommendations.
-
-Huge thanks to the T-Mobile team and HackUTD organizers for an unforgettable weekend! 🚀 Forecast. Fix.`,
-      likes: 189,
-      comments: 28,
-      tags: ["#HackUTD", "#TMobile", "#TeamHarmoniQ", "#AI"]
     }
   ];
 
@@ -702,97 +894,6 @@ Huge thanks to the T-Mobile team and HackUTD organizers for an unforgettable wee
                View more on LinkedIn <ExternalLink size={16} />
              </a>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Experience = () => {
-  const experiences = [
-    {
-      company: "ACM Research (Qryptik)",
-      role: "Researcher / Cryptography + AI Developer",
-      period: "Aug 2024 – Dec 2025",
-      description: "Developed a Deep Learning-Driven tamper detection system for RLCE. Implemented GF(2^8) Gauss-Jordan inverses and built a CNN-based validator. Won 1st Place at Fall 2025 ACM Research Symposium."
-    },
-    {
-      company: "Nebula Labs",
-      role: "Engineering Division",
-      period: "2024 - Present",
-      description: "Developing 'Notebook', a knowledge-sharing platform, and contributing to 'HarmoniQ', an AI productivity dashboard using React, Next.js, and Auth0."
-    },
-    {
-      company: "Collective Qubits",
-      role: "Project Associate (Quantum + ML)",
-      period: "2024 - Present",
-      description: "Working on quantum-enhanced DNA sequence classification using Quanvolutional Neural Networks. Developing hybrid quantum-classical frameworks."
-    },
-    {
-      company: "QAMP 2025",
-      role: "Quantum Materials Researcher",
-      period: "2025",
-      description: "Built Q-UCSpec, a simulator for photonic upconversion materials. Modeled defect-level energy transitions and provided visualization outputs."
-    },
-    {
-      company: "The Coding School",
-      role: "AI Research Cohort",
-      period: "2023 – 2024",
-      description: "Selected among top global applicants. Worked on NLP and Computer Vision pipelines under researcher mentorship."
-    },
-    {
-      company: "Qiskit Advocate",
-      role: "Community Contributor",
-      period: "2023 – Present",
-      description: "Supporting localization and documentation. Assisting learners in workshops and participating in yearly IBM Quantum challenges."
-    }
-  ];
-
-  return (
-    <section id="experience" className="py-24 relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection>
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">Experience</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-          </div>
-        </AnimatedSection>
-
-        <div className="space-y-12">
-          {experiences.map((exp, index) => (
-            <AnimatedSection key={index} className={`delay-${index * 100}`}>
-              <div className="relative pl-8 md:pl-0">
-                {/* Timeline Line (Desktop) */}
-                <div className="hidden md:block absolute left-[50%] top-0 bottom-0 w-px bg-slate-800 transform -translate-x-1/2"></div>
-                
-                <div className={`md:flex items-center justify-between ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} group`}>
-                   
-                   {/* Center Dot */}
-                   <div className="absolute left-[-5px] md:left-[50%] top-0 w-3 h-3 rounded-full bg-blue-500 transform md:-translate-x-1/2 mt-2 z-10 group-hover:scale-150 group-hover:bg-cyan-400 transition-all duration-300 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-
-                   {/* Content Card */}
-                   <div className="md:w-[45%] mb-2 md:mb-0">
-                      <div className="p-6 rounded-2xl bg-slate-900 border border-white/5 hover:border-white/20 transition-all duration-300 hover:shadow-xl relative overflow-hidden group-hover:-translate-y-1">
-                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                           <Briefcase size={60} />
-                        </div>
-                        <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-500/10 rounded-full">
-                          {exp.period}
-                        </span>
-                        <h3 className="text-xl font-bold text-white mb-1">{exp.role}</h3>
-                        <div className="text-purple-400 font-medium mb-3">{exp.company}</div>
-                        <p className="text-slate-400 text-sm leading-relaxed">
-                          {exp.description}
-                        </p>
-                      </div>
-                   </div>
-                   
-                   {/* Empty space for the other side */}
-                   <div className="md:w-[45%]"></div>
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
         </div>
       </div>
     </section>
@@ -922,9 +1023,10 @@ const App = () => {
       <main>
         <Hero />
         <About />
+        <Awards />
         <Skills />
-        <Projects />
         <Experience />
+        <Projects />
         <SocialUpdates />
         <Contact />
       </main>
