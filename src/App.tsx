@@ -881,7 +881,7 @@ const SocialUpdates = () => {
       author: "Lakshmi Siri Appalaneni",
       role: "Student @ UTD",
       date: "1 month ago",
-      content: `Just wrapped up an intense 36 hours at HackUTD! 💻 Proud to announce that our team took home 3rd place in the T-Mobile challenge. We built an IoT solution that helps optimize network traffic using edge computing. Huge shoutout to my teammates! 🏆 #HackUTD #Hackathon #Innovation
+      content: `Just wrapped up an intense 24 hours at HackUTD! 💻 Proud to announce that our team took home 3rd place in the T-Mobile challenge. We built an IoT solution that helps optimize network traffic using edge computing. Huge shoutout to my teammates! 🏆 #HackUTD #Hackathon #Innovation
 
 #HackUTD2025 #Winner #TeamWork`,
       likes: 189,
