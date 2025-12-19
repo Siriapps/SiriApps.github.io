@@ -318,7 +318,7 @@ const Hero = () => {
                      </div>
                      <div className="pl-4 border-l border-white/5">
                         <span className="text-slate-500 mr-2">scholarship:</span>
-                        <span className="text-green-400">"AES Full Ride"</span>,
+                        <span className="text-green-400">"AES Merit Scholarship"</span>,
                      </div>
                      <div className="pl-4 border-l border-white/5">
                        <span className="text-slate-500 mr-2">interests:</span>
