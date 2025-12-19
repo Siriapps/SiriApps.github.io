@@ -462,7 +462,7 @@ const Awards = () => {
                icon: Zap,
                title: "3rd Place (T-Mobile)",
                org: "HackUTD 2025",
-               desc: "Built 'HarmoniQ', an AI-powered dashboard. Recognized by T-Mobile judges for predictive analytics.",
+               desc: "Largest 24hr hackathon in North America. Built 'HarmoniQ', an AI-powered dashboard. Recognized by T-Mobile judges for predictive analytics.",
                color: "pink",
                gradient: "from-pink-500 to-purple-500"
              }
@@ -534,7 +534,7 @@ const Experience = () => {
       company: "Nebula Labs",
       role: "Engineering Division",
       period: "2024 - 2025",
-      description: "Developed 'Notebook', a knowledge-sharing platform, and contributed to 'HarmoniQ', an AI productivity dashboard using React, Next.js, and Auth0."
+      description: "Collaborating on 2 open-source projects serving 10,000+ UTD students: UTD Trendz (professor rating platform) and UTD Notebook (academic note-sharing platform)."
     },
     {
       year: '2025',
@@ -744,7 +744,7 @@ const Projects = () => {
       imageGradient: "from-indigo-600 to-purple-600"
     },
     {
-      title: "HarmoniQ (Nebula Labs)",
+      title: "HarmoniQ (HackUTD T-Mobile Challenge 3rd place)",
       subtitle: "AI Productivity Dashboard",
       description: "Productivity dashboard for PM workflows integrating LLMs to predict outcomes and streamline tasks.",
       tags: ["Next.js", "Tailwind", "Auth0", "Gemini API"],
