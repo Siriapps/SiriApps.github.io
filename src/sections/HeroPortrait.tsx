@@ -68,7 +68,7 @@ export default function HeroPortrait() {
     <section
       ref={sectionRef}
       id="about"
-      className="snap-section relative h-screen overflow-hidden"
+      className="snap-section relative min-h-screen md:h-screen overflow-visible md:overflow-hidden py-20 md:py-0"
       style={{ background: '#0b080c' }}
     >
       {/* Background glow */}
@@ -79,18 +79,14 @@ export default function HeroPortrait() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-5 md:px-8 h-full flex items-end md:items-center">
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16 items-end pb-8 md:pb-0">
-          {/* LEFT: Portrait — full height, anchored to bottom */}
-          <div ref={portraitRef} className="relative flex items-end justify-center">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 h-full flex items-start md:items-center">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16 items-start md:items-end pb-0 md:pb-0">
+          {/* LEFT: Portrait — full height, anchored to bottom on desktop */}
+          <div ref={portraitRef} className="relative flex items-start md:items-end justify-center">
             <img
               src="/images/portrait.png"
               alt="Siri Appalaneni"
-              className="h-[50vh] md:h-[85vh] w-auto max-w-full lg:max-w-none object-contain"
-              style={{
-                maskImage: 'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0.85) 85%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0.85) 85%, transparent 100%)',
-              }}
+              className="portrait-mask h-[38vh] max-h-[280px] md:h-[85vh] md:max-h-none w-auto max-w-full lg:max-w-none object-contain object-top md:object-center"
             />
           </div>
 

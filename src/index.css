@@ -33,6 +33,14 @@ body {
   min-height: 100vh;
 }
 
+/* Portrait top fade — desktop only (mobile shows full head) */
+@media (min-width: 768px) {
+  .portrait-mask {
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0.85) 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0.85) 85%, transparent 100%);
+  }
+}
+
 /* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, #c2a4ff, #8b5cf6, #c2a4ff);
