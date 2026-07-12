@@ -32,7 +32,7 @@ export default function Contact() {
     <section id="contact" ref={sectionRef} className="relative py-24 md:py-36">
       <div className="max-w-5xl mx-auto px-5 md:px-6">
         <p className="obs-label">
-          OBS 07 <span className="obs-dim">/ send a signal</span>
+          OBS 08 <span className="obs-dim">/ send a signal</span>
         </p>
         <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-3">
           The dome is always open

@@ -1,5 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ExternalLink } from 'lucide-react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const GithubIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -109,129 +113,132 @@ const projects = [
   },
 ]
 
-// inner ring: first 5 projects, outer ring: the rest
-const INNER = 5
+// degrees between neighbors on the arc; the active project sits at 0
+// (pointing straight right from the half-hidden hub on the left edge)
+const STEP = 26
 
 export default function Projects() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const stRef = useRef<ScrollTrigger | null>(null)
   const [active, setActive] = useState(0)
-  const p = projects[active]
 
-  // Each node sits on a spinning ring; a static -angle plus the
-  // counter-spin span cancel every rotation, so planets and labels
-  // stay upright while they travel the orbit.
-  const node = (i: number, count: number, radius: number, ringIndex: number) => {
-    const idx = ringIndex === 0 ? i : INNER + i
-    const proj = projects[idx]
-    const angle = (360 / count) * i
-    return (
-      <button
-        key={proj.title}
-        onMouseEnter={() => setActive(idx)}
-        onFocus={() => setActive(idx)}
-        onClick={() => setActive(idx)}
-        aria-label={`Show ${proj.title}`}
-        className="absolute left-1/2 top-1/2 w-0 h-0"
-        style={{ transform: `rotate(${angle}deg) translateX(${radius}px)` }}
-      >
-        <span className="block w-0 h-0" style={{ transform: `rotate(${-angle}deg)` }}>
-          <span className="orbit-counter block w-0 h-0">
-            <span
-              className="absolute -left-6 -top-6 w-12 h-12 rounded-full transition-all duration-300"
-              style={{
-                background: `radial-gradient(circle at 35% 30%, ${proj.accent}, ${proj.accent}55)`,
-                boxShadow: idx === active
-                  ? `0 0 24px ${proj.accent}, 0 0 0 3px ${proj.accent}50`
-                  : `0 0 10px ${proj.accent}60`,
-                scale: idx === active ? '1.2' : '1',
-              }}
-            />
-            <span className="absolute left-0 top-7 -translate-x-1/2 font-mono text-[9px] tracking-wider whitespace-nowrap text-white/60"
-              style={idx === active ? { color: proj.accent, opacity: 1 } : undefined}>
-              {proj.title}
-            </span>
-          </span>
-        </span>
-      </button>
-    )
+  useEffect(() => {
+    const mm = gsap.matchMedia()
+    mm.add('(min-width: 768px)', () => {
+      stRef.current = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: () => `+=${projects.length * 55}%`,
+        pin: true,
+        scrub: 0.4,
+        snap: 1 / (projects.length - 1),
+        onUpdate: (self) => {
+          setActive(Math.round(self.progress * (projects.length - 1)))
+        },
+      })
+    })
+    return () => mm.revert()
+  }, [])
+
+  // Clicking a planet scrolls the page to that project's slot in the pin.
+  const jumpTo = (idx: number) => {
+    const st = stRef.current
+    if (!st) { setActive(idx); return }
+    const pos = st.start + (idx / (projects.length - 1)) * (st.end - st.start)
+    window.scrollTo({ top: pos, behavior: 'smooth' })
   }
 
+  const skip = () => {
+    const st = stRef.current
+    if (st) window.scrollTo({ top: st.end + 10, behavior: 'smooth' })
+    else document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const p = projects[active]
+
   return (
-    <section id="projects" className="relative py-24 md:py-36 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-5 md:px-6 w-full">
+    <section id="projects" ref={sectionRef} className="relative md:h-screen py-24 md:py-0 md:flex md:items-center overflow-hidden">
+      {/* Desktop: half orbit pinned to the left edge */}
+      <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-[560px] h-[560px] pointer-events-none">
+        <div className="absolute inset-0 rounded-full" style={{ border: '1px dashed rgba(255,176,32,0.25)' }} />
+        <div className="absolute inset-[70px] rounded-full" style={{ border: '1px dashed rgba(167,139,250,0.18)' }} />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl"
+          style={{ color: '#ffb020', textShadow: '0 0 28px rgba(255,176,32,0.8)' }}>✦</div>
+      </div>
+
+      <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-0 h-0">
+        {projects.map((proj, i) => {
+          const angle = (i - active) * STEP
+          const off = Math.abs(i - active)
+          const visible = Math.abs(angle) <= 92
+          return (
+            <button
+              key={proj.title}
+              onClick={() => jumpTo(i)}
+              aria-label={`Show ${proj.title}`}
+              className="absolute left-0 top-0"
+              style={{
+                transform: `rotate(${angle}deg) translateX(280px) rotate(${-angle}deg)`,
+                transition: 'transform 0.7s cubic-bezier(0.35, 0, 0.25, 1), opacity 0.5s',
+                opacity: visible ? Math.max(0.25, 1 - off * 0.16) : 0,
+                pointerEvents: visible ? 'auto' : 'none',
+              }}
+            >
+              <span className="block w-11 h-11 -ml-[22px] -mt-[22px] rounded-full transition-all duration-500"
+                style={{
+                  background: `radial-gradient(circle at 35% 30%, ${proj.accent}, ${proj.accent}55)`,
+                  boxShadow: i === active ? `0 0 26px ${proj.accent}, 0 0 0 3px ${proj.accent}50` : `0 0 10px ${proj.accent}50`,
+                  scale: i === active ? '1.3' : '1',
+                }} />
+              <span className="absolute left-1/2 top-6 -translate-x-1/2 mt-1 font-mono text-[9px] tracking-wider whitespace-nowrap text-white/60"
+                style={i === active ? { color: proj.accent, opacity: 1 } : undefined}>
+                {proj.title}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="max-w-6xl mx-auto px-5 md:px-6 w-full md:pl-[360px]">
         <p className="obs-label">
-          OBS 04 <span className="obs-dim">/ the orbit</span>
+          OBS 04 <span className="obs-dim">/ in rotation</span>
         </p>
         <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-3">
-          Eleven bodies in orbit
+          Projects
         </h2>
-        <p className="text-white/45 font-light text-lg mb-10 max-w-2xl">
-          Everything I have shipped, in rotation around one fixed point.
-          Hover a body to bring it into focus.
+        <p className="text-white/45 font-light text-lg mb-10 max-w-xl hidden md:block">
+          Scroll to turn the orbit, or press any planet.
         </p>
 
-        {/* Desktop: the orbit */}
-        <div className="hidden md:grid grid-cols-[460px_1fr] gap-14 items-center">
-          <div className="orbit-stage relative w-[460px] h-[460px]">
-            {/* ring guides */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] rounded-full"
-              style={{ border: '1px dashed rgba(167,139,250,0.3)' }} />
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full"
-              style={{ border: '1px dashed rgba(255,176,32,0.22)' }} />
-
-            {/* the fixed point */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl"
-              style={{ color: '#ffb020', textShadow: '0 0 24px rgba(255,176,32,0.8)' }}>
-              ✦
-            </div>
-
-            {/* inner ring rotates one way, outer the other; hover pauses */}
-            <div className="orbit-ring orbit-ring-inner absolute inset-0">
-              {Array.from({ length: INNER }, (_, i) => node(i, INNER, 130, 0))}
-            </div>
-            <div className="orbit-ring orbit-ring-outer absolute inset-0">
-              {Array.from({ length: projects.length - INNER }, (_, i) => node(i, projects.length - INNER, 210, 1))}
-            </div>
+        {/* Desktop: detail panel for the focused project */}
+        <div key={active} className="hidden md:block min-h-[300px] max-w-xl">
+          <p className="font-mono text-[11px] tracking-[0.25em] uppercase mb-3" style={{ color: p.accent }}>
+            {p.subtitle}
+          </p>
+          <h3 className="font-display font-bold text-4xl text-white mb-5">{p.title}</h3>
+          <p className="text-white/60 text-base leading-relaxed mb-6">{p.desc}</p>
+          <div className="flex flex-wrap gap-2 mb-7">
+            {p.tags.map(tag => (
+              <span key={tag} className="chip px-3 py-1.5 font-mono text-[11px] rounded-full text-white/50">{tag}</span>
+            ))}
           </div>
-
-          {/* detail panel for the focused body */}
-          <div key={active} className="min-h-[300px]">
-            <p className="font-mono text-[11px] tracking-[0.25em] uppercase mb-3" style={{ color: p.accent }}>
-              {p.subtitle}
-            </p>
-            <h3 className="font-display font-bold text-4xl lg:text-5xl text-white mb-5">{p.title}</h3>
-            <p className="text-white/60 text-base lg:text-lg leading-relaxed mb-6 max-w-xl">{p.desc}</p>
-            <div className="flex flex-wrap gap-2 mb-7">
-              {p.tags.map(tag => (
-                <span key={tag} className="chip px-3 py-1.5 font-mono text-[11px] rounded-full text-white/50">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <div className="flex gap-3">
-              {p.github !== '#' && (
-                <a href={p.github} target="_blank" rel="noopener noreferrer" aria-label={`${p.title} on GitHub`}
-                  className="chip inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.1em] text-white/70">
-                  <GithubIcon /> Source
-                </a>
-              )}
-              {p.live !== '#' && (
-                <a href={p.live} target="_blank" rel="noopener noreferrer" aria-label={`${p.title} live site`}
-                  className="chip inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.1em] text-white/70">
-                  <ExternalLink size={13} /> Visit
-                </a>
-              )}
-            </div>
-            <div className="flex gap-2 mt-10">
-              {projects.map((_, i) => (
-                <button key={i} onClick={() => setActive(i)} aria-label={`Project ${i + 1}`}
-                  className="h-1.5 rounded-full transition-all duration-500"
-                  style={{
-                    width: i === active ? 26 : 8,
-                    background: i === active ? p.accent : 'rgba(150,150,150,0.3)',
-                  }} />
-              ))}
-            </div>
+          <div className="flex gap-3">
+            {p.github !== '#' && (
+              <a href={p.github} target="_blank" rel="noopener noreferrer" aria-label={`${p.title} on GitHub`}
+                className="chip inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.1em] text-white/70">
+                <GithubIcon /> Source
+              </a>
+            )}
+            {p.live !== '#' && (
+              <a href={p.live} target="_blank" rel="noopener noreferrer" aria-label={`${p.title} live site`}
+                className="chip inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.1em] text-white/70">
+                <ExternalLink size={13} /> Visit
+              </a>
+            )}
           </div>
+          <p className="font-mono text-[10px] tracking-[0.3em] text-white/25 mt-10">
+            {String(active + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+          </p>
         </div>
 
         {/* Mobile: stacked list, no orbit */}
@@ -262,6 +269,14 @@ export default function Projects() {
           ))}
         </div>
       </div>
+
+      {/* skip out of the pinned run */}
+      <button
+        onClick={skip}
+        className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.35em] uppercase text-white/30 hover:text-white/60 transition-colors font-light"
+      >
+        Skip to skills ↓
+      </button>
     </section>
   )
 }

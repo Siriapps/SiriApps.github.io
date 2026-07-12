@@ -110,7 +110,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
             cursor: ready ? 'pointer' : 'default',
           }}
         >
-          {ready ? 'Scroll' : 'Aligning the view'}
+          {ready ? 'Enter' : 'Aligning the view'}
         </button>
       </div>
 

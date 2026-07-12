@@ -1,14 +1,43 @@
 import { useRef, useEffect } from 'react'
+import type { MouseEvent, SyntheticEvent } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const detections = [
-  { label: 'builder', conf: '0.99', top: '12%', left: '6%' },
-  { label: 'researcher', conf: '0.97', top: '38%', left: '58%' },
-  { label: 'wanderlust', conf: '0.94', top: '68%', left: '10%' },
-]
+function PhotoReveal({ src, alt, frame, className = '' }: {
+  src: string; alt: string; frame: string; className?: string
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const onMove = (e: MouseEvent) => {
+    const el = ref.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`)
+    el.style.setProperty('--my', `${e.clientY - r.top}px`)
+  }
+  const onLeave = () => {
+    ref.current?.style.setProperty('--mx', '-300px')
+    ref.current?.style.setProperty('--my', '-300px')
+  }
+  // ponytail: falls back to the old portrait until the new photos land in public/images
+  const fallback = (e: SyntheticEvent<HTMLImageElement>) => {
+    if (!e.currentTarget.src.endsWith('portrait.png')) e.currentTarget.src = '/images/portrait.png'
+  }
+  return (
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={`pixel-reveal relative overflow-hidden rounded-xl ${className}`}
+      style={{ border: `5px solid ${frame}`, boxShadow: `0 16px 44px rgba(0,0,0,0.4), 0 0 30px ${frame}22` }}
+    >
+      <img src={src} alt={alt} className="block w-full" onError={fallback} />
+      <img src={src} alt="" aria-hidden="true" className="pixel-overlay absolute inset-0 w-full h-full object-cover" onError={fallback} />
+      <div className="pixel-grid absolute inset-0" aria-hidden="true" />
+    </div>
+  )
+}
 
 const terminalLines = [
   { prompt: true, text: 'siri --whoami' },
@@ -43,39 +72,25 @@ export default function About() {
           OBS 01 <span className="obs-dim">/ field notes</span>
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-[minmax(260px,380px)_1fr] gap-10 md:gap-16 items-start">
-          {/* Portrait with computer-vision hover frame */}
-          <div className="about-reveal group relative rounded-2xl overflow-hidden" tabIndex={0}>
-            <img
-              src="/images/portrait.png"
-              alt="Portrait of Siri Appalaneni"
-              className="portrait-mask w-full object-cover"
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,420px)_1fr] gap-10 md:gap-16 items-start">
+          {/* Two field photos, overlapping diagonally. Hovering reveals a
+              black-and-white pixel version only under the cursor. */}
+          <div className="about-reveal relative pb-24 pr-10">
+            <PhotoReveal
+              src="/images/presenting.jpg"
+              alt="Presenting quantum encryption research at Symposium Night"
+              frame="#ffb020"
+              className="w-[82%]"
             />
-            {/* CV overlay: brackets, scanline, detections */}
-            <div className="cv-frame absolute inset-0 pointer-events-none">
-              <div className="absolute inset-3">
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#ffb020]" />
-                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-[#ffb020]" />
-                <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-[#ffb020]" />
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#ffb020]" />
-              </div>
-              <div className="cv-scanline absolute left-3 right-3 h-px"
-                style={{ background: 'linear-gradient(to right, transparent, #ffb020, transparent)', boxShadow: '0 0 12px #ffb020' }} />
-              {detections.map(d => (
-                <div key={d.label} className="absolute font-mono text-[9px] tracking-wider px-1.5 py-0.5"
-                  style={{ top: d.top, left: d.left, color: '#ffb020', border: '1px solid rgba(255,176,32,0.6)', background: 'rgba(7,6,9,0.65)' }}>
-                  {d.label}: {d.conf}
-                </div>
-              ))}
-              <div className="absolute bottom-3 left-3 right-3 flex justify-between font-mono text-[9px] text-[#a78bfa] px-2">
-                <span>MODEL: SIRI-NET v3.97</span>
-                <span>FPS: 60</span>
-              </div>
-            </div>
-            <div className="panel absolute bottom-0 inset-x-0 px-5 py-3 font-mono text-[10px] tracking-[0.15em] uppercase text-white/50 flex justify-between md:hidden group-hover:opacity-0 transition-opacity">
-              <span>Field note 001</span>
-              <span className="text-[#ffb020]">Tap to scan</span>
-            </div>
+            <PhotoReveal
+              src="/images/quantum.jpg"
+              alt="Beside IBM quantum computers at the developer conference"
+              frame="#a78bfa"
+              className="absolute right-0 bottom-0 w-[58%] rotate-2"
+            />
+            <p className="absolute -bottom-1 left-0 font-mono text-[9px] tracking-[0.25em] uppercase text-white/30">
+              Field photos · hover to develop
+            </p>
           </div>
 
           <div>
@@ -87,8 +102,7 @@ export default function About() {
             </p>
 
             {/* Terminal card */}
-            <div className="about-reveal terminal-card rounded-xl overflow-hidden mb-10"
-              style={{ background: '#0c0912', border: '1px solid rgba(167,139,250,0.18)' }}>
+            <div className="about-reveal terminal-card rounded-xl overflow-hidden mb-10">
               <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: '1px solid rgba(167,139,250,0.12)' }}>
                 <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
                 <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />

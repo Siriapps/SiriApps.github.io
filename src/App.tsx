@@ -11,6 +11,7 @@ import Experience from './sections/Experience'
 import Projects from './sections/Projects'
 import Skills from './sections/Skills'
 import Awards from './sections/Awards'
+import Workspace from './sections/Workspace'
 import Contact from './sections/Contact'
 
 export type Theme = 'dark' | 'light'
@@ -56,6 +57,7 @@ export default function App() {
           <Projects />
           <Skills />
           <Awards />
+          <Workspace />
           <Contact />
         </main>
       </div>

@@ -42,9 +42,13 @@ export default function Skills() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.skill-group', {
-        y: 28, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: { trigger: '.skills-grid', start: 'top 80%' },
+      // the deck: each layer pops up out of the stack as it scrolls in
+      gsap.utils.toArray<HTMLElement>('.skill-group').forEach((el, i) => {
+        gsap.from(el, {
+          y: 110, scale: 0.94, rotate: i % 2 === 0 ? -1.6 : 1.6, opacity: 0,
+          duration: 0.75, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 92%' },
+        })
       })
     }, sectionRef)
     return () => ctx.revert()
@@ -57,7 +61,7 @@ export default function Skills() {
           OBS 05 <span className="obs-dim">/ instruments</span>
         </p>
         <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-3">
-          The instrument panel
+          Skills
         </h2>
         <p className="text-white/45 font-light text-lg mb-14 max-w-2xl">
           Every tool on the bench, grouped the way I actually reach for them.

@@ -151,6 +151,27 @@ body {
 .mobile-menu-overlay { background: rgba(7, 6, 9, 0.95); }
 [data-theme='light'] .mobile-menu-overlay { background: rgba(242, 238, 225, 0.96); }
 
+/* Photo pair: hover develops a black-and-white pixel print under the cursor */
+.pixel-reveal { --mx: -300px; --my: -300px; }
+.pixel-overlay, .pixel-grid {
+  clip-path: circle(90px at var(--mx) var(--my));
+  pointer-events: none;
+  transition: clip-path 0.12s linear;
+}
+.pixel-overlay { filter: grayscale(1) contrast(1.25); }
+.pixel-grid {
+  background-image:
+    repeating-linear-gradient(to right, rgba(0, 0, 0, 0.3) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0 1px, transparent 1px 7px);
+}
+
+/* Dark surfaces that must survive daylight */
+.reel-frame { background: #0d0a13; }
+[data-theme='light'] .reel-frame { background: #ffffff; }
+.terminal-card { background: #0c0912; border: 1px solid rgba(167, 139, 250, 0.18); }
+[data-theme='light'] .terminal-card { background: #fffdf6; border-color: rgba(34, 48, 28, 0.18); }
+[data-theme='light'] [class*='text-\[\#ffb020\]'] { color: #a86a00 !important; }
+
 /* Computer-vision scan overlay on the portrait */
 @keyframes cv-scan {
   0% { top: 4%; }
