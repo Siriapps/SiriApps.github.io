@@ -4,30 +4,35 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const categories = [
+const groups = [
   {
     title: 'Languages',
-    accent: '#c2a4ff',
+    accent: '#ffb020',
+    primary: 'Python',
     skills: ['Python', 'C++', 'Java', 'JavaScript', 'TypeScript', 'SQL', 'Bash'],
   },
   {
-    title: 'ML & Research',
-    accent: '#f472b6',
-    skills: ['PyTorch', 'scikit-learn', 'XGBoost', 'CatBoost', 'Physics-Informed NNs', 'LSTM', 'SHAP', 'FAISS', 'Qiskit'],
+    title: 'ML and Research',
+    accent: '#ff7a3d',
+    primary: 'PyTorch',
+    skills: ['PyTorch', 'scikit-learn', 'XGBoost', 'CatBoost', 'Physics-Informed NNs', 'LSTM', 'SHAP', 'FAISS'],
   },
   {
-    title: 'Agentic & LLM',
-    accent: '#fbbf24',
+    title: 'Agentic and LLM',
+    accent: '#a78bfa',
+    primary: 'LangChain',
     skills: ['LangChain', 'Google ADK', 'MCP', 'Gemini API', 'RAG Pipelines', 'Multi-Agent Orchestration'],
   },
   {
-    title: 'Web & Infrastructure',
-    accent: '#34d399',
-    skills: ['FastAPI', 'Flask', 'React', 'Node.js', 'Tailwind', 'MongoDB', 'DuckDB', 'GCS', 'Cloud Run', 'Docker'],
+    title: 'Web and Infrastructure',
+    accent: '#ffb020',
+    primary: 'FastAPI',
+    skills: ['FastAPI', 'Flask', 'React', 'Node.js', 'Tailwind', 'MongoDB', 'DuckDB', 'Cloud Run', 'Docker'],
   },
   {
     title: 'Quantum Computing',
-    accent: '#60a5fa',
+    accent: '#a78bfa',
+    primary: 'Qiskit',
     skills: ['Qiskit', 'pyZX', 'ZX Calculus', 'Circuit Design', 'Variational Algorithms'],
   },
 ]
@@ -37,67 +42,50 @@ export default function Skills() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.skills-title', {
-        y: 40, duration: 0.8, ease: 'power3.out',
-        scrollTrigger: { trigger: '#skills', start: 'top 80%' },
-      })
-      gsap.from('.skill-category', {
-        y: 30, duration: 0.5, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: { trigger: '.skills-grid', start: 'top 90%' },
+      gsap.from('.skill-group', {
+        y: 28, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.skills-grid', start: 'top 80%' },
       })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
   return (
-    <section
-      id="skills"
-      ref={sectionRef}
-      className="py-28 md:py-40 relative"
-      style={{ background: '#0b080c' }}
-    >
-      <div className="max-w-7xl mx-auto px-5 md:px-6">
-        <div className="skills-title mb-16">
-          <p className="section-label">TOOLKIT</p>
-          <h2 className="font-display text-5xl md:text-7xl text-white tracking-tight">
-            Technical{' '}
-            <span className="gradient-text" style={{ fontStyle: 'italic' }}>Stack</span>
-          </h2>
-        </div>
+    <section id="skills" ref={sectionRef} className="relative py-24 md:py-36">
+      <div className="max-w-6xl mx-auto px-5 md:px-6">
+        <p className="obs-label">
+          OBS 05 <span className="obs-dim">/ instruments</span>
+        </p>
+        <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-3">
+          The instrument panel
+        </h2>
+        <p className="text-white/45 font-light text-lg mb-14 max-w-2xl">
+          Every tool on the bench, grouped the way I actually reach for them.
+          The brightest chip in each row gets used daily.
+        </p>
 
-        <div className="skills-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {categories.map(({ title, accent, skills }) => (
-            <div
-              key={title}
-              className="skill-category group relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
-              style={{
-                background: 'rgba(255,255,255,0.025)',
-                border: `1px solid ${accent}20`,
-              }}
-            >
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: `radial-gradient(circle at 50% 0%, ${accent}20, transparent 70%)` }}
-              />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: accent, boxShadow: `0 0 10px ${accent}80` }} />
-                  <h3 className="text-lg font-bold tracking-tight" style={{ color: accent }}>{title}</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map(skill => (
+        <div className="skills-grid flex flex-col gap-4">
+          {groups.map(({ title, accent, primary, skills }) => (
+            <div key={title} className="skill-group panel rounded-2xl px-6 md:px-8 py-6 md:flex md:items-start md:gap-10">
+              <div className="md:w-56 shrink-0 mb-4 md:mb-0 flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full" style={{ background: accent, boxShadow: `0 0 10px ${accent}` }} />
+                <h3 className="font-display font-bold text-lg text-white">{title}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {skills.map(skill => {
+                  const daily = skill === primary
+                  return (
                     <span
                       key={skill}
-                      className="px-3 py-1.5 rounded-lg text-sm font-medium text-white/70 hover:text-white transition-colors duration-300"
-                      style={{
-                        background: `${accent}10`,
-                        border: `1px solid ${accent}18`,
-                      }}
+                      className={`px-3.5 py-1.5 rounded-full text-sm transition-colors duration-300 ${daily ? 'text-white' : 'chip text-white/65'}`}
+                      style={daily
+                        ? { background: `${accent}1e`, border: `1px solid ${accent}90`, boxShadow: `0 0 16px ${accent}30` }
+                        : undefined}
                     >
                       {skill}
                     </span>
-                  ))}
-                </div>
+                  )
+                })}
               </div>
             </div>
           ))}

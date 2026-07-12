@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
+import { Download, Sun, Moon } from 'lucide-react'
+import type { Theme } from '../App'
 
-const navLinks = ['About', 'Experience', 'Work', 'Skills', 'Awards', 'Contact']
+const navLinks = [
+  { label: 'About', id: 'about' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Certifications', id: 'certifications' },
+  { label: 'Contact', id: 'contact' },
+]
 
-const idMap: Record<string, string> = {
-  About: 'about',
-  Experience: 'experience',
-  Work: 'projects',
-  Skills: 'skills',
-  Awards: 'awards',
-  Contact: 'contact',
-}
-
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggleTheme: () => void }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -22,101 +22,118 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
-  const scrollTo = (link: string) => {
+  const scrollTo = (id: string) => {
     setMenuOpen(false)
     setTimeout(() => {
-      document.getElementById(idMap[link])?.scrollIntoView({ behavior: 'smooth' })
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
     }, 100)
   }
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 px-5 md:px-10 py-5 md:py-6 flex items-center justify-between transition-all duration-700 ${
-          scrolled ? 'backdrop-blur-2xl bg-[#0b080c]/60' : ''
-        }`}
-      >
-        <button
-          onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-          className="font-display text-2xl text-white/90 hover:text-white transition-colors z-[60]"
+      {/* Centered floating pill */}
+      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-fit">
+        <div
+          className="flex items-center gap-1 md:gap-2 rounded-full px-3 md:px-4 py-2.5 transition-all duration-500"
+          style={{
+            background: theme === 'light'
+              ? (scrolled ? 'rgba(255, 253, 246, 0.9)' : 'rgba(255, 253, 246, 0.65)')
+              : (scrolled ? 'rgba(10, 8, 14, 0.88)' : 'rgba(10, 8, 14, 0.55)'),
+            border: theme === 'light' ? '1px solid rgba(34, 48, 28, 0.15)' : '1px solid rgba(167, 139, 250, 0.18)',
+            backdropFilter: 'blur(14px)',
+            WebkitBackdropFilter: 'blur(14px)',
+            boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.5)' : 'none',
+          }}
         >
-          Siri.dev
-        </button>
+          <button
+            onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+            className="font-display font-bold text-sm text-white/90 hover:text-white transition-colors flex items-center gap-1.5 px-2 whitespace-nowrap"
+          >
+            <span className="text-[#ffb020]">✦</span> SIRI
+          </button>
 
-        <div className="hidden md:flex items-center gap-10">
-          {navLinks.map(link => (
-            <button
-              key={link}
-              onClick={() => scrollTo(link)}
-              className="text-sm font-medium tracking-[0.15em] uppercase text-white/40 hover:text-[#c2a4ff] transition-colors duration-300"
-            >
-              {link}
-            </button>
-          ))}
+          <span className="hidden lg:block w-px h-4 bg-white/15 mx-1" />
+
+          <div className="hidden lg:flex items-center">
+            {navLinks.map(({ label, id }) => (
+              <button
+                key={id}
+                onClick={() => scrollTo(id)}
+                className="font-mono text-[11px] tracking-[0.12em] uppercase text-white/50 hover:text-[#ffb020] transition-colors duration-300 px-3 py-1.5 rounded-full hover:bg-white/[0.04] whitespace-nowrap"
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <span className="hidden lg:block w-px h-4 bg-white/15 mx-1" />
+
+          <a
+            href="/Lakshmi_Siri_Appalaneni_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden lg:inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.08em] uppercase px-4 py-1.5 rounded-full text-[#070609] font-medium transition-transform hover:scale-105 whitespace-nowrap"
+            style={{ background: 'linear-gradient(100deg, #ffb020, #ff7a3d)' }}
+          >
+            <Download size={12} />
+            Resume
+          </a>
+
+          {/* night / morning toggle */}
+          <button
+            onClick={onToggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to morning' : 'Switch to night'}
+            className="w-9 h-9 rounded-full flex items-center justify-center text-white/60 hover:text-[#ffb020] transition-colors"
+          >
+            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+          </button>
+
+          {/* Hamburger, below lg */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 z-[60]"
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            <span className="block w-5 h-[2px] transition-all duration-300"
+              style={{ background: 'var(--starlight)', transform: menuOpen ? 'rotate(45deg) translateY(4px)' : 'none' }} />
+            <span className="block w-5 h-[2px] transition-all duration-300"
+              style={{ background: 'var(--starlight)', opacity: menuOpen ? 0 : 1 }} />
+            <span className="block w-5 h-[2px] transition-all duration-300"
+              style={{ background: 'var(--starlight)', transform: menuOpen ? 'rotate(-45deg) translateY(-4px)' : 'none' }} />
+          </button>
         </div>
-
-        <a
-          href="mailto:lakshmisiri783@gmail.com"
-          className="hidden md:block text-sm text-white/40 hover:text-[#c2a4ff] transition-colors"
-        >
-          lakshmisiri783@gmail.com
-        </a>
-
-        {/* Hamburger button — mobile only */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden z-[60] w-8 h-8 flex flex-col items-center justify-center gap-1.5"
-          aria-label="Toggle menu"
-        >
-          <span
-            className="block w-6 h-[2px] bg-white transition-all duration-300"
-            style={{
-              transform: menuOpen ? 'rotate(45deg) translateY(4px)' : 'none',
-            }}
-          />
-          <span
-            className="block w-6 h-[2px] bg-white transition-all duration-300"
-            style={{
-              opacity: menuOpen ? 0 : 1,
-            }}
-          />
-          <span
-            className="block w-6 h-[2px] bg-white transition-all duration-300"
-            style={{
-              transform: menuOpen ? 'rotate(-45deg) translateY(-4px)' : 'none',
-            }}
-          />
-        </button>
       </nav>
 
       {/* Mobile menu overlay */}
       <div
-        className={`fixed inset-0 z-[55] bg-[#0b080c]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${
+        className={`mobile-menu-overlay fixed inset-0 z-[45] backdrop-blur-xl flex flex-col items-center justify-center gap-6 transition-all duration-500 lg:hidden ${
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {navLinks.map(link => (
+        {navLinks.map(({ label, id }, i) => (
           <button
-            key={link}
-            onClick={() => scrollTo(link)}
-            className="text-2xl font-medium tracking-[0.15em] uppercase text-white/70 hover:text-[#c2a4ff] transition-colors duration-300"
+            key={id}
+            onClick={() => scrollTo(id)}
+            className="font-mono text-xl tracking-[0.18em] uppercase text-white/75 hover:text-[#ffb020] transition-colors duration-300"
           >
-            {link}
+            <span className="text-white/25 mr-3 text-sm">{String(i + 1).padStart(2, '0')}</span>
+            {label}
           </button>
         ))}
         <a
-          href="mailto:lakshmisiri783@gmail.com"
-          className="text-sm text-white/40 hover:text-[#c2a4ff] transition-colors mt-4"
+          href="/Lakshmi_Siri_Appalaneni_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 font-mono text-sm tracking-[0.1em] uppercase px-6 py-3 rounded-full text-[#070609] font-medium mt-4"
+          style={{ background: 'linear-gradient(100deg, #ffb020, #ff7a3d)' }}
         >
-          lakshmisiri783@gmail.com
+          <Download size={14} />
+          Resume
         </a>
       </div>
     </>

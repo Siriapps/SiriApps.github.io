@@ -1,39 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=general-sans@300,400,500,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg: #0b080c;
-  --accent: #c2a4ff;
-  --accent-dim: rgba(194,164,255,0.15);
-  --font-display: 'Instrument Serif', serif;
-  --font-body: 'Satoshi', sans-serif;
+  --night: #070609;
+  --panel: rgba(16, 12, 22, 0.6);
+  --starlight: #f5f2ea;
+  --gold: #ffb020;
+  --orange: #ff7a3d;
+  --violet: #a78bfa;
+  --font-display: 'Cabinet Grotesk', sans-serif;
+  --font-body: 'General Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
+
+/* Light mode: a clear morning in the park. Lawn greens, pond light,
+   the same skyline waiting beyond the treeline. */
+:root[data-theme='light'] {
+  --night: #f0ecdf;
+  --panel: rgba(255, 255, 255, 0.62);
+  --starlight: #22301c;
+  --gold: #c77f00;
+  --orange: #cf5417;
+  --violet: #6d4fe0;
+}
+
+[data-theme='light'] body { background: var(--night); color: var(--starlight); }
+[data-theme='light'] ::selection { background: rgba(199, 127, 0, 0.3); color: #22301c; }
+
+/* Remap the dark-mode text utilities onto ink greens; strongest first,
+   then dim tiers override. */
+[data-theme='light'] [class*='text-white'] { color: rgba(34, 48, 28, 0.92) !important; }
+[data-theme='light'] [class*='text-white/4'],
+[data-theme='light'] [class*='text-white/5'],
+[data-theme='light'] [class*='text-white/6'] { color: rgba(34, 48, 28, 0.68) !important; }
+[data-theme='light'] [class*='text-white/2'],
+[data-theme='light'] [class*='text-white/3'] { color: rgba(34, 48, 28, 0.45) !important; }
+
+[data-theme='light'] .panel {
+  background: var(--panel);
+  border: 1px solid rgba(34, 48, 28, 0.12);
+}
+[data-theme='light'] .obs-label { color: var(--gold); }
+[data-theme='light'] .obs-label .obs-dim { color: rgba(34, 48, 28, 0.4); }
+[data-theme='light'] .filmstrip {
+  --hole: rgba(34, 48, 28, 0.3);
+  border-top-color: rgba(34, 48, 28, 0.2);
+  border-bottom-color: rgba(34, 48, 28, 0.2);
+}
+[data-theme='light'] .barcode { opacity: 0.85; }
+.cert-logo { filter: invert(0.92); }
+[data-theme='light'] .cert-logo { filter: none; opacity: 0.85; }
+[data-theme='light'] ::-webkit-scrollbar-thumb { background: rgba(199, 127, 0, 0.45); }
+
+body { transition: background-color 0.7s ease, color 0.7s ease; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-html, body {
-  overflow-x: hidden;
-}
+html, body { overflow-x: hidden; }
 body {
-  background: var(--bg);
-  color: #eae5ec;
+  background: var(--night);
+  color: var(--starlight);
   font-family: var(--font-body);
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
 }
-::selection { background: rgba(194,164,255,0.35); color: #fff; }
-@media (pointer: fine) { * { cursor: none; } }
+::selection { background: rgba(255, 176, 32, 0.35); color: #fff; }
+
 .font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
 
-/* Snap sections */
-.snap-section {
-  min-height: 100vh;
+/* Observation-log eyebrow */
+.obs-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+.obs-label .obs-dim { color: rgba(245,242,234,0.35); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid rgba(167, 139, 250, 0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
-/* Portrait top fade — desktop only (mobile shows full head) */
+/* Portrait top fade, desktop only (mobile shows full head) */
 @media (min-width: 768px) {
   .portrait-mask {
     mask-image: linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0.85) 85%, transparent 100%);
@@ -41,66 +99,124 @@ body {
   }
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #c2a4ff, #8b5cf6, #c2a4ff);
-  background-size: 200% 200%;
-  animation: gradient-shift 4s ease infinite;
+.accent-text {
+  background: linear-gradient(100deg, var(--gold), var(--orange) 55%, var(--violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-@keyframes gradient-shift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
 
-/* Section label */
-.section-label {
-  color: rgba(194,164,255,0.5);
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
+/* Entrance: the airplane window scales up until you are through it */
+@keyframes window-fly {
+  from { transform: scale(0.02); }
+  to { transform: scale(14); }
 }
 
-/* Liquid glass */
-.liquid-glass {
-  background: rgba(255,255,255,0.01);
-  background-blend-mode: luminosity;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: none;
-  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
-  position: relative;
-  overflow: hidden;
+/* Project orbit: rings revolve, content counter-spins to stay upright */
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
-.liquid-glass::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.4px;
-  background: linear-gradient(180deg,rgba(255,255,255,0.45) 0%,rgba(255,255,255,0.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,0.15) 80%,rgba(255,255,255,0.45) 100%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+.orbit-ring-inner { animation: orbit-spin 60s linear infinite; }
+.orbit-ring-outer { animation: orbit-spin 90s linear infinite reverse; }
+.orbit-ring-inner .orbit-counter { animation: orbit-spin 60s linear infinite reverse; }
+.orbit-ring-outer .orbit-counter { animation: orbit-spin 90s linear infinite; }
+.orbit-stage:hover .orbit-ring-inner,
+.orbit-stage:hover .orbit-ring-outer,
+.orbit-stage:hover .orbit-counter,
+.orbit-stage:focus-within .orbit-ring-inner,
+.orbit-stage:focus-within .orbit-ring-outer,
+.orbit-stage:focus-within .orbit-counter {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring-inner, .orbit-ring-outer, .orbit-counter { animation: none; }
 }
 
-/* Scrollbar */
+/* Shared chip border that stays visible in both themes */
+.chip { border: 1px solid rgba(245, 242, 234, 0.16); }
+[data-theme='light'] .chip { border-color: rgba(34, 48, 28, 0.25); }
+
+/* Status colors that survive the light theme */
+.status-archived { color: rgba(233, 237, 246, 0.4); }
+[data-theme='light'] .status-archived { color: rgba(34, 48, 28, 0.45); }
+
+/* Violet body accents need more ink on cream */
+[data-theme='light'] [class*='text-\[\#a78bfa\]'] { color: #5a3fd0 !important; }
+
+/* The observatory dome arc adapts to daylight */
+:root { --dome: #0a080f; --dome-line: rgba(167, 139, 250, 0.25); }
+:root[data-theme='light'] { --dome: #e3e9df; --dome-line: rgba(34, 48, 28, 0.2); }
+
+.mobile-menu-overlay { background: rgba(7, 6, 9, 0.95); }
+[data-theme='light'] .mobile-menu-overlay { background: rgba(242, 238, 225, 0.96); }
+
+/* Computer-vision scan overlay on the portrait */
+@keyframes cv-scan {
+  0% { top: 4%; }
+  50% { top: 92%; }
+  100% { top: 4%; }
+}
+.cv-scanline { animation: cv-scan 3.2s ease-in-out infinite; }
+.cv-frame { opacity: 0; transition: opacity 0.35s ease; }
+.group:hover .cv-frame, .group:focus-within .cv-frame { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .cv-scanline { animation: none; top: 40%; }
+}
+
+/* Film strip: sprocket holes drawn with gradients, no images */
+.filmstrip {
+  --hole: rgba(245,242,234,0.28);
+  padding: 26px 0;
+  background-image:
+    repeating-linear-gradient(to right, transparent 0 10px, var(--hole) 10px 22px, transparent 22px 34px),
+    repeating-linear-gradient(to right, transparent 0 10px, var(--hole) 10px 22px, transparent 22px 34px);
+  background-size: 34px 10px, 34px 10px;
+  background-position: 0 6px, 0 calc(100% - 6px);
+  background-repeat: repeat-x, repeat-x;
+  border-top: 2px solid rgba(245,242,234,0.15);
+  border-bottom: 2px solid rgba(245,242,234,0.15);
+}
+@keyframes reel {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.reel-track { animation: reel var(--reel-speed, 40s) linear infinite; }
+.reel-track:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .reel-track { animation: none; }
+}
+
+/* Visitor pass perforation */
+.perforation {
+  background-image: linear-gradient(to bottom, rgba(245,242,234,0.25) 45%, transparent 45%);
+  background-size: 2px 12px;
+  width: 2px;
+}
+.perforation-h {
+  background-image: linear-gradient(to right, rgba(245,242,234,0.25) 45%, transparent 45%);
+  background-size: 12px 2px;
+  height: 2px;
+}
+
+/* Barcode built from stripes, no image needed */
+.barcode {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--starlight) 0 2px, transparent 2px 5px,
+    var(--starlight) 5px 6px, transparent 6px 11px,
+    var(--starlight) 11px 14px, transparent 14px 16px,
+    var(--starlight) 16px 17px, transparent 17px 22px
+  );
+  opacity: 0.75;
+}
+
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: rgba(194,164,255,0.2); border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--night); }
+::-webkit-scrollbar-thumb { background: rgba(255, 176, 32, 0.35); border-radius: 2px; }
 
-/* Split line overflow */
-.split-line { overflow: hidden; }
-
-/* Hover link effect */
-.hover-link { overflow: hidden; position: relative; }
-.hover-link .hover-in { transition: transform 0.3s ease; }
-.hover-link .hover-in div {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  color: var(--accent);
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
-.hover-link:hover .hover-in { transform: translateY(-100%); }

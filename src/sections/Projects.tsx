@@ -1,9 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { ExternalLink } from 'lucide-react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const GithubIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -14,218 +10,257 @@ const GithubIcon = ({ size = 14 }: { size?: number }) => (
 const projects = [
   {
     title: 'Cue',
-    subtitle: 'Intent-Aware AI Workspace Agent',
-    desc: 'Chrome extension that monitors browsing context and uses multi-agent Google ADK pipeline to predict your next five tasks. Actions execute autonomously across Google Workspace via MCP.',
-    tags: ['Gemini 2.0', 'Google ADK', 'MCP', 'Chrome Extensions', 'TypeScript'],
-    accent: '#c2a4ff',
+    subtitle: 'Intent-aware AI workspace agent',
+    desc: 'Chrome extension that reads browsing context and uses a multi-agent Google ADK pipeline to predict your next five tasks. Actions execute autonomously across Google Workspace via MCP.',
+    tags: ['Gemini 2.0', 'Google ADK', 'MCP', 'TypeScript'],
+    accent: '#ffb020',
     github: 'https://github.com/Siriapps/cue',
     live: '#',
   },
   {
     title: 'Pondr',
-    subtitle: '1st Place — HackAI Dallas 2026',
-    desc: 'Adaptive learning via living knowledge graphs. XGBoost model fitted to Ebbinghaus forgetting curve predicts decaying concepts. YouTube clips, ElevenLabs TTS, and Google Calendar scheduling.',
-    tags: ['LangChain', 'XGBoost', 'Gemini 2.0', 'Knowledge Graphs', 'React Flow'],
-    accent: '#fbbf24',
+    subtitle: '1st Place · HackAI Dallas 2026',
+    desc: 'Adaptive learning via living knowledge graphs. An XGBoost model fitted to the Ebbinghaus forgetting curve predicts decaying concepts, then resurfaces them with YouTube clips, TTS, and Calendar scheduling.',
+    tags: ['LangChain', 'XGBoost', 'Knowledge Graphs', 'React Flow'],
+    accent: '#ff7a3d',
     github: '#',
     live: '#',
   },
   {
     title: 'SafeWay',
-    subtitle: 'ACM Projects · Safety-First Navigation',
-    desc: 'Routes by crash risk, not just speed. Two-stage hurdle model on 2.3M+ crash records across 29,500 Chicago intersections. AUC 0.891, R² 0.745, deployed on Cloud Run with nightly retraining.',
-    tags: ['CatBoost', 'XGBoost', 'SHAP', 'FastAPI', 'DuckDB', 'Cloud Run'],
-    accent: '#34d399',
+    subtitle: 'ACM Projects · Safety-first navigation',
+    desc: 'Routes by crash risk, not just speed. Two-stage hurdle model on 2.3M+ crash records across 29,500 Chicago intersections. AUC 0.891, R2 0.745, deployed on Cloud Run with nightly retraining.',
+    tags: ['CatBoost', 'SHAP', 'FastAPI', 'DuckDB', 'Cloud Run'],
+    accent: '#a78bfa',
     github: 'https://github.com/Siriapps/safeway',
     live: '#',
   },
   {
     title: 'HarmoniQ',
-    subtitle: '3rd Place — HackUTD · T-Mobile + MLH Auth0',
-    desc: 'Unified real-time dashboard for PMs — live sentiment analysis across 100K+ posts, Prophet-powered outage prediction, geographic heatmaps, and Gemini-powered NL insights.',
-    tags: ['scikit-learn', 'Prophet', 'Flask', 'React', 'Gemini', 'Auth0'],
-    accent: '#60a5fa',
-    github: 'https://github.com/Siriapps/harmoniq',
+    subtitle: '3rd Place · HackUTD, T-Mobile + MLH Auth0',
+    desc: 'Unified real-time dashboard for PMs: live sentiment across 100K+ posts, Prophet-powered outage prediction, geographic heatmaps, and Gemini-powered natural language insights.',
+    tags: ['scikit-learn', 'Prophet', 'Flask', 'React', 'Auth0'],
+    accent: '#ffb020',
+    github: 'https://github.com/Siriapps/HarmoniQ',
     live: '#',
   },
   {
     title: 'Remix',
-    subtitle: 'GDSC UTD Sprints · AI Mock Interview',
-    desc: 'Interview prep that knows what you don\'t know. Semantic resume analysis, gap detection, and adaptive interview flow targeting your weakest areas. Cut average prep time ~40%.',
-    tags: ['FAISS', 'LangChain', 'Gemini 2.5', 'FastAPI', 'mpnet-base-v2'],
-    accent: '#f472b6',
+    subtitle: 'GDSC UTD Sprints · AI mock interviews',
+    desc: 'Interview prep that knows what you do not know. Semantic resume analysis, gap detection, and an adaptive interview flow that targets your weakest areas. Cut average prep time about 40 percent.',
+    tags: ['FAISS', 'LangChain', 'Gemini 2.5', 'FastAPI'],
+    accent: '#ff7a3d',
     github: 'https://github.com/Siriapps/remix',
     live: '#',
   },
   {
     title: 'Post-Quantum RGNN',
-    subtitle: '1st Place — ACM UTD Research Symposium',
-    desc: 'Recurrent Graph Neural Network decoder for RLCE post-quantum cryptographic failures. 15M+ adversarial test cases, graph-structured error sequences. 30x improvement over classical baselines.',
-    tags: ['PyTorch', 'NetworkX', 'Graph NNs', 'Post-Quantum Crypto'],
+    subtitle: '1st Place · ACM UTD Research Symposium',
+    desc: 'Recurrent Graph Neural Network decoder for RLCE post-quantum cryptographic failures. 15M+ adversarial test cases, graph-structured error sequences, 30x improvement over classical baselines.',
+    tags: ['PyTorch', 'NetworkX', 'Graph NNs', 'PQ Crypto'],
     accent: '#a78bfa',
     github: 'https://github.com/Siriapps/qryptik',
     live: '#',
   },
   {
     title: 'StreamSign',
-    subtitle: 'TRAIN AI · Accessible Video',
+    subtitle: 'TRAIN AI · Accessible video',
     desc: 'Real-time video audio to Indian Sign Language animations. Custom NLP preprocessing handles ISL grammar restructuring before animation rendering. 90%+ accuracy.',
-    tags: ['Python', 'OpenCV', 'NLP', 'Flask', 'Google TTS'],
-    accent: '#fb923c',
-    github: 'https://github.com/Siriapps/streamsign',
+    tags: ['Python', 'OpenCV', 'NLP', 'Flask'],
+    accent: '#ffb020',
+    github: 'https://github.com/Siriapps/Stream-Sign',
+    live: '#',
+  },
+  {
+    title: 'Matcha',
+    subtitle: 'Team matching for hackathons',
+    desc: 'Brewing your perfect hack team. Matches hackers by complementary skills, interests, and working styles so teams form in minutes instead of the first panicked hour.',
+    tags: ['JavaScript', 'React', 'Matching Algorithms'],
+    accent: '#ff7a3d',
+    github: 'https://github.com/Siriapps/Matcha',
+    live: '#',
+  },
+  {
+    title: 'ReelSkill',
+    subtitle: 'Agents from social video',
+    desc: 'DM an Instagram Reel, get back an installable AI agent skill. Turns short-form how-to content into structured, executable automations.',
+    tags: ['Python', 'AI Agents', 'Instagram API'],
+    accent: '#a78bfa',
+    github: 'https://github.com/Siriapps/reelskill',
+    live: '#',
+  },
+  {
+    title: 'CabinIQ',
+    subtitle: 'Attention triage for crews',
+    desc: 'Helps flight crews prioritize attention proactively during flights, surfacing what needs a human first instead of drowning crews in alerts.',
+    tags: ['JavaScript', 'Real-time Systems', 'UX'],
+    accent: '#ffb020',
+    github: 'https://github.com/Siriapps/CabinIQ',
+    live: '#',
+  },
+  {
+    title: 'ASL Recognition',
+    subtitle: 'Computer vision · 99% accuracy',
+    desc: 'A convolutional neural network that recognizes American Sign Language signs with 99 percent accuracy, an early step in a continuing thread of accessibility work.',
+    tags: ['CNN', 'TensorFlow', 'Computer Vision'],
+    accent: '#ff7a3d',
+    github: 'https://github.com/Siriapps/American-Sign-Language-Recognition',
     live: '#',
   },
 ]
 
+// inner ring: first 5 projects, outer ring: the rest
+const INNER = 5
+
 export default function Projects() {
-  const sectionRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
-  const orbitRef = useRef<HTMLDivElement>(null)
+  const p = projects[active]
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.projects-orbit-title', {
-        y: 60, opacity: 0, duration: 1, ease: 'power3.out',
-        scrollTrigger: { trigger: '#projects', start: 'top 80%' },
-      })
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: () => `+=${projects.length * 100}%`,
-        pin: true,
-        scrub: 1,
-        snap: {
-          snapTo: 1 / (projects.length - 1),
-          duration: { min: 0.3, max: 0.6 },
-          ease: 'power1.inOut',
-        },
-        onUpdate: (self) => {
-          const idx = Math.round(self.progress * (projects.length - 1))
-          setActive(idx)
-        },
-      })
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
-
-  useEffect(() => {
-    if (!orbitRef.current) return
-    const cards = orbitRef.current.querySelectorAll<HTMLElement>('.orbit-card')
-
-    cards.forEach((card, i) => {
-      const offset = i - active
-      const absOffset = Math.abs(offset)
-
-      let x = 0, y = 0, scale = 1, opacity = 1, rotate = 0, zIndex = 10
-
-      if (offset === 0) {
-        x = 0; y = 0; scale = 1; opacity = 1; zIndex = 10; rotate = 0
-      } else if (absOffset === 1) {
-        x = offset * 340; y = 120; scale = 0.7; opacity = 0.3; rotate = offset * -8; zIndex = 5
-      } else if (absOffset === 2) {
-        x = offset * 420; y = 180; scale = 0.5; opacity = 0.1; rotate = offset * -12; zIndex = 2
-      } else {
-        x = offset * 500; y = 220; scale = 0.4; opacity = 0; rotate = offset * -15; zIndex = 1
-      }
-
-      gsap.to(card, {
-        x, y, scale, opacity, rotation: rotate, zIndex,
-        duration: 0.7, ease: 'power3.out', overwrite: true,
-      })
-    })
-  }, [active])
+  // Each node sits on a spinning ring; a static -angle plus the
+  // counter-spin span cancel every rotation, so planets and labels
+  // stay upright while they travel the orbit.
+  const node = (i: number, count: number, radius: number, ringIndex: number) => {
+    const idx = ringIndex === 0 ? i : INNER + i
+    const proj = projects[idx]
+    const angle = (360 / count) * i
+    return (
+      <button
+        key={proj.title}
+        onMouseEnter={() => setActive(idx)}
+        onFocus={() => setActive(idx)}
+        onClick={() => setActive(idx)}
+        aria-label={`Show ${proj.title}`}
+        className="absolute left-1/2 top-1/2 w-0 h-0"
+        style={{ transform: `rotate(${angle}deg) translateX(${radius}px)` }}
+      >
+        <span className="block w-0 h-0" style={{ transform: `rotate(${-angle}deg)` }}>
+          <span className="orbit-counter block w-0 h-0">
+            <span
+              className="absolute -left-6 -top-6 w-12 h-12 rounded-full transition-all duration-300"
+              style={{
+                background: `radial-gradient(circle at 35% 30%, ${proj.accent}, ${proj.accent}55)`,
+                boxShadow: idx === active
+                  ? `0 0 24px ${proj.accent}, 0 0 0 3px ${proj.accent}50`
+                  : `0 0 10px ${proj.accent}60`,
+                scale: idx === active ? '1.2' : '1',
+              }}
+            />
+            <span className="absolute left-0 top-7 -translate-x-1/2 font-mono text-[9px] tracking-wider whitespace-nowrap text-white/60"
+              style={idx === active ? { color: proj.accent, opacity: 1 } : undefined}>
+              {proj.title}
+            </span>
+          </span>
+        </span>
+      </button>
+    )
+  }
 
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="snap-section relative h-screen overflow-hidden"
-      style={{ background: '#0b080c' }}
-    >
-      <div className="absolute left-1/2 bottom-[5%] -translate-x-1/2 w-[800px] h-[400px] pointer-events-none opacity-[0.06]"
-        style={{ background: 'radial-gradient(ellipse at 50% 100%, #c2a4ff, transparent 70%)', filter: 'blur(60px)' }} />
+    <section id="projects" className="relative py-24 md:py-36 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-5 md:px-6 w-full">
+        <p className="obs-label">
+          OBS 04 <span className="obs-dim">/ the orbit</span>
+        </p>
+        <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-3">
+          Eleven bodies in orbit
+        </h2>
+        <p className="text-white/45 font-light text-lg mb-10 max-w-2xl">
+          Everything I have shipped, in rotation around one fixed point.
+          Hover a body to bring it into focus.
+        </p>
 
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-[-300px] w-[900px] h-[900px] rounded-full pointer-events-none opacity-[0.04]"
-        style={{ border: '1px solid #c2a4ff' }} />
+        {/* Desktop: the orbit */}
+        <div className="hidden md:grid grid-cols-[460px_1fr] gap-14 items-center">
+          <div className="orbit-stage relative w-[460px] h-[460px]">
+            {/* ring guides */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] rounded-full"
+              style={{ border: '1px dashed rgba(167,139,250,0.3)' }} />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full"
+              style={{ border: '1px dashed rgba(255,176,32,0.22)' }} />
 
-      <div className="projects-orbit-title absolute top-8 md:top-16 left-0 right-0 z-20 text-center pointer-events-none px-4">
-        <p className="section-label">PORTFOLIO</p>
-        <h2 className="font-display text-4xl md:text-7xl text-white tracking-tight">Featured Work</h2>
-      </div>
+            {/* the fixed point */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl"
+              style={{ color: '#ffb020', textShadow: '0 0 24px rgba(255,176,32,0.8)' }}>
+              ✦
+            </div>
 
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
-        <div className="flex gap-2">
-          {projects.map((_, i) => (
-            <div key={i} className="w-2 h-2 rounded-full transition-all duration-500"
-              style={{
-                background: i === active ? '#c2a4ff' : 'rgba(255,255,255,0.15)',
-                transform: i === active ? 'scale(1.3)' : 'scale(1)',
-                boxShadow: i === active ? '0 0 12px rgba(194,164,255,0.4)' : 'none',
-              }} />
-          ))}
-        </div>
-        <p className="text-white/15 text-[10px] tracking-[0.3em] uppercase">scroll to move next</p>
-      </div>
-
-      <div className="absolute top-20 right-8 z-20 text-white/15 font-display text-8xl pointer-events-none hidden md:block">
-        {String(active + 1).padStart(2, '0')}
-      </div>
-
-      <div ref={orbitRef} className="absolute inset-0 flex items-center justify-center pt-16 md:pt-8" style={{ perspective: '1200px' }}>
-        {projects.map((project, i) => (
-          <div key={project.title} className="orbit-card absolute" style={{ width: 'min(400px, 85vw)', willChange: 'transform, opacity' }}>
-            <div className="relative rounded-2xl p-8 transition-shadow duration-500"
-              style={{
-                background: 'rgba(255,255,255,0.025)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                backdropFilter: 'blur(12px)',
-                boxShadow: i === active ? `0 0 60px ${project.accent}15, 0 20px 60px rgba(0,0,0,0.4)` : '0 10px 40px rgba(0,0,0,0.3)',
-              }}>
-              {i === active && (
-                <div className="absolute inset-0 rounded-2xl transition-opacity duration-700"
-                  style={{ background: `radial-gradient(circle at 50% 0%, ${project.accent}12, transparent 60%)` }} />
-              )}
-
-              <div className="relative w-full h-40 rounded-xl mb-6 overflow-hidden flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, ${project.accent}10, ${project.accent}05)`, border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span className="text-5xl font-display font-bold" style={{ color: `${project.accent}30` }}>
-                  {project.title[0]}
-                </span>
-              </div>
-
-              <div className="relative">
-                <p className="text-[10px] uppercase tracking-[0.2em] font-medium mb-2" style={{ color: project.accent + '80' }}>
-                  {project.subtitle}
-                </p>
-                <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">{project.title}</h3>
-                <p className="text-white/40 text-sm leading-relaxed mb-5">{project.desc}</p>
-
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="px-2.5 py-1 text-[10px] font-medium rounded-md text-white/35"
-                      style={{ background: 'rgba(255,255,255,0.04)' }}>{tag}</span>
-                  ))}
-                </div>
-
-                <div className="flex gap-2">
-                  <a href={project.github} target="_blank" rel="noopener noreferrer"
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white/25 hover:text-white/60 transition-colors"
-                    style={{ background: 'rgba(255,255,255,0.04)' }}>
-                    <GithubIcon />
-                  </a>
-                  {project.live !== '#' && (
-                    <a href={project.live} target="_blank" rel="noopener noreferrer"
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white/25 hover:text-white/60 transition-colors"
-                      style={{ background: 'rgba(255,255,255,0.04)' }}>
-                      <ExternalLink size={14} />
-                    </a>
-                  )}
-                </div>
-              </div>
+            {/* inner ring rotates one way, outer the other; hover pauses */}
+            <div className="orbit-ring orbit-ring-inner absolute inset-0">
+              {Array.from({ length: INNER }, (_, i) => node(i, INNER, 130, 0))}
+            </div>
+            <div className="orbit-ring orbit-ring-outer absolute inset-0">
+              {Array.from({ length: projects.length - INNER }, (_, i) => node(i, projects.length - INNER, 210, 1))}
             </div>
           </div>
-        ))}
+
+          {/* detail panel for the focused body */}
+          <div key={active} className="min-h-[300px]">
+            <p className="font-mono text-[11px] tracking-[0.25em] uppercase mb-3" style={{ color: p.accent }}>
+              {p.subtitle}
+            </p>
+            <h3 className="font-display font-bold text-4xl lg:text-5xl text-white mb-5">{p.title}</h3>
+            <p className="text-white/60 text-base lg:text-lg leading-relaxed mb-6 max-w-xl">{p.desc}</p>
+            <div className="flex flex-wrap gap-2 mb-7">
+              {p.tags.map(tag => (
+                <span key={tag} className="chip px-3 py-1.5 font-mono text-[11px] rounded-full text-white/50">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="flex gap-3">
+              {p.github !== '#' && (
+                <a href={p.github} target="_blank" rel="noopener noreferrer" aria-label={`${p.title} on GitHub`}
+                  className="chip inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.1em] text-white/70">
+                  <GithubIcon /> Source
+                </a>
+              )}
+              {p.live !== '#' && (
+                <a href={p.live} target="_blank" rel="noopener noreferrer" aria-label={`${p.title} live site`}
+                  className="chip inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.1em] text-white/70">
+                  <ExternalLink size={13} /> Visit
+                </a>
+              )}
+            </div>
+            <div className="flex gap-2 mt-10">
+              {projects.map((_, i) => (
+                <button key={i} onClick={() => setActive(i)} aria-label={`Project ${i + 1}`}
+                  className="h-1.5 rounded-full transition-all duration-500"
+                  style={{
+                    width: i === active ? 26 : 8,
+                    background: i === active ? p.accent : 'rgba(150,150,150,0.3)',
+                  }} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile: stacked list, no orbit */}
+        <div className="md:hidden flex flex-col gap-10">
+          {projects.map((proj) => (
+            <div key={proj.title} className="panel rounded-2xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="w-8 h-8 rounded-full shrink-0"
+                  style={{ background: `radial-gradient(circle at 35% 30%, ${proj.accent}, ${proj.accent}55)`, boxShadow: `0 0 12px ${proj.accent}60` }} />
+                <div>
+                  <h3 className="font-display font-bold text-xl text-white leading-tight">{proj.title}</h3>
+                  <p className="font-mono text-[9px] tracking-[0.2em] uppercase" style={{ color: proj.accent }}>{proj.subtitle}</p>
+                </div>
+              </div>
+              <p className="text-white/55 text-sm leading-relaxed mb-4">{proj.desc}</p>
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {proj.tags.map(tag => (
+                  <span key={tag} className="chip px-2.5 py-1 font-mono text-[10px] rounded-full text-white/45">{tag}</span>
+                ))}
+              </div>
+              {proj.github !== '#' && (
+                <a href={proj.github} target="_blank" rel="noopener noreferrer" aria-label={`${proj.title} on GitHub`}
+                  className="chip inline-flex items-center gap-2 px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-[0.1em] text-white/70">
+                  <GithubIcon /> Source
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
