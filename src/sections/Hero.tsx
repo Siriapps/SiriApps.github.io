@@ -59,9 +59,13 @@ export default function Hero() {
         <span className="block accent-text">Appalaneni</span>
       </h1>
 
-      <p className="hero-rise text-white/55 text-base md:text-xl mt-8 font-light max-w-2xl text-center">
+      <p className="hero-rise font-mono text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#ffb020]/90 mt-7">
+        YC SUS&apos;26 · CS @ UTD · IBM Qiskit Advocate
+      </p>
+
+      <p className="hero-rise text-white/55 text-base md:text-xl mt-5 font-light max-w-2xl text-center">
         Building intelligent systems across agentic AI, physics-informed ML,
-        and quantum computing, from a rooftop above the city.
+        and quantum computing, from research papers to production deployments.
       </p>
 
       {/* socials, visible the moment the site opens */}

@@ -75,30 +75,36 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,420px)_1fr] gap-10 md:gap-16 items-start">
           {/* Two field photos, overlapping diagonally. Hovering reveals a
               black-and-white pixel version only under the cursor. */}
-          <div className="about-reveal relative pb-24 pr-10">
-            <PhotoReveal
-              src="/images/presenting.jpg"
-              alt="Presenting quantum encryption research at Symposium Night"
-              frame="#ffb020"
-              className="w-[82%]"
-            />
-            <PhotoReveal
-              src="/images/quantum.jpg"
-              alt="Beside IBM quantum computers at the developer conference"
-              frame="#a78bfa"
-              className="absolute right-0 bottom-0 w-[58%] rotate-2"
-            />
-            <p className="absolute -bottom-1 left-0 font-mono text-[9px] tracking-[0.25em] uppercase text-white/30">
+          <div className="about-reveal">
+            <div className="flex items-end gap-3 max-w-[300px]">
+              <PhotoReveal
+                src="/images/presenting.jpg"
+                alt="Presenting quantum encryption research at Symposium Night"
+                frame="#ffb020"
+                className="w-[36%] shrink-0"
+              />
+              <PhotoReveal
+                src="/images/quantum.jpg"
+                alt="Beside IBM quantum computers at the developer conference"
+                frame="#a78bfa"
+                className="w-[60%] shrink-0"
+              />
+            </div>
+            <p className="mt-3 font-mono text-[9px] tracking-[0.25em] uppercase text-white/30">
               Field photos · hover to develop
             </p>
           </div>
 
           <div>
-            <p className="about-reveal text-white/70 text-lg md:text-xl font-light leading-relaxed mb-10">
-              CS Honors student at UT Dallas who treats every new field like a new city:
-              land, learn the language, build something the locals would actually use.
-              So far that itinerary covers agentic AI systems, physics-informed machine
-              learning for hydropower digital twins, and post-quantum cryptography research.
+            <p className="about-reveal font-mono text-[11px] md:text-xs tracking-[0.18em] uppercase text-[#ffb020]/90 mb-4">
+              YC SUS&apos;26 · CS @ UTD · IBM Qiskit Advocate
+            </p>
+            <p className="about-reveal text-white/70 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-xl">
+              I am a Computer Science Honors student at UT Dallas, minoring in Business
+              Intelligence and Analytics. I am curious about how agents will reshape the
+              web, and passionate about deep learning, quantum computing, agentic AI,
+              algorithm design, and computer vision. I love building things that are
+              technically rigorous and actually meaningful, and I am always happy to connect.
             </p>
 
             {/* Terminal card */}

@@ -10,7 +10,7 @@ const LINKS = {
   radaPaper: '/RaDA_Hydropower_PILSTM_Draft.pdf', // ponytail: drop the PDF at public/RaDA_Hydropower_PILSTM_Draft.pdf
   blog: 'https://medium.com/@siriapps3/quantum-journey-of-a-13-year-old-b1d15beb22f1',
   linkedinPost: 'https://www.linkedin.com/posts/innovation-thrives-where-industry-and-education-ugcPost-7407129224500854786-PR2b/',
-  youtube: '', // ponytail: paste the YouTube watch URL or embed ID when Siri sends it
+  youtube: 'https://www.youtube.com/watch?v=6YrF4kUaUWQ',
 }
 
 // A desk at the observatory: whiteboard with pinned papers, a monitor

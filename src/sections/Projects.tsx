@@ -149,17 +149,19 @@ export default function Projects() {
   }
 
   const skip = () => {
-    const st = stRef.current
-    if (st) window.scrollTo({ top: st.end + 10, behavior: 'smooth' })
-    else document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' })
+    const skills = document.getElementById('skills')
+    if (skills) {
+      const top = skills.getBoundingClientRect().top + window.scrollY
+      window.scrollTo({ top, behavior: 'smooth' })
+    }
   }
 
   const p = projects[active]
 
   return (
-    <section id="projects" ref={sectionRef} className="relative md:h-screen py-24 md:py-0 md:flex md:items-center overflow-hidden">
+    <section id="projects" ref={sectionRef} className="relative md:h-screen py-24 md:py-0 md:flex md:items-center">
       {/* Desktop: half orbit pinned to the left edge */}
-      <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-[560px] h-[560px] pointer-events-none">
+      <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-[560px] h-[560px] pointer-events-none overflow-visible">
         <div className="absolute inset-0 rounded-full" style={{ border: '1px dashed rgba(255,176,32,0.25)' }} />
         <div className="absolute inset-[70px] rounded-full" style={{ border: '1px dashed rgba(167,139,250,0.18)' }} />
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl"
@@ -273,7 +275,7 @@ export default function Projects() {
       {/* skip out of the pinned run */}
       <button
         onClick={skip}
-        className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.35em] uppercase text-white/30 hover:text-white/60 transition-colors font-light"
+        className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-50 items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[10px] tracking-[0.25em] uppercase text-white/70 hover:text-white transition-all duration-300 pointer-events-auto skip-skills-btn"
       >
         Skip to skills ↓
       </button>

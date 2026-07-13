@@ -13,108 +13,137 @@ type Entry = {
   highlight?: boolean
 }
 
-// 2025 - 2026: active roles first, then what is about to start, then completed.
+// Ordered like the resume: YC on top, then current roles by recency,
+// then recently completed work. Dates mirror LinkedIn exactly.
 const recent: Entry[] = [
   {
-    dates: 'January 2026 - Present',
-    role: 'Undergraduate Researcher',
-    company: 'RaDA Lab, UT Dallas · Dr. Yanwen Xu',
-    desc: 'Physics-Informed LSTM surrogate models for a hydropower digital twin. R2 up to 0.893, 20 to 40 percent RMSE reduction over baselines across five Western U.S. watersheds. First-author paper in preparation for NAPS 2026.',
-    status: 'NOW',
+    dates: 'July 25 - 26, 2026',
+    role: 'YC AI Startup School',
+    company: 'Y Combinator · San Francisco',
+    desc: 'Selected for the invite-only cohort at Chase Center alongside NeurIPS authors and Olympiad medalists. Two days with the people building the frontier, centered on the questions I care about most: how agents will reshape the web, how physics-informed models reach production, and where quantum computing fits next.',
+    status: 'UPCOMING',
+    highlight: true,
+  },
+  {
+    dates: 'July 13 - 19, 2026',
+    role: 'Qiskit Global Summer School 2026',
+    company: 'IBM Quantum',
+    desc: 'Returning to QGSS after earning the Quantum Excellence certificate in 2021 and the 2025 advanced badge. A week on error correction, transpilation, and utility-scale quantum workloads.',
+    status: 'UPCOMING',
   },
   {
     dates: 'January 2026 - Present',
-    role: 'Industry Director',
-    company: 'GDSC UTD',
-    desc: 'Leads external partnerships, sponsor negotiations, and finance. Secured $12K+ in sponsorships for HackDSC 2026, scaling to 350+ participants.',
+    role: 'Undergraduate AI Research Assistant',
+    company: 'RIDE Program, UT Dallas · Dr. Yanwen Xu',
+    desc: 'Selected for the Research Internships in Design Engineering program at the intersection of machine learning, physics-informed AI, and engineering design. Researching digital twins and surrogate modeling to cut simulation cost while staying faithful to physical constraints; Physics-Informed LSTMs reduce RMSE 20 to 40 percent across five Western U.S. watersheds. First-author paper in preparation for NAPS 2026.',
     status: 'NOW',
   },
   {
-    dates: 'Summer 2026',
-    role: 'AI 301 Student',
+    dates: 'June 2026 - Present',
+    role: 'AI 301 · Open-Source Contributor',
     company: 'CodePath',
-    desc: 'Advanced AI coursework: agentic systems, evaluation, and applied LLM engineering, alongside a national cohort.',
+    desc: 'Advanced AI engineering course with an open-source track: contributing fixes to Lance and LanceDB, the multimodal retrieval stack, including a production index bug diagnosis in the Rust search index builder.',
+    status: 'NOW',
+  },
+  {
+    dates: 'May 2026 - Present',
+    role: 'Industry Director',
+    company: 'Google Developers Group on Campus UTD',
+    desc: 'Leads partner outreach, sponsorship negotiation, and event logistics for HackDSC 2026, securing $12K+ in sponsorships and scaling toward 350+ participants.',
     status: 'NOW',
   },
   {
     dates: '2026 Cohort',
     role: 'WISER Program',
     company: 'WISER Quantum',
-    desc: 'Quantum computing research and mentorship program, deepening the bridge between quantum algorithms and real workloads.',
+    desc: 'Quantum computing research and mentorship program connecting quantum algorithms to real workloads.',
+    status: 'NOW',
+  },
+  {
+    dates: 'September 2025 - Present',
+    role: 'Qiskit Advocate',
+    company: 'IBM Quantum',
+    desc: 'Recognized member of the global community supporting the Qiskit open-source ecosystem. Progressing through the tiered advocate structure with access to mentorship, exclusive training, and IBM Quantum hardware; contributes workshops, educational content, code, and mentoring for newer members.',
     status: 'NOW',
   },
   {
     dates: 'September 2025 - Present',
     role: 'Software Engineer',
     company: 'Nebula Labs, UTD',
-    desc: 'Open-source student platforms (UTD Trendz, UTD Notebook) serving 10,000+ students. Node.js, MongoDB, and React in agile sprints with 30+ developers.',
+    desc: 'Ships features for open-source student platforms (UTD Trendz, UTD Notebook) serving 10,000+ students. Node.js, MongoDB, and React in agile sprints with 30+ developers.',
     status: 'NOW',
-  },
-  {
-    dates: 'Since July 2024',
-    role: 'Young Member',
-    company: 'The New York Academy of Sciences',
-    desc: 'Selected young member contributing to the Academy\'s research community, following the Young AI Researcher recognition.',
-    status: 'NOW',
-  },
-  {
-    dates: 'July 13 - 19, 2026',
-    role: 'Qiskit Global Summer School 2026',
-    company: 'IBM Quantum',
-    desc: 'Third QGSS, after earning Quantum Excellence in the 2025 edition. A week deep in error correction, transpilation, and utility-scale quantum workloads.',
-    status: 'UPCOMING',
-  },
-  {
-    dates: 'July 25 - 26, 2026',
-    role: 'YC AI Startup School',
-    company: 'Y Combinator · San Francisco',
-    desc: 'Selected for the invite-only cohort alongside NeurIPS authors and Olympiad medalists. Two days with the people building the frontier, and the questions I care about most: how agentic AI earns trust, how physics-informed models meet production, and where quantum fits in.',
-    status: 'UPCOMING',
-    highlight: true,
   },
   {
     dates: 'January - May 2026',
-    role: 'Backend ML Lead',
-    company: 'ACM Projects UTD',
-    desc: 'End-to-end ML backend for SafeWay: two-stage CatBoost + XGBoost hurdle model, AUC 0.891, 2.3M+ crash records across 29,500 intersections. FastAPI on Cloud Run with nightly retraining.',
+    role: 'Back End Developer',
+    company: 'ACM, Association for Computing Machinery',
+    desc: 'Built SafeWay, a safety-first navigation app: two-stage CatBoost + XGBoost hurdle model reaching AUC 0.891 and R2 0.745 on 2.3M+ crash records, with SHAP explainability and nightly CI/CD retraining. FastAPI backend on Google Cloud Run with DuckDB over GCS Parquet scores routes across 29,500 Chicago intersections in real time.',
+    status: 'COMPLETE',
+  },
+  {
+    dates: 'January - April 2026',
+    role: 'Machine Learning Engineer',
+    company: 'GDG UTD Sprints',
+    desc: 'Cut average interview prep time about 40 percent by engineering Remix, an AI assistant powered by a FAISS-based RAG pipeline with LangChain, Gemini APIs, and a relational SQL data layer.',
     status: 'COMPLETE',
   },
   {
     dates: '2025',
     role: 'Conference Attendee',
     company: 'IBM Quantum Developer Conference',
-    desc: 'On the floor with the systems themselves, superconducting processors included, and the engineers who run them.',
+    desc: 'On the floor with IBM superconducting quantum systems and the engineers who build them, connecting Qiskit work to production-scale hardware.',
     status: 'COMPLETE',
   },
   {
-    dates: 'August - December 2025',
-    role: 'Post-Quantum Crypto Research',
-    company: 'ACM Research UTD',
-    desc: 'Recurrent Graph Neural Network decoder for RLCE cryptographic failure modes, trained on 15M+ test cases. 30x improvement in decoding accuracy. 1st Place, ACM UTD Fall 2025 Research Symposium.',
+    dates: 'August - November 2025',
+    role: 'CS Researcher',
+    company: 'ACM, Association for Computing Machinery',
+    desc: 'Applied research on post-quantum cryptography: a custom Recurrent Graph Neural Network that decodes encrypted RLCE syndromes by learning parity relationships from the public key structure. 30x improvement in successful decoding over the benchmark; 1st Place at the Fall 2025 ACM Research Symposium.',
     status: 'COMPLETE',
   },
 ]
 
 const earlier: Entry[] = [
   {
-    dates: 'Since 2024',
-    role: 'Qiskit Advocate',
-    company: 'IBM Quantum',
-    desc: 'Active contributor to the Qiskit open-source ecosystem (about 540 advocates globally). Completed the QAMP Research Mentorship track (5 percent acceptance) on TDDFT and Quantum ML.',
-    status: 'NOW',
-  },
-  {
-    dates: 'May - July 2024',
-    role: 'Research Intern',
+    dates: 'June - August 2024',
+    role: 'Research Lab Intern',
     company: 'UTD Quantum Lab · Dr. Basu, Dr. Koludrubetz',
-    desc: 'Quantum circuit verification using ZX calculus and pyZX, with open-source bug fixes to pyZX. Qiskit 1.x circuit implementation and validation.',
+    desc: 'Worked with Qiskit 1.x and pyZX, the ZX Calculus software: fixed critical circuit-verification bugs and added configurations for missing gates, contributed upstream.',
     status: 'COMPLETE',
   },
   {
-    dates: '2021 - 2023',
-    role: 'Quantum Computing Programs',
-    company: 'Qubit by Qubit and IBM Quantum',
-    desc: 'Early immersion: Qubit by Qubit coursework, IBM Quantum Challenges (top scorer, 2021 to 2025), and the IBM Certified Quantum Developer credential earned at age 13.',
+    dates: 'June - August 2024',
+    role: 'Independent Student Researcher',
+    company: 'The Coding School · TRAIN AI',
+    desc: '1 of 10 selected from 2,000+ U.S. high school students. Built StreamSign, translating video audio to Indian Sign Language animations using Flask, Google TTS, and a custom NLP preprocessing algorithm.',
+    status: 'COMPLETE',
+  },
+  {
+    dates: 'August 2023 - June 2024',
+    role: 'Young Researcher',
+    company: 'The New York Academy of Sciences',
+    desc: 'Program with a 6 to 10 percent global acceptance rate. With an international team of six, built WasteWatch, an AI system for efficient waste sorting. Also part of the 1000 Girls, 1000 Futures mentoring program.',
+    status: 'COMPLETE',
+  },
+  {
+    dates: '2021 - May 2024',
+    role: 'Qiskit Bronze Localization Contributor',
+    company: 'IBM Quantum',
+    desc: 'Translated Qiskit documentation as part of the Hindi and French localization communities.',
+    status: 'COMPLETE',
+  },
+  {
+    dates: 'June - August 2023',
+    role: 'Student Researcher',
+    company: 'Incognito Blueprints',
+    desc: 'Safe-navigation research for women and students in new cities, with a team of five across India and Canada. A* based routing over crime rate, street light density, and socio-economic data for cities like Boston.',
+    status: 'COMPLETE',
+  },
+  {
+    dates: '2020 - 2021',
+    role: 'Early Quantum Training',
+    company: 'The Coding School and IBM Quantum',
+    desc: 'Introduction to Quantum Computing with Qubit by Qubit, then QGSS 2021 on Quantum Machine Learning with a 100 percent final score and the Quantum Excellence certificate, plus the IBM Certified Quantum Developer credential at age 13.',
     status: 'COMPLETE',
   },
 ]
@@ -174,7 +203,8 @@ export default function Experience() {
           Experience
         </h2>
         <p className="text-white/45 font-light text-lg mb-16 max-w-2xl">
-          2025 to 2026 in full, active roles first. Earlier years fold out below.
+          What is next and what is active, then the work that led here.
+          Earlier years fold out below.
         </p>
 
         <div className="relative">

@@ -133,7 +133,19 @@ body {
   .orbit-ring-inner, .orbit-ring-outer, .orbit-counter { animation: none; }
 }
 
-/* Shared chip border that stays visible in both themes */
+/* Skip-to-skills pill on the pinned projects section */
+.skip-skills-btn {
+  border: 1px solid rgba(255, 176, 32, 0.35);
+  background: rgba(16, 12, 22, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+[data-theme='light'] .skip-skills-btn {
+  border-color: rgba(199, 127, 0, 0.45);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 4px 20px rgba(34, 48, 28, 0.12);
+}
+
 .chip { border: 1px solid rgba(245, 242, 234, 0.16); }
 [data-theme='light'] .chip { border-color: rgba(34, 48, 28, 0.25); }
 

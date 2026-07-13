@@ -139,9 +139,16 @@ export default function Awards() {
             {certifications.length} on file
           </span>
         </div>
-        {/* ponytail: add her Credly profile URL here when she sends it */}
         <p className="text-white/40 font-light mb-6">
-          Verified credentials, organized by constellation.
+          Verified credentials, organized by constellation.{' '}
+          <a
+            href="https://www.credly.com/users/lakshmi-siri-appalaneni"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#ffb020]/80 hover:text-[#ffb020] underline underline-offset-2 transition-colors"
+          >
+            View all on Credly →
+          </a>
         </p>
 
         {/* category filter */}
