@@ -12,7 +12,7 @@
 
 <br />
 
-<img src="public/images/portrait.png" alt="Lakshmi Siri Appalaneni" width="220" style="border-radius: 16px; border: 3px solid #ffb020;" />
+<img src="public/images/quantum.jpg" alt="Beside IBM quantum computers at the developer conference" width="320" style="border-radius: 16px; border: 3px solid #a78bfa;" />
 
 <br /><br />
 
@@ -81,7 +81,7 @@
 ### [Cue](https://github.com/Siriapps/cue) — *Intent-aware AI workspace agent*
 Chrome extension with a multi-agent Google ADK pipeline that predicts your next five tasks and executes autonomously across Google Workspace via MCP.
 
-`Gemini 2.0` · `Google ADK` · `MCP` · `TypeScript`
+`Gemini 3` · `Google ADK` · `MCP` · `TypeScript`
 
 ---
 

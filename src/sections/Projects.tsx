@@ -16,7 +16,7 @@ const projects = [
     title: 'Cue',
     subtitle: 'Intent-aware AI workspace agent',
     desc: 'Chrome extension that reads browsing context and uses a multi-agent Google ADK pipeline to predict your next five tasks. Actions execute autonomously across Google Workspace via MCP.',
-    tags: ['Gemini 2.0', 'Google ADK', 'MCP', 'TypeScript'],
+    tags: ['Gemini 3', 'Google ADK', 'MCP', 'TypeScript'],
     accent: '#ffb020',
     github: 'https://github.com/Siriapps/cue',
     live: '#',
