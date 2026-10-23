@@ -1,8 +1,4 @@
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useEffect, useRef, useState } from 'react'
 
 type Entry = {
   dates: string
@@ -10,40 +6,52 @@ type Entry = {
   company: string
   desc: string
   status: 'NOW' | 'UPCOMING' | 'COMPLETE'
-  highlight?: boolean
 }
 
 // Ordered like the resume: YC on top, then current roles by recency,
 // then recently completed work. Dates mirror LinkedIn exactly.
 const recent: Entry[] = [
   {
+    dates: '2026 - Present',
+    role: 'Women Techmakers Ambassador',
+    company: 'Google Women Techmakers',
+    desc: "Ambassador in Google's global program for women in technology, bringing workshops, talks, and a welcoming room to UT Dallas builders.",
+    status: 'NOW',
+  },
+  {
+    dates: 'June 2026 - Present',
+    role: 'Founder and Software Engineer',
+    company: 'Vizent · Richardson, TX',
+    desc: 'Building a real-time vision-language agent: point a camera or share a screen and it watches live, answers mid-task, and shows the fix on screen across 3 verticals with 0 task-specific fine-tuning. Sustains 12 fps at sub-100 ms latency, cut CPU load about 20x by moving inference in-browser, guarded by 95 automated tests.',
+    status: 'NOW',
+  },
+  {
     dates: 'July 25 - 26, 2026',
     role: 'YC AI Startup School',
     company: 'Y Combinator · San Francisco',
     desc: 'Selected for the invite-only cohort at Chase Center alongside NeurIPS authors and Olympiad medalists. Two days with the people building the frontier, centered on the questions I care about most: how agents will reshape the web, how physics-informed models reach production, and where quantum computing fits next.',
-    status: 'UPCOMING',
-    highlight: true,
+    status: 'COMPLETE',
   },
   {
     dates: 'July 13 - 19, 2026',
     role: 'Qiskit Global Summer School 2026',
     company: 'IBM Quantum',
     desc: 'Returning to QGSS after earning the Quantum Excellence certificate in 2021 and the 2025 advanced badge. A week on error correction, transpilation, and utility-scale quantum workloads.',
-    status: 'UPCOMING',
+    status: 'COMPLETE',
   },
   {
     dates: 'January 2026 - Present',
     role: 'Undergraduate AI Research Assistant',
     company: 'RIDE Program, UT Dallas · Dr. Yanwen Xu',
-    desc: 'Selected for the Research Internships in Design Engineering program at the intersection of machine learning, physics-informed AI, and engineering design. Researching digital twins and surrogate modeling to cut simulation cost while staying faithful to physical constraints; Physics-Informed LSTMs reduce RMSE 20 to 40 percent across five Western U.S. watersheds. First-author paper in preparation for NAPS 2026.',
+    desc: 'Selected for the Research Internships in Design Engineering program at the intersection of machine learning, physics-informed AI, and engineering design. Researching digital twins and surrogate modeling to cut simulation cost while staying faithful to physical constraints; Physics-Informed LSTMs reduce RMSE 20 to 40 percent across five Western U.S. watersheds. First-author IEEE paper accepted to the North American Power Symposium (NAPS 2026) with 93.8 to 94.6 percent empirical forecast coverage.',
     status: 'NOW',
   },
   {
-    dates: 'June 2026 - Present',
+    dates: 'June - August 2026',
     role: 'AI 301 · Open-Source Contributor',
     company: 'CodePath',
-    desc: 'Advanced AI engineering course with an open-source track: contributing fixes to Lance and LanceDB, the multimodal retrieval stack, including a production index bug diagnosis in the Rust search index builder.',
-    status: 'NOW',
+    desc: 'Advanced AI engineering course with an open-source track: contributing fixes to Lance and LanceDB, the multimodal retrieval stack, including a production index bug diagnosis in the Rust search index builder, landed upstream as PR #7330 with a regression test across 635 tests.',
+    status: 'COMPLETE',
   },
   {
     dates: 'May 2026 - Present',
@@ -148,109 +156,117 @@ const earlier: Entry[] = [
   },
 ]
 
-const statusStyle: Record<Entry['status'], { color: string; glow: boolean }> = {
-  NOW: { color: '#ff7a3d', glow: true },
-  UPCOMING: { color: '#ffb020', glow: true },
-  COMPLETE: { color: '', glow: false },
+// The street has two blocks. Lit boards are roles held today; the plain
+// boards after the second sign are finished work, newest first.
+const now = recent.filter(e => e.status === 'NOW')
+const before = [...recent.filter(e => e.status !== 'NOW'), ...earlier]
+
+function Board({ e, live }: { e: Entry; live: boolean }) {
+  return (
+    <li className="shrink-0 w-full md:w-[460px] flex flex-col">
+      <article className={`rounded-xl p-5 md:p-6 ${live ? 'xp-live' : 'xp-before'}`}>
+        <p className="text-sm font-medium" style={{ color: live ? '#22e4ff' : '#ffb020' }}>{e.dates}</p>
+        <h3 className="font-display font-bold text-xl md:text-2xl text-white leading-tight mt-1">{e.role}</h3>
+        <p className="text-sm text-[#c9b8ff] mt-1">{e.company}</p>
+        <p className="text-white/85 text-[15px] leading-relaxed mt-3">{e.desc}</p>
+      </article>
+      <div className="hidden md:flex justify-between px-14 h-14" aria-hidden="true">
+        <span className="w-1.5 bg-gradient-to-b from-[#4a3a6a] to-[#1c1430]" />
+        <span className="w-1.5 bg-gradient-to-b from-[#4a3a6a] to-[#1c1430]" />
+      </div>
+    </li>
+  )
 }
 
-function EntryCard({ e }: { e: Entry }) {
-  const s = statusStyle[e.status]
+function Sign({ title, note, innerRef }: { title: string; note: string; innerRef?: React.Ref<HTMLLIElement> }) {
   return (
-    <div className="panel rounded-xl px-6 py-5"
-      style={e.highlight ? { borderColor: 'rgba(255,176,32,0.45)', boxShadow: '0 0 40px rgba(255,176,32,0.08)' } : undefined}>
-      <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/40 mb-2 md:hidden">{e.dates}</p>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1">
-        <h3 className="text-white font-medium text-lg leading-snug">{e.role}</h3>
-        <span className={`inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] ${s.color ? '' : 'status-archived'}`}
-          style={s.color ? { color: s.color } : undefined}>
-          <span className="w-1.5 h-1.5 rounded-full"
-            style={{ background: s.color || 'currentColor', boxShadow: s.glow ? `0 0 8px ${s.color}` : 'none' }} />
-          {e.status}
-        </span>
-      </div>
-      <p className="text-[#a78bfa]/80 text-sm mb-2">{e.company}</p>
-      <p className="text-white/50 text-sm leading-relaxed">{e.desc}</p>
-    </div>
+    <li ref={innerRef} className="shrink-0 md:w-[280px] md:pb-20 pt-6 md:pt-0 scroll-mt-24">
+      <h3 className="font-display font-extrabold text-white leading-none" style={{ fontSize: 'clamp(2.6rem, 6vw, 5rem)' }}>{title}</h3>
+      <p className="text-white/75 mt-2 max-w-[16rem]">{note}</p>
+    </li>
   )
 }
 
 export default function Experience() {
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const wrap = useRef<HTMLDivElement>(null)
+  const track = useRef<HTMLUListElement>(null)
+  const beforeSign = useRef<HTMLLIElement>(null)
+  const bar = useRef<HTMLDivElement>(null)
+  const [block, setBlock] = useState<'now' | 'before'>('now')
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>('.timeline-entry').forEach((el, i) => {
-        gsap.from(el, {
-          opacity: 0,
-          x: i % 2 === 0 ? -28 : 28,
-          duration: 0.55,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 85%' },
-        })
-      })
-    }, sectionRef)
-    return () => ctx.revert()
+    const el = wrap.current, tr = track.current
+    if (!el || !tr) return
+    const wide = () => window.innerWidth >= 768
+    let dist = 0
+    let raf = 0
+    // one pixel of scroll moves the street one pixel, so it feels like walking
+    const layout = () => {
+      if (!wide()) { el.style.height = ''; tr.style.transform = ''; return }
+      dist = tr.scrollWidth - window.innerWidth
+      el.style.height = `${dist + window.innerHeight}px`
+    }
+    const render = () => {
+      if (!wide()) return
+      const x = Math.min(dist, Math.max(0, -el.getBoundingClientRect().top))
+      tr.style.transform = `translate3d(${-x}px, 0, 0)`
+      if (bar.current) bar.current.style.transform = `scaleX(${dist ? x / dist : 0})`
+      const sign = beforeSign.current
+      if (sign) setBlock(x + window.innerWidth * 0.5 > sign.offsetLeft ? 'before' : 'now')
+    }
+    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(render) }
+    const onResize = () => { layout(); render() }
+    onResize()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+    }
   }, [])
 
+  const go = (b: 'now' | 'before') => {
+    const el = wrap.current, sign = beforeSign.current
+    if (!el || !sign) return
+    if (window.innerWidth < 768) {
+      (b === 'now' ? el : sign).scrollIntoView({ behavior: 'smooth' })
+      return
+    }
+    const x = b === 'now' ? 0 : sign.offsetLeft - window.innerWidth * 0.12
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + x, behavior: 'smooth' })
+  }
+
   return (
-    <section id="experience" ref={sectionRef} className="relative py-24 md:py-36">
-      <div className="max-w-6xl mx-auto px-5 md:px-6">
-        <p className="obs-label">
-          OBS 03 <span className="obs-dim">/ observation log</span>
-        </p>
-        <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-3">
-          Experience
-        </h2>
-        <p className="text-white/45 font-light text-lg mb-16 max-w-2xl">
-          What is next and what is active, then the work that led here.
-          Earlier years fold out below.
-        </p>
-
-        <div className="relative">
-          <div className="absolute left-[9px] md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-px"
-            style={{ background: 'linear-gradient(to bottom, #ffb020, rgba(167,139,250,0.4) 70%, transparent)' }} />
-
-          <div className="flex flex-col gap-10 md:gap-12">
-            {recent.map((e, i) => {
-              const left = i % 2 === 0
-              return (
-                <div key={e.role + e.dates} className="timeline-entry relative md:grid md:grid-cols-2 md:gap-16">
-                  <span className="absolute left-[5px] md:left-1/2 md:-translate-x-1/2 top-2 w-[9px] h-[9px] rounded-full z-10"
-                    style={{
-                      background: statusStyle[e.status].color || '#ffb020',
-                      boxShadow: statusStyle[e.status].glow
-                        ? `0 0 14px ${statusStyle[e.status].color}`
-                        : '0 0 8px rgba(255,176,32,0.4)',
-                    }} />
-                  <div className={`hidden md:flex items-start pt-1 ${left ? 'order-2 justify-start pl-2' : 'order-1 justify-end pr-2'}`}>
-                    <span className="font-mono text-xs tracking-[0.15em] text-white/45 uppercase">{e.dates}</span>
-                  </div>
-                  <div className={`pl-8 md:pl-0 ${left ? 'order-1' : 'order-2'}`}>
-                    <EntryCard e={e} />
-                  </div>
-                </div>
-              )
-            })}
+    <section id="experience" ref={wrap} className="relative py-24 md:py-0">
+      <div className="md:sticky md:top-0 md:h-screen md:overflow-hidden">
+        <div className="px-5 md:px-10 md:pt-24 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight text-white">Experience</h2>
+            <p className="text-white/75 mt-2">Keep scrolling to walk the street. What I do now comes first, then what came before.</p>
+          </div>
+          <div className="flex gap-2" role="group" aria-label="Jump to">
+            {([['now', `Now (${now.length})`], ['before', `Before (${before.length})`]] as const).map(([b, label]) => (
+              <button key={b} onClick={() => go(b)} aria-pressed={block === b}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${block === b ? 'bg-white text-[#141026]' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+                {label}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Earlier years, folded away */}
-        <details className="mt-16 group">
-          <summary className="cursor-pointer list-none flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] uppercase text-white/40 hover:text-[#ffb020] transition-colors w-fit">
-            <span className="w-6 h-6 rounded-full flex items-center justify-center transition-transform group-open:rotate-45"
-              style={{ border: '1px solid rgba(255,176,32,0.4)', color: '#ffb020' }}>+</span>
-            2024 and earlier
-          </summary>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {earlier.map(e => (
-              <div key={e.role}>
-                <p className="hidden md:block font-mono text-[10px] tracking-[0.15em] text-white/40 uppercase mb-2">{e.dates}</p>
-                <EntryCard e={e} />
-              </div>
-            ))}
-          </div>
-        </details>
+        <ul ref={track}
+          className="flex flex-col md:flex-row md:items-end gap-6 md:gap-12 px-5 md:px-0 md:pl-[8vw] md:pr-[30vw] mt-8 md:mt-0 md:absolute md:bottom-10 md:left-0 md:w-max will-change-transform">
+          <Sign title="Now" note={`${now.length} roles I hold today.`} />
+          {now.map(e => <Board key={e.role + e.dates} e={e} live />)}
+          <Sign innerRef={beforeSign} title="Before" note="Finished work, newest first, back to where it started in 2020." />
+          {before.map(e => <Board key={e.role + e.dates} e={e} live={false} />)}
+        </ul>
+
+        {/* the road, filling in as you walk */}
+        <div className="hidden md:block absolute bottom-0 inset-x-0 h-10 bg-[#0c0818]" aria-hidden="true">
+          <div ref={bar} className="h-1 origin-left" style={{ background: 'linear-gradient(90deg,#22e4ff,#ff3ea5)', transform: 'scaleX(0)' }} />
+        </div>
       </div>
     </section>
   )

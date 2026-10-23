@@ -60,7 +60,7 @@ body { transition: background-color 0.7s ease, color 0.7s ease; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-html, body { overflow-x: hidden; }
+html, body { overflow-x: clip; }
 body {
   background: var(--night);
   color: var(--starlight);
@@ -253,3 +253,66 @@ body {
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+/* Flight intro */
+.fi-social { color: var(--ink, #16325c); }
+.fi-cloud {
+  background: radial-gradient(closest-side, rgba(255,255,255,0.95), rgba(255,255,255,0.55) 60%, transparent);
+  filter: blur(6px);
+  animation: fi-drift 40s linear infinite alternate;
+}
+@keyframes fi-drift { to { translate: 6vw 0; } }
+
+/* Riverwalk backdrop: a very slow drift so the city breathes */
+.city-drift { animation: city-drift 60s ease-in-out infinite alternate; transform-origin: 50% 60%; }
+@keyframes city-drift { to { transform: scale(1.08) translateX(-1.5%); } }
+
+/* Billboard */
+.billboard {
+  border: 2px solid rgba(255, 62, 165, 0.85);
+  box-shadow: 0 0 0 6px #120c22, 0 0 0 8px rgba(34, 228, 255, 0.55), 0 0 60px rgba(255, 62, 165, 0.45), 0 40px 90px rgba(0, 0, 0, 0.55);
+}
+.bb-led {
+  background:
+    repeating-linear-gradient(to bottom, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px),
+    radial-gradient(120% 90% at 50% 50%, transparent 60%, rgba(0,0,0,0.45));
+  mix-blend-mode: multiply;
+}
+@keyframes bb-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.bb-tile { animation: bb-tile 0.6s cubic-bezier(.2,.9,.3,1.2) both; }
+@keyframes bb-tile { from { opacity: 0; transform: scale(0.6) rotate(-4deg); } }
+.bb-kenburns { animation: bb-kb 9s ease-out both; }
+@keyframes bb-kb { from { transform: scale(1.18); } to { transform: scale(1.02); } }
+/* a collage tile growing to fill the screen */
+.bb-focus { animation: bb-focus 0.9s cubic-bezier(.7,0,.2,1) both; }
+@keyframes bb-focus { from { clip-path: inset(34% 38% 34% 38% round 10px); } to { clip-path: inset(0 0 0 0 round 0); } }
+.bb-rise { animation: bb-rise 0.7s ease-out both; }
+@keyframes bb-rise { from { opacity: 0; transform: translateY(14px); } }
+.bb-line { animation: bb-rise 0.35s ease-out both; }
+.bb-draw { stroke-dasharray: 600; animation: bb-draw 1.8s ease-out both; }
+@keyframes bb-draw { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+.bb-fade { animation: bb-rise 1.2s ease-out 0.8s both; }
+.bb-pop { animation: bb-pop 0.5s cubic-bezier(.2,.9,.3,1.3) both; transform-box: fill-box; transform-origin: center; }
+@keyframes bb-pop { from { opacity: 0; transform: scale(0.4); } }
+.bb-pulse { animation: bb-pulse 1.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes bb-pulse { 50% { transform: scale(1.5); fill: #22e4ff; } }
+.bb-hand { animation: bb-hand 3s ease-in-out infinite alternate; }
+@keyframes bb-hand { to { transform: translate(6px, -4px) rotate(3deg); } }
+.bb-drop { animation: bb-drop 0.45s cubic-bezier(.2,.9,.3,1.2) both; }
+@keyframes bb-drop { from { opacity: 0; transform: translateY(-18px); } }
+
+/* Experience street: lit boards are current, plain boards are finished */
+.xp-live {
+  background: rgba(18, 12, 34, 0.96);
+  border: 1px solid #22e4ff;
+  box-shadow: 0 0 0 3px rgba(18, 12, 34, 0.96), 0 0 0 4px rgba(255, 62, 165, 0.8), 0 0 36px rgba(34, 228, 255, 0.28);
+}
+.xp-before {
+  background: rgba(22, 17, 34, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .city-drift, .bb-kenburns, .bb-hand, .bb-pulse { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) { .fi-cloud { animation: none; } }

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Download, Sun, Moon } from 'lucide-react'
-import type { Theme } from '../App'
+import { Download } from 'lucide-react'
 
 const navLinks = [
   { label: 'About', id: 'about' },
@@ -11,12 +10,14 @@ const navLinks = [
   { label: 'Contact', id: 'contact' },
 ]
 
-export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggleTheme: () => void }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50)
+    // stays out of the way until the intro has landed
+    const onScroll = () => setScrolled((document.getElementById('home')?.getBoundingClientRect().bottom ?? 0) < window.innerHeight * 0.6)
+    onScroll()
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -36,14 +37,12 @@ export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggl
   return (
     <>
       {/* Centered floating pill */}
-      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-fit">
+      <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-fit transition-all duration-500 ${scrolled ? '' : 'opacity-0 -translate-y-6 pointer-events-none'}`}>
         <div
           className="flex items-center gap-1 md:gap-2 rounded-full px-3 md:px-4 py-2.5 transition-all duration-500"
           style={{
-            background: theme === 'light'
-              ? (scrolled ? 'rgba(255, 253, 246, 0.9)' : 'rgba(255, 253, 246, 0.65)')
-              : (scrolled ? 'rgba(10, 8, 14, 0.88)' : 'rgba(10, 8, 14, 0.55)'),
-            border: theme === 'light' ? '1px solid rgba(34, 48, 28, 0.15)' : '1px solid rgba(167, 139, 250, 0.18)',
+            background: scrolled ? 'rgba(10, 8, 14, 0.88)' : 'rgba(10, 8, 14, 0.6)',
+            border: '1px solid rgba(255, 255, 255, 0.14)',
             backdropFilter: 'blur(14px)',
             WebkitBackdropFilter: 'blur(14px)',
             boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.5)' : 'none',
@@ -53,7 +52,7 @@ export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggl
             onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
             className="font-display font-bold text-sm text-white/90 hover:text-white transition-colors flex items-center gap-1.5 px-2 whitespace-nowrap"
           >
-            <span className="text-[#ffb020]">✦</span> SIRI
+            siri <span className="font-normal text-white/50 hidden sm:inline">/ somewhere, building.</span>
           </button>
 
           <span className="hidden lg:block w-px h-4 bg-white/15 mx-1" />
@@ -82,15 +81,6 @@ export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggl
             <Download size={12} />
             Resume
           </a>
-
-          {/* night / morning toggle */}
-          <button
-            onClick={onToggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to morning' : 'Switch to night'}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-white/60 hover:text-[#ffb020] transition-colors"
-          >
-            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-          </button>
 
           {/* Hamburger, below lg */}
           <button

@@ -102,7 +102,7 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean; scrubFram
     function fit() {
       var s, frame;
       if (renderMode) { s = 1; frame = reelFrame; }
-      else if (scrubbing && scrubFrame) { frame = scrubFrame; var w = frame.parentNode.getBoundingClientRect().width || window.innerWidth; s = Math.min(w / 1920, (window.innerHeight - 170) / 1080); }
+      else if (scrubbing && scrubFrame) { frame = scrubFrame; var cs = getComputedStyle(frame.parentNode); var w = (frame.parentNode.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)) || window.innerWidth; s = Math.min(w / 1920, (window.innerHeight - 170) / 1080); }
       else { frame = reelFrame; s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080); }
       stage.style.setProperty('--s', s);
       frame.style.width = (1920 * s) + 'px'; frame.style.height = (1080 * s) + 'px';
