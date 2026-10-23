@@ -1,13 +1,22 @@
-import { useRef } from 'react'
-import Gradient from './Gradient'
+import { useEffect, useRef } from 'react'
+import Gradient, { type Pointer } from './Gradient'
 import { useReveals } from './hooks'
 
 export default function Hero({ ready }: { ready: boolean }) {
   const ref = useRef<HTMLElement>(null)
+  const pointer = useRef<Pointer>({ x: 0, y: 0, on: 0 })
   useReveals(ref, [ready])
+  useEffect(() => {
+    const el = ref.current; if (!el) return
+    // the plane is 18 by 12 world units; map the pointer across it so the ripple sits under the cursor
+    const move = (e: PointerEvent) => { const r = el.getBoundingClientRect(); pointer.current = { x: ((e.clientX - r.left) / r.width - 0.5) * 18, y: -((e.clientY - r.top) / r.height - 0.5) * 12, on: 1 } }
+    const leave = () => { pointer.current = { ...pointer.current, on: 0 } }
+    el.addEventListener('pointermove', move); el.addEventListener('pointerleave', leave)
+    return () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerleave', leave) }
+  }, [])
   return (
     <section id="top" className="hero sec dark" ref={ref}>
-      <Gradient className="gl" />
+      <Gradient className="gl" pointer={pointer} />
       <div className="wrap">
         <p className="mono" data-reveal>Lakshmi Siri Appalaneni</p>
         <h1><span className="line masked">Live in the future,</span><span className="line masked">then build what's missing.</span></h1>

@@ -23,7 +23,7 @@ export default function Nav() {
       <header className={`nav ${light ? 'on-light' : ''}`}>
         <a className="brand" href="#top">Siri Appalaneni</a>
         <div className="cta">
-          <a className="btn btn-ghost" href="/Lakshmi_Siri_Appalaneni_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+          <a className="btn btn-sun" href="/Lakshmi_Siri_Appalaneni_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
           <a className="btn btn-ghost" href="https://github.com/Siriapps" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a className="btn btn-white" href="https://linkedin.com/in/a-lakshmi-siri" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>

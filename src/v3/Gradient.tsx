@@ -24,12 +24,16 @@ vec3 f=fade(Pf0);vec4 nz=mix(vec4(n000,n100,n010,n110),vec4(n001,n101,n011,n111)
 `
 
 const VERT = /* glsl */`
-uniform float uTime, uSpeed, uDensity, uStrength;
+uniform float uTime, uSpeed, uDensity, uStrength, uHover;
+uniform vec2 uMouse;
 varying float vD; varying float vX;
 ${NOISE}
 void main(){
   float t = uTime * uSpeed;
   float d = 0.75 * cnoise(0.43 * position * uDensity + vec3(t, t * 0.6, t * 0.3));
+  // the ripple: rings spreading from the pointer, fading with distance, only while hovering
+  float rr = distance(position.xy, uMouse);
+  d += uHover * exp(-rr * 0.45) * sin(rr * 3.2 - uTime * 5.0) * 0.45;
   vec3 pos = position + normal * d * uStrength;
   vD = d; vX = position.x;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
@@ -46,16 +50,27 @@ void main(){
   gl_FragColor = vec4(col, 1.0);
 }`
 
-type Props = { colors?: [string, string, string]; speed?: number; strength?: number; density?: number; light?: number; className?: string }
+export type Pointer = { x: number; y: number; on: number }
+type Props = { colors?: [string, string, string]; speed?: number; strength?: number; density?: number; light?: number; className?: string; pointer?: React.RefObject<Pointer> }
 
-function Surface({ colors, speed, strength, density, light }: Required<Omit<Props, 'className'>>) {
+function Surface({ colors, speed, strength, density, light, pointer }: Required<Omit<Props, 'className' | 'pointer'>> & { pointer?: React.RefObject<Pointer> }) {
   const mat = useRef<THREE.ShaderMaterial>(null)
   const reduce = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, [])
   const uniforms = useMemo(() => ({
-    uTime: { value: 0 }, uSpeed: { value: speed }, uDensity: { value: density }, uStrength: { value: strength }, uLight: { value: light },
+    uTime: { value: 0 }, uSpeed: { value: speed }, uDensity: { value: density }, uStrength: { value: strength }, uLight: { value: light }, uHover: { value: 0 }, uMouse: { value: new THREE.Vector2(0, 0) },
     c1: { value: new THREE.Color(colors[0]) }, c2: { value: new THREE.Color(colors[1]) }, c3: { value: new THREE.Color(colors[2]) },
   }), [colors, speed, density, strength, light])
-  useFrame(({ clock }) => { if (mat.current && !reduce) mat.current.uniforms.uTime.value = clock.getElapsedTime() })
+  useFrame(({ clock }) => {
+    const m = mat.current; if (!m || reduce) return
+    m.uniforms.uTime.value = clock.getElapsedTime()
+    const p = pointer?.current
+    if (p) {
+      // smooth toward the pointer so the ripple glides instead of jumping
+      const mv = m.uniforms.uMouse.value as THREE.Vector2
+      mv.x += (p.x - mv.x) * 0.08; mv.y += (p.y - mv.y) * 0.08
+      m.uniforms.uHover.value += (p.on - m.uniforms.uHover.value) * 0.06
+    }
+  })
   return (
     <mesh rotation={[-0.55, 0, 0.35]} position={[0.4, -0.4, 0]}>
       <planeGeometry args={[18, 12, 160, 110]} />
@@ -64,11 +79,11 @@ function Surface({ colors, speed, strength, density, light }: Required<Omit<Prop
   )
 }
 
-export default function Gradient({ colors = ['#ff5005', '#dbba95', '#d0bce1'], speed = 0.4, strength = 2.2, density = 0.55, light = 1.2, className }: Props) {
+export default function Gradient({ colors = ['#ff5005', '#dbba95', '#d0bce1'], speed = 0.4, strength = 2.2, density = 0.55, light = 1.2, className, pointer }: Props) {
   return (
     <div className={className} aria-hidden="true">
       <Canvas dpr={[1, 1.5]} gl={{ antialias: false, powerPreference: 'low-power' }} camera={{ position: [0, 0, 6.5], fov: 45 }} frameloop="always">
-        <Surface colors={colors} speed={speed} strength={strength} density={density} light={light} />
+        <Surface colors={colors} speed={speed} strength={strength} density={density} light={light} pointer={pointer} />
       </Canvas>
     </div>
   )

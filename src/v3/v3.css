@@ -38,8 +38,9 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 .wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--gutter); }
 
 /* Sections alternate: dark hero and cities, light body, dark close */
-.sec { padding: 72px 0; position: relative; }
+.sec { padding: 72px 0; position: relative; min-height: 100vh; min-height: 100svh; display: grid; align-content: center; }
 @media (min-width: 720px) { .sec { padding: 112px 0; } }
+.sec > .wrap { width: 100%; }
 .sec.light { background: var(--paper); color: var(--ink); }
 .sec.dark { background: var(--navy); color: #fff; }
 .sec.dark .mono { color: rgba(255,255,255,0.68); }
@@ -71,10 +72,10 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 @media (min-width: 1180px) { .rail { display: flex; } }
 .rail a { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); transition: color 200ms ease; }
 .rail a i { display: block; width: 14px; height: 1px; background: currentColor; transition: width 250ms var(--ease-out); }
-.rail a span { opacity: 0; transform: translateX(-6px); transition: opacity 200ms ease, transform 250ms var(--ease-out); }
+.rail a span { text-decoration: underline transparent; text-underline-offset: 5px; text-decoration-thickness: 1px; transition: text-decoration-color 250ms ease; }
 .rail a:hover, .rail a.on { color: #fff; }
 .rail a.on i { width: 28px; }
-.rail:hover a span, .rail a.on span { opacity: 1; transform: none; }
+.rail a.on span { text-decoration-color: currentColor; }
 .rail.on-light a { color: rgba(18,26,47,0.4); }
 .rail.on-light a:hover, .rail.on-light a.on { color: var(--ink); }
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 15px; line-height: 1; border: 1px solid transparent; transition: transform 160ms var(--ease-out), background-color 160ms ease, border-color 160ms ease; }
@@ -86,6 +87,8 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 .v3 .btn-navy { background: var(--navy); color: #fff; }
 .btn-navy:hover { background: var(--navy-2); }
 .v3 .btn-ink { color: var(--ink); border-color: var(--ink); }
+.v3 .btn-sun { background: var(--sun); color: var(--navy); }
+.v3 .btn-sun:hover { background: #ffe08a; }
 .btn-ink:hover { background: var(--surface); }
 .btn svg { width: 18px; height: 18px; }
 
@@ -140,6 +143,7 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 
 /* Highlights: a sticky dial on the left turns a full circle as you read; a droplet slides down the list to the entry under the reading line */
 .highlights { overflow: hidden; }
+@media (min-width: 1000px) { .highlights { padding: 0; height: 100vh; height: 100svh; align-content: start; } .highlights .wrap { padding-top: 110px; } .hilist { will-change: transform; } }
 .hi-grid { display: grid; gap: 28px; }
 @media (min-width: 1000px) { .hi-grid { grid-template-columns: 340px 1fr; gap: 56px; align-items: start; } .hi-side { position: sticky; top: 96px; } }
 .hi-side h2 { margin-bottom: 26px; }
@@ -253,3 +257,14 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 .scrub .bar { width: min(100%, 420px); height: 2px; background: rgba(255,255,255,0.15); position: relative; }
 .scrub .bar i { position: absolute; inset: 0; background: linear-gradient(90deg, var(--orange), var(--pink), var(--violet)); transform: scaleX(0); transform-origin: left; }
 @media (prefers-reduced-motion: reduce) { .scrub .track { height: auto; } .scrub .sticky { position: static; height: auto; padding: 72px var(--gutter); } }
+
+/* The cursor: a dot and a lagging ring, swelling over links */
+.cur-dot, .cur-ring { position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; border-radius: 50%; transform: translate(-50%, -50%); opacity: 0; mix-blend-mode: difference; }
+.cur-dot { width: 8px; height: 8px; background: #fff; }
+.cur-ring { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.9); transition: width 250ms var(--ease-out), height 250ms var(--ease-out), background-color 250ms ease; }
+.cur-ring.big { width: 56px; height: 56px; background: rgba(255,255,255,0.18); }
+html.has-cursor .v3 a, html.has-cursor .v3 button { cursor: none; }
+html.has-cursor body { cursor: none; }
+/* Bouncy entrances for chips, cards and sketches */
+.row li, .sketch, .pcard, .hilist li { transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+[data-reveal].row, [data-reveal].sketch { transform: translateY(26px) scale(0.96); }

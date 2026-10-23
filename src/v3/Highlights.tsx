@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { highlights } from './data'
 import { reduced, useReveals } from './hooks'
 
@@ -12,6 +13,19 @@ export default function Highlights() {
   const arc = useRef<SVGCircleElement>(null)
   const [on, setOn] = useState(0)
   useReveals(ref)
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    const sec = ref.current, ul = list.current
+    if (!sec || !ul) return
+    // desktop: the screen pins and the list glides up through it, so the dial and the droplet stay put
+    const mm = gsap.matchMedia()
+    mm.add('(min-width: 1000px) and (prefers-reduced-motion: no-preference)', () => {
+      const dist = () => Math.max(0, ul.scrollHeight - (window.innerHeight - 220))
+      const tw = gsap.to(ul, { y: () => -dist(), ease: 'none', scrollTrigger: { trigger: sec, start: 'top top', end: () => `+=${dist() + 200}`, pin: true, scrub: 0.5, invalidateOnRefresh: true } })
+      return () => { tw.scrollTrigger?.kill(); tw.kill() }
+    })
+    return () => mm.revert()
+  }, [])
   useEffect(() => {
     const sec = ref.current, ul = list.current
     if (!sec || !ul || !lead.current || !tail.current) return
@@ -31,7 +45,7 @@ export default function Highlights() {
       items.forEach((li, i) => { const b = li.getBoundingClientRect(); const dd = Math.abs((b.top + b.bottom) / 2 - line); if (dd < bd) { bd = dd; best = i } })
       if (best !== last && best >= 0) {
         last = best; setOn(best)
-        const y = items[best].offsetTop + 22
+        const y = items[best].offsetTop + 22 + (gsap.getProperty(ul, 'y') as number)
         if (toLead && toTail) { toLead(y); toTail(y + 3) }
       }
     }
