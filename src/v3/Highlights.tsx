@@ -32,6 +32,7 @@ export default function Highlights() {
     const still = reduced()
     const toLead = still ? null : gsap.quickTo(lead.current, 'y', { duration: 0.55, ease: 'back.out(1.6)' })
     const toTail = still ? null : gsap.quickTo(tail.current, 'y', { duration: 0.95, ease: 'power3.out' })
+    const toLeadX = gsap.quickTo(lead.current, 'x', { duration: 0.3 }), toTailX = gsap.quickTo(tail.current, 'x', { duration: 0.5 })
     let last = -1, raf = 0
     const f = () => {
       raf = 0
@@ -46,8 +47,9 @@ export default function Highlights() {
       if (best >= 0) {
         if (best !== last) { last = best; setOn(best) }
         // measured on screen, so it stays right while the pinned list glides under it
-        const y = items[best].getBoundingClientRect().top - ul.parentElement!.getBoundingClientRect().top + 22
-        if (toLead && toTail) { toLead(y); toTail(y + 3) }
+        const wr = ul.parentElement!.getBoundingClientRect(), ir = items[best].getBoundingClientRect()
+        const y = ir.top - wr.top + 22, x = ir.left - wr.left - 44
+        if (toLead && toTail) { toLead(y); toTail(y + 3); toLeadX(x); toTailX(x + 3) }
       }
     }
     const h = () => { if (!raf) raf = requestAnimationFrame(f) }
