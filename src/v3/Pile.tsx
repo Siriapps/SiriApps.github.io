@@ -29,10 +29,12 @@ export default function Pile() {
       Bodies.rectangle(W() + 20, H() / 2, 80, H() * 4, { isStatic: true }),
     ]
     Composite.add(engine.world, walls)
+    const onResize = () => { Body.setPosition(walls[0], { x: W() / 2, y: H() + 40 }); Body.setPosition(walls[2], { x: W() + 20, y: H() / 2 }) }
     const nodes: { body: Matter.Body; dom: HTMLElement }[] = []
     let started = false
     const drop = () => {
       if (started) return; started = true
+      onResize()   // the section has its final height by now; put the floor at its bottom
       cubes.forEach((c, i) => {
         setTimeout(() => {
           const x = W() * (0.12 + 0.76 * ((i * 0.618) % 1)), s = c.size
@@ -41,7 +43,9 @@ export default function Pile() {
           const dom = document.createElement('div')
           dom.className = `cube ${c.sealed ? 'sealed' : ''}`
           dom.style.setProperty('--s', `${s}px`); dom.style.setProperty('--tone', c.tone)
-          dom.innerHTML = `<span class="f front"><b>${c.label}</b><small>${c.sub}</small></span><span class="f top"></span><span class="f side"></span>`
+          dom.style.setProperty('--h', `${((i * 47) % 70) - 35}deg`)   // stay in the pink, violet, cyan family
+          dom.style.setProperty('--spin', `${(Math.random() * 40 - 20).toFixed(1)}deg`)
+          dom.innerHTML = `<span class="c3"><span class="f fz"><b>${c.label}</b><small>${c.sub}</small></span><span class="f bz"></span><span class="f rx"></span><span class="f lx"></span><span class="f ty"></span><span class="f by"></span></span>`
           el.appendChild(dom)
           Composite.add(engine.world, body)
           nodes.push({ body, dom })
@@ -63,7 +67,6 @@ export default function Pile() {
       raf = requestAnimationFrame(paint)
     }
     paint()
-    const onResize = () => { Body.setPosition(walls[0], { x: W() / 2, y: H() + 40 }); Body.setPosition(walls[2], { x: W() + 20, y: H() / 2 }) }
     window.addEventListener('resize', onResize)
     return () => { cancelAnimationFrame(raf); io.disconnect(); Runner.stop(runner); Engine.clear(engine); window.removeEventListener('resize', onResize); nodes.forEach(n => n.dom.remove()) }
   }, [])
