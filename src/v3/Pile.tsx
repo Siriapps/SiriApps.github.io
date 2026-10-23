@@ -29,7 +29,8 @@ export default function Pile() {
       Bodies.rectangle(W() + 20, H() / 2, 80, H() * 4, { isStatic: true }),
     ]
     Composite.add(engine.world, walls)
-    const onResize = () => { Body.setPosition(walls[0], { x: W() / 2, y: H() + 40 }); Body.setPosition(walls[2], { x: W() + 20, y: H() / 2 }) }
+    // the tilted faces draw above the box, so the floor sits a little below the edge
+    const onResize = () => { Body.setPosition(walls[0], { x: W() / 2, y: H() + 110 }); Body.setPosition(walls[2], { x: W() + 20, y: H() / 2 }) }
     const nodes: { body: Matter.Body; dom: HTMLElement }[] = []
     let started = false
     const drop = () => {
