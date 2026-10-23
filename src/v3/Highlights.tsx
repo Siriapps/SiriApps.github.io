@@ -43,9 +43,10 @@ export default function Highlights() {
       const line = vh * 0.45
       let best = -1, bd = Infinity
       items.forEach((li, i) => { const b = li.getBoundingClientRect(); const dd = Math.abs((b.top + b.bottom) / 2 - line); if (dd < bd) { bd = dd; best = i } })
-      if (best !== last && best >= 0) {
-        last = best; setOn(best)
-        const y = items[best].offsetTop + 22 + (gsap.getProperty(ul, 'y') as number)
+      if (best >= 0) {
+        if (best !== last) { last = best; setOn(best) }
+        // measured on screen, so it stays right while the pinned list glides under it
+        const y = items[best].getBoundingClientRect().top - ul.parentElement!.getBoundingClientRect().top + 22
         if (toLead && toTail) { toLead(y); toTail(y + 3) }
       }
     }
