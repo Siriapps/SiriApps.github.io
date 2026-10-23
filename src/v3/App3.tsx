@@ -13,7 +13,6 @@ import Highlights from './Highlights'
 import Experience from './Experience'
 import Projects from './Projects'
 import Skills from './Skills'
-import Ideas from './Ideas'
 import Connect from './Connect'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -52,7 +51,6 @@ export default function App3() {
         <Experience />
         <Projects />
         <Skills />
-        <Ideas />
         <Connect />
       </main>
     </div>

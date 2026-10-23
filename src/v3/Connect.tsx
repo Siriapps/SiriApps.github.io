@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import Gradient from './Gradient'
+import Pile from './Pile'
 import { useReveals } from './hooks'
 
 export default function Connect() {
@@ -9,9 +10,10 @@ export default function Connect() {
     <>
       <section id="connect" className="sec dark connect" ref={ref}>
         <Gradient className="gl" colors={['#3b2bb3', '#f06ab0', '#ff8a3d']} speed={0.25} />
+        <Pile />
         <div className="wrap">
           <h2 className="masked">Say hello.</h2>
-          <p className="lede" data-reveal>Open to AI/ML research, full-stack engineering, and quantum computing opportunities. I answer on LinkedIn first. The code lives on GitHub.</p>
+          <p className="lede" data-reveal>Open to AI/ML research, full-stack engineering, and quantum computing opportunities. I answer on LinkedIn first. The code lives on GitHub. The cubes are what I am building: the sealed ones are ideas still in the drawer.</p>
           <div className="actions" data-reveal style={{ ['--n' as string]: 1 }}>
             <a className="btn btn-white" href="https://linkedin.com/in/a-lakshmi-siri" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
             <a className="btn btn-ghost" href="https://github.com/Siriapps" target="_blank" rel="noopener noreferrer">GitHub</a>

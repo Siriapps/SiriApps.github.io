@@ -67,8 +67,8 @@ function Surface({ colors, speed, strength, density, light, pointer }: Required<
     if (p) {
       // smooth toward the pointer so the ripple glides instead of jumping
       const mv = m.uniforms.uMouse.value as THREE.Vector2
-      mv.x += (p.x - mv.x) * 0.08; mv.y += (p.y - mv.y) * 0.08
-      m.uniforms.uHover.value += (p.on - m.uniforms.uHover.value) * 0.06
+      mv.x = p.x; mv.y = p.y   // no lag: the ripple sits under the cursor
+      m.uniforms.uHover.value += (p.on - m.uniforms.uHover.value) * 0.12
     }
   })
   return (

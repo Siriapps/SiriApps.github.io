@@ -258,11 +258,11 @@ export const projects: Project[] = [
 
 export const highlights = [
   { big: true, t: 'YC AI Startup School', d: 'Selected for the invite-only cohort at Chase Center, San Francisco, July 2026.' },
-  { big: true, t: "Dean's List, Spring 2026", d: 'UT Dallas, Computer Science Honors, as an AES Scholar on a full merit scholarship.' },
+  { big: true, t: "Dean's List, Spring 2026", d: 'UT Dallas, Computer Science Honors, AES Merit Scholar.' },
   { big: true, t: 'Founding President, Quantum Comet', d: "Started UT Dallas's first quantum student organization in October 2026, with a faculty advisor and a six-officer board." },
   { t: '1st Place, HackAI Dallas 2026', d: 'Pondr, adaptive learning on living knowledge graphs.' },
   { t: '1st Place, Yale Quantum Hackathon 2025', d: 'BlueQubit Challenge.' },
-  { t: '1st Place, ACM UTD Research Symposium', d: 'Post-quantum cryptography with a recurrent graph neural network decoder, 30x over the baseline.' },
+  { t: '1st Place, ACM UTD Research Symposium, Fall 2025', d: 'Post-quantum cryptography with a recurrent graph neural network decoder, 30x over the baseline.' },
   { t: 'Gold, Rank 5, ICPC AlgoQueen 2023', d: 'Global top five.' },
   { t: '3rd Place and MLH Auth0, HackUTD 2025', d: 'HarmoniQ, with T-Mobile.' },
   { t: 'IBM Qiskit Advocate', d: 'Certified quantum developer at 13; advocate since September 2025.' },

@@ -82,13 +82,13 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean; scrubFram
   (function () {
     var force = /[?&]reel/.test(location.search);
     var seen = false;
-    try { seen = sessionStorage.getItem('reel-seen') === '1'; } catch (err) {}
+    try { seen = Date.now() - Number(sessionStorage.getItem('reel-seen') || 0) < 20 * 60 * 1000; } catch (err) {}  /* replays after 20 minutes */
     var playIntro = renderMode || !(reduce || (seen && !force));
     if (playIntro) {
       reelPlaying = true;
       reel.hidden = false;
       document.body.classList.add('reel-on');
-      try { if (!renderMode) sessionStorage.setItem('reel-seen', '1'); } catch (err) {}
+      try { if (!renderMode) sessionStorage.setItem('reel-seen', String(Date.now())); } catch (err) {}
     } else {
       html.classList.remove('reel-pending');
     }
