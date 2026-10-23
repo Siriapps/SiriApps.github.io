@@ -25,8 +25,8 @@ export default function Pile() {
     const W = () => el.clientWidth, H = () => el.clientHeight
     const walls = [
       Bodies.rectangle(W() / 2, H() + 40, W() * 2, 80, { isStatic: true, friction: 0.9 }),
-      Bodies.rectangle(-40, H() / 2, 80, H() * 4, { isStatic: true }),
-      Bodies.rectangle(W() + 40, H() / 2, 80, H() * 4, { isStatic: true }),
+      Bodies.rectangle(-20, H() / 2, 80, H() * 4, { isStatic: true }),
+      Bodies.rectangle(W() + 20, H() / 2, 80, H() * 4, { isStatic: true }),
     ]
     Composite.add(engine.world, walls)
     const nodes: { body: Matter.Body; dom: HTMLElement }[] = []
@@ -35,7 +35,7 @@ export default function Pile() {
       if (started) return; started = true
       cubes.forEach((c, i) => {
         setTimeout(() => {
-          const x = W() * (0.15 + 0.7 * ((i * 0.618) % 1)), s = c.size
+          const x = W() * (0.12 + 0.76 * ((i * 0.618) % 1)), s = c.size
           const body = Bodies.rectangle(x, -s - 40, s, s, { restitution: 0.08, friction: 0.6, frictionAir: 0.012, density: 0.004, angle: (Math.random() - 0.5) * 0.6 })
           Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.08)
           const dom = document.createElement('div')
@@ -63,7 +63,7 @@ export default function Pile() {
       raf = requestAnimationFrame(paint)
     }
     paint()
-    const onResize = () => { Body.setPosition(walls[0], { x: W() / 2, y: H() + 40 }); Body.setPosition(walls[2], { x: W() + 40, y: H() / 2 }) }
+    const onResize = () => { Body.setPosition(walls[0], { x: W() / 2, y: H() + 40 }); Body.setPosition(walls[2], { x: W() + 20, y: H() / 2 }) }
     window.addEventListener('resize', onResize)
     return () => { cancelAnimationFrame(raf); io.disconnect(); Runner.stop(runner); Engine.clear(engine); window.removeEventListener('resize', onResize); nodes.forEach(n => n.dom.remove()) }
   }, [])

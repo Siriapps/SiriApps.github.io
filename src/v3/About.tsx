@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useReveals } from './hooks'
 import { recent } from './data'
+import Stats from './Stats'
 
 export default function About() {
   const ref = useRef<HTMLElement>(null)
@@ -27,11 +28,7 @@ export default function About() {
               </li>
             ))}
           </ul>
-          <dl className="specs">
-            {[['GPA', '3.97'], ['Projects shipped', '15+'], ['Hackathon wins', '4x'], ['Research efforts', '5+']].map(([k, v], i) => (
-              <div key={k} data-reveal style={{ ['--n' as string]: i }}><dt>{k}</dt><dd>{v}</dd></div>
-            ))}
-          </dl>
+          <Stats />
         </div>
       </div>
     </section>
