@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { highlights } from './data'
 import { reduced, useReveals } from './hooks'
+import Player from './Player'
 
 /* A sticky dial turns one full circle over the section; a goo droplet slides to the entry under the reading line. */
 export default function Highlights() {
@@ -81,6 +82,7 @@ export default function Highlights() {
             </svg>
             <div className="num"><span ref={num}>{String(on + 1).padStart(2, '0')}</span><small>of {highlights.length}</small></div>
           </div>
+          <div className="piece-wrap"><Player slug={highlights[on].slug} /></div>
         </div>
         <div style={{ position: 'relative' }}>
           <ol className="hilist" ref={list}>
