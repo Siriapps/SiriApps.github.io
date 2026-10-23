@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const links = [['about', 'About'], ['cities', 'Cities'], ['highlights', 'Highlights'], ['experience', 'Experience'], ['projects', 'Projects'], ['skills', 'Skills'], ['ideas', 'Ideas'], ['connect', 'Connect']]
+const links = [['about', 'About'], ['reel', 'Reel'], ['highlights', 'Highlights'], ['experience', 'Experience'], ['projects', 'Projects'], ['skills', 'Skills'], ['ideas', 'Ideas'], ['connect', 'Connect']]
 
 export default function Nav() {
   const [solid, setSolid] = useState(false)

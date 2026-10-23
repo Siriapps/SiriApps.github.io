@@ -3,11 +3,11 @@ import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './v3.css'
-import Reel from './Reel'
+import Reel, { ReelScrub } from './Reel'
 import Nav from './Nav'
+import Glow from './Glow'
 import Hero from './Hero'
 import About from './About'
-import Cities from './Cities'
 import Highlights from './Highlights'
 import Experience from './Experience'
 import Projects from './Projects'
@@ -33,11 +33,12 @@ export default function App3() {
   return (
     <div className="v3">
       <Reel onEnd={() => setReady(true)} />
+      <Glow />
       <Nav />
       <main>
         <Hero ready={ready} />
         <About />
-        <Cities />
+        <ReelScrub />
         <Highlights />
         <Experience />
         <Projects />

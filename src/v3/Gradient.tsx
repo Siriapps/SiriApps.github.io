@@ -38,10 +38,11 @@ void main(){
 const FRAG = /* glsl */`
 uniform vec3 c1, c2, c3; uniform float uLight;
 varying float vD; varying float vX;
+float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 void main(){
-  vec3 col = mix(mix(c1, c2, smoothstep(-5.0, 5.0, vX)), c3, clamp(0.5 + vD * 1.1, 0.0, 1.0));
-  col = mix(col, vec3(1.0, 0.82, 0.4), smoothstep(0.35, 0.9, vD));
-  col *= uLight * (0.86 + 0.3 * clamp(vD, -0.5, 0.5));
+  vec3 col = mix(mix(c1, c2, smoothstep(-6.0, 6.0, vX)), c3, clamp(0.5 + vD * 1.3, 0.0, 1.0));
+  col *= uLight * (0.92 + 0.2 * clamp(vD, -0.5, 0.5));
+  col += (hash(gl_FragCoord.xy) - 0.5) * 0.11;   // the Halo grain
   gl_FragColor = vec4(col, 1.0);
 }`
 
@@ -63,7 +64,7 @@ function Surface({ colors, speed, strength, density, light }: Required<Omit<Prop
   )
 }
 
-export default function Gradient({ colors = ['#ff8a3d', '#f06ab0', '#3b2bb3'], speed = 0.35, strength = 1.6, density = 1.3, light = 1, className }: Props) {
+export default function Gradient({ colors = ['#ff5005', '#dbba95', '#d0bce1'], speed = 0.4, strength = 2.2, density = 0.55, light = 1.2, className }: Props) {
   return (
     <div className={className} aria-hidden="true">
       <Canvas dpr={[1, 1.5]} gl={{ antialias: false, powerPreference: 'low-power' }} camera={{ position: [0, 0, 6.5], fov: 45 }} frameloop="always">

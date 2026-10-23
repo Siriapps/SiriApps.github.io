@@ -2,7 +2,7 @@
    Ported verbatim from the AI1 page; mountReel wires it to a container and reports when it ends. */
 /* eslint-disable */
 // @ts-nocheck
-export function mountReel(opts: { onEnd?: () => void; force?: boolean }) {
+export function mountReel(opts: { onEnd?: () => void; force?: boolean; scrubFrame?: HTMLElement | null; scrubTrack?: HTMLElement | null; scrubBar?: HTMLElement | null }) {
   var html = document.documentElement;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasGsap = true;
@@ -97,10 +97,12 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean }) {
     var shots = Array.prototype.slice.call(stage.querySelectorAll('.shot'));
     var reelFrame = document.getElementById('reelFrame');
     var scrubbing = false;
+    var scrubFrame = opts.scrubFrame, scrubTrack = opts.scrubTrack, scrubBar = opts.scrubBar;
     function curScale() { return parseFloat(stage.style.getPropertyValue('--s')) || 1; }
     function fit() {
       var s, frame;
       if (renderMode) { s = 1; frame = reelFrame; }
+      else if (scrubbing && scrubFrame) { frame = scrubFrame; var w = frame.parentNode.getBoundingClientRect().width || window.innerWidth; s = Math.min(w / 1920, (window.innerHeight - 170) / 1080); }
       else { frame = reelFrame; s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080); }
       stage.style.setProperty('--s', s);
       frame.style.width = (1920 * s) + 'px'; frame.style.height = (1080 * s) + 'px';
@@ -271,7 +273,27 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean }) {
       document.body.classList.remove('reel-on');
       Array.prototype.forEach.call(document.querySelectorAll('#top [data-masked]'), function (h) { h.classList.add('is-visible'); });
       window.dispatchEvent(new Event('scroll'));
+      startScrub();
       if (opts.onEnd) opts.onEnd();
+    }
+    /* the same stage, now driven by scroll: the pinned section's progress maps to 0..15 s */
+    function startScrub() {
+      if (!scrubFrame || !scrubTrack) return;
+      scrubbing = true;
+      scrubFrame.appendChild(stage);
+      fit();
+      var sraf = 0;
+      function paint() {
+        sraf = 0;
+        var r = scrubTrack.getBoundingClientRect();
+        var p = clamp(-r.top / (r.height - window.innerHeight));
+        seek(p * REEL_T);
+        if (scrubBar) scrubBar.style.transform = 'scaleX(' + p + ')';
+      }
+      function onS() { if (!sraf) sraf = requestAnimationFrame(paint); }
+      window.addEventListener('scroll', onS, { passive: true });
+      window.addEventListener('resize', onS);
+      paint();
     }
     function ready() {
       html.classList.remove('reel-pending');
@@ -280,7 +302,7 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean }) {
       reelReady = true; window.reelReady = true;
       seek(0);
       if (renderMode) return;
-      if (!playIntro) { finished = true; return; }
+      if (!playIntro) { finished = true; if (reduce) { if (scrubFrame) { scrubbing = true; scrubFrame.appendChild(stage); fit(); seek(5.6); } } else { startScrub(); } if (opts.onEnd) opts.onEnd(); return; }
       var start = performance.now();
       (function frame(now) {
         if (finished) return;

@@ -82,7 +82,7 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 /* Hero: the shader gradient fills the first screen */
 .hero { position: relative; min-height: 100svh; display: grid; align-items: end; padding: 120px 0 72px; overflow: clip; }
 .hero .gl { position: absolute; inset: 0; z-index: 0; }
-.hero .gl::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(15,23,51,0.78), rgba(15,23,51,0.3) 55%, rgba(15,23,51,0.05)), linear-gradient(to top, rgba(15,23,51,0.9), rgba(15,23,51,0) 45%); }
+.hero .gl::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(15,23,51,0.82), rgba(15,23,51,0.45) 50%, rgba(15,23,51,0.06)), linear-gradient(to top, rgba(15,23,51,0.85), rgba(15,23,51,0) 40%); }
 .hero .wrap { position: relative; z-index: 1; width: 100%; }
 .hero h1 { font-size: clamp(46px, 8vw, 120px); line-height: 0.96; margin: 16px 0 24px; }
 .hero h1 .line { display: block; }
@@ -216,3 +216,20 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 .v3 .reel { z-index: 60; }
 /* Phone nav: brand plus one button */
 @media (max-width: 599px) { .nav { padding: 12px var(--gutter); } .nav .cta .btn-ghost { display: none; } .nav .brand { font-size: 17px; } .nav .btn { padding: 10px 16px; font-size: 14px; } }
+
+/* The light: a warm pool that trails the pointer over the light sections */
+.glow { position: fixed; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; }
+.glow .pool { position: absolute; left: 0; top: 0; width: 900px; height: 900px; margin: -450px 0 0 -450px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,138,61,0.28), rgba(240,106,176,0.14) 45%, rgba(255,255,255,0) 70%); mix-blend-mode: multiply; will-change: transform; opacity: 0; transition: opacity 500ms ease; }
+.glow.on .pool { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .glow { display: none; } }
+
+/* The scrubbed reel: pinned frame, 420vh of track maps to the 15 seconds */
+.scrub { padding: 0; }
+.scrub .track { height: 420vh; }
+.scrub .sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; justify-items: center; gap: 18px; padding: 72px var(--gutter) 0; box-sizing: border-box; }
+.scrub .frame { border-radius: 12px; border: 1px solid var(--line-dark); box-shadow: 0 30px 60px -40px rgba(0,0,0,0.6); background: var(--navy-2); }
+.scrub .cap { display: flex; gap: 8px 28px; flex-wrap: wrap; justify-content: center; align-items: baseline; }
+.scrub .cap h2 { font-size: clamp(22px, 2.4vw, 30px); margin: 0; }
+.scrub .bar { width: min(100%, 420px); height: 2px; background: rgba(255,255,255,0.15); position: relative; }
+.scrub .bar i { position: absolute; inset: 0; background: linear-gradient(90deg, var(--orange), var(--pink), var(--violet)); transform: scaleX(0); transform-origin: left; }
+@media (prefers-reduced-motion: reduce) { .scrub .track { height: auto; } .scrub .sticky { position: static; height: auto; padding: 72px var(--gutter); } }
