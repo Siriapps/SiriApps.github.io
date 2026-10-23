@@ -16,7 +16,9 @@ export default function Glow() {
     const check = () => {
       const el = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)
       const sec = el?.closest('.sec') as HTMLElement | null
-      glow.classList.toggle('on', !!sec && sec.classList.contains('light'))
+      glow.classList.toggle('on', !!sec && !sec.classList.contains('hero'))
+      glow.classList.toggle('on-light', !!sec && sec.classList.contains('light'))
+      glow.classList.toggle('on-dark', !!sec && !sec.classList.contains('light'))
       if (!fine && sec) { const r = sec.getBoundingClientRect(); gx(window.innerWidth * 0.6); gy(Math.min(Math.max(r.top + r.height / 2, 120), window.innerHeight - 120)) }
     }
     window.addEventListener('scroll', check, { passive: true }); check()

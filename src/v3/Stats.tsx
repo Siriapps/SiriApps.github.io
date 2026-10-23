@@ -52,7 +52,7 @@ export default function Stats() {
     return () => { io.disconnect(); tl?.kill(); el.removeEventListener('click', play) }
   }, [])
   return (
-    <div className="stats" ref={ref} role="group" aria-label="Numbers">
+    <section id="numbers" className="sec light stats-sec"><div className="stats" ref={ref} role="group" aria-label="Numbers">
       <div className="stage2" aria-hidden="true">
         <span className="sd" /><span className="sd" /><span className="sd" />
         <span className="blot" />
@@ -66,6 +66,6 @@ export default function Stats() {
           </div>
         ))}
       </dl>
-    </div>
+    </div></section>
   )
 }

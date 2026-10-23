@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import { useReveals } from './hooks'
 import { recent } from './data'
-import Stats from './Stats'
 
 export default function About() {
   const ref = useRef<HTMLElement>(null)
@@ -28,7 +27,6 @@ export default function About() {
               </li>
             ))}
           </ul>
-          <Stats />
         </div>
       </div>
     </section>

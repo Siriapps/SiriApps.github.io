@@ -9,7 +9,6 @@ export default function Skills() {
     <section id="skills" className="sec light" ref={ref}>
       <div className="wrap">
         <h2 className="masked">Skills</h2>
-        <p className="lede" data-reveal>Every tool on the bench, grouped the way I actually reach for them. The dark chip in each row is the one I use daily.</p>
         <div className="rows">
           {skills.map((g, i) => (
             <div className="row" key={g.title} data-reveal style={{ ['--n' as string]: i }}>

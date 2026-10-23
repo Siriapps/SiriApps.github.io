@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const links = [['about', 'About'], ['reel', 'Reel'], ['highlights', 'Highlights'], ['experience', 'Experience'], ['projects', 'Projects'], ['skills', 'Skills'], ['connect', 'Connect']]
+const links = [['about', 'About'], ['reelsec', 'Reel'], ['highlights', 'Highlights'], ['experience', 'Experience'], ['projects', 'Projects'], ['skills', 'Skills'], ['connect', 'Connect']]
 
 /* Top: the name and three buttons on a transparent bar. Left: a quiet vertical rail of section links. */
 export default function Nav() {

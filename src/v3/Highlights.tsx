@@ -11,6 +11,8 @@ export default function Highlights() {
   const lead = useRef<HTMLElement>(null)
   const tail = useRef<HTMLElement>(null)
   const arc = useRef<SVGCircleElement>(null)
+  const rider = useRef<SVGCircleElement>(null)
+  const num = useRef<HTMLSpanElement>(null)
   const [on, setOn] = useState(0)
   useReveals(ref)
   useEffect(() => {
@@ -40,12 +42,16 @@ export default function Highlights() {
       if (r.bottom < -200 || r.top > vh + 200) return
       const prog = Math.min(1, Math.max(0, (vh * 0.5 - r.top) / (r.height - vh * 0.3)))
       if (arc.current && !still) arc.current.style.transform = `rotate(${prog * 360 - 90}deg)`
+      if (rider.current && !still) { const a = (prog * 360 - 90 + 180) * Math.PI / 180; rider.current.setAttribute('cx', String(120 + 112 * Math.cos(a))); rider.current.setAttribute('cy', String(120 + 112 * Math.sin(a))) }
       const items = Array.from(ul.children) as HTMLElement[]
       const line = vh * 0.45
       let best = -1, bd = Infinity
       items.forEach((li, i) => { const b = li.getBoundingClientRect(); const dd = Math.abs((b.top + b.bottom) / 2 - line); if (dd < bd) { bd = dd; best = i } })
       if (best >= 0) {
-        if (best !== last) { last = best; setOn(best) }
+        if (best !== last) {
+          last = best; setOn(best)
+          if (num.current && !still) gsap.fromTo(num.current, { scale: 0.6, y: 14, opacity: 0 }, { scale: 1, y: 0, opacity: 1, duration: 0.45, ease: 'back.out(2.4)', overwrite: true })
+        }
         // measured on screen, so it stays right while the pinned list glides under it
         const wr = ul.parentElement!.getBoundingClientRect(), ir = items[best].getBoundingClientRect()
         const y = ir.top - wr.top + 22, x = ir.left - wr.left - 44
@@ -71,8 +77,9 @@ export default function Highlights() {
             <svg viewBox="0 0 240 240">
               <circle className="ring" cx="120" cy="120" r="112" />
               <circle className="arc" ref={arc} cx="120" cy="120" r="112" strokeDasharray="352 704" />
+              <circle className="rider" ref={rider} cx="120" cy="8" r="9" />
             </svg>
-            <div className="num">{String(on + 1).padStart(2, '0')}<small>of {highlights.length}</small></div>
+            <div className="num"><span ref={num}>{String(on + 1).padStart(2, '0')}</span><small>of {highlights.length}</small></div>
           </div>
         </div>
         <div style={{ position: 'relative' }}>

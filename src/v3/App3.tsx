@@ -9,9 +9,10 @@ import Glow from './Glow'
 import Cursor from './Cursor'
 import Hero from './Hero'
 import About from './About'
+import Stats from './Stats'
 import Highlights from './Highlights'
 import Experience from './Experience'
-import Projects from './Projects'
+import Ribbon from './Ribbon'
 import Skills from './Skills'
 import Connect from './Connect'
 
@@ -31,8 +32,8 @@ export default function App3() {
     // section handoffs: each screen's content glides in as it arrives and lifts away as the next one takes over
     const ctx = gsap.context(() => {
       document.querySelectorAll<HTMLElement>('.sec:not(.hero):not(.projects):not(.scrub):not(.highlights) > .wrap').forEach(w => {
-        gsap.fromTo(w, { y: 70, opacity: 0.2 }, { y: 0, opacity: 1, ease: 'none', scrollTrigger: { trigger: w, start: 'top 92%', end: 'top 45%', scrub: 0.4 } })
-        gsap.to(w, { y: -50, opacity: 0.3, ease: 'none', scrollTrigger: { trigger: w, start: 'bottom 45%', end: 'bottom -5%', scrub: 0.4 } })
+        gsap.fromTo(w, { y: 60, opacity: 0.6 }, { y: 0, opacity: 1, ease: 'none', scrollTrigger: { trigger: w, start: 'top 95%', end: 'top 60%', scrub: 0.4 } })
+        gsap.to(w, { y: -40, ease: 'none', scrollTrigger: { trigger: w, start: 'bottom 40%', end: 'bottom -5%', scrub: 0.4 } })
       })
     })
     return () => { ctx.revert(); gsap.ticker.remove(tick); lenis.destroy() }
@@ -46,10 +47,11 @@ export default function App3() {
       <main>
         <Hero ready={ready} />
         <About />
+        <Stats />
         <ReelScrub />
         <Highlights />
         <Experience />
-        <Projects />
+        <Ribbon />
         <Skills />
         <Connect />
       </main>

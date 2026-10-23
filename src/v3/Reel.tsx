@@ -7,7 +7,7 @@ import './reel.css'
    stage moves into the pinned section below the hero, where scrolling scrubs it from 0 to 15 s. */
 export function ReelScrub() {
   return (
-    <section id="reel" className="sec dark scrub" aria-label="The reel, scrubbed by scrolling">
+    <section id="reelsec" className="sec dark scrub" aria-label="The reel, scrubbed by scrolling">
       <div className="track" id="scrubTrack">
         <div className="sticky">
           <div className="frame" id="scrubFrame" />

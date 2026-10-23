@@ -132,6 +132,7 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean; scrubFram
     var pillKeys = null;
     function measure() {
       var s3 = stage.querySelector('.s3'); s3.classList.add('on');
+      words.forEach(function (w) { w.style.opacity = '1'; w.style.transform = 'none'; w.style.filter = 'none'; });
       wordW = words.map(function (w) { return w.getBoundingClientRect().width / (parseFloat(stage.style.getPropertyValue('--s')) || 1) + 120; });
       pillKeys = [[0, 1920], [6.52, 1920], [6.56, 160]];
       WORD_T.forEach(function (tt, i) { pillKeys.push([tt - 0.12, wordW[i]]); });
@@ -205,7 +206,7 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean; scrubFram
       }
       /* shot 3: one shape, never cuts: the bar becomes a pill, each word enters as the pill resizes to fit it, then it rounds into a lamp */
       if (t >= S3[0] && t < S3[1]) {
-        if (!pillKeys) measure();
+        if (!pillKeys || wordW.some(function (w) { return !(w > 130); })) measure();
         var pw = track(t, pillKeys, 140, 22);
         var ph = track(t, [[0, 1080], [6.52, 1080], [6.56, 160], [6.93, 220], [9.35, 220]], 140, 22);
         var rounding = spring(t - 9.35, 120, 20);
@@ -302,7 +303,7 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean; scrubFram
       reelReady = true; window.reelReady = true;
       seek(0);
       if (renderMode) return;
-      if (!playIntro) { finished = true; if (reduce) { if (scrubFrame) { scrubbing = true; scrubFrame.appendChild(stage); fit(); seek(5.6); } } else { startScrub(); } if (opts.onEnd) opts.onEnd(); return; }
+      if (!playIntro) { finished = true; var go = function () { scrubFrame = opts.scrubFrame = document.getElementById('scrubFrame'); scrubTrack = document.getElementById('scrubTrack'); scrubBar = document.getElementById('scrubBar'); if (!scrubFrame) { setTimeout(go, 50); return; } if (reduce) { scrubbing = true; scrubFrame.appendChild(stage); fit(); seek(5.6); } else { startScrub(); } }; go(); if (opts.onEnd) opts.onEnd(); return; }
       var start = performance.now();
       (function frame(now) {
         if (finished) return;
