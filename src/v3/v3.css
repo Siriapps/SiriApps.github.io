@@ -16,7 +16,7 @@
   --line: #e2e5f0;
   --line-dark: rgba(255,255,255,0.14);
   /* single grotesk: headings and body share Inter. To go back to the serif headings, set --font-display to "Gloock", Georgia, serif. */
-  --font-display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Gloock", "Iowan Old Style", Georgia, serif;
   --font-text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -31,7 +31,7 @@ html.v3 { scroll-behavior: auto; }
 html.v3 ::selection { background: rgba(240,106,176,0.4); color: #fff; }
 html.v3 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); }
 html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
-.v3 h1, .v3 h2, .v3 h3 { font-family: var(--font-display); font-weight: 600; margin: 0; letter-spacing: -0.035em; }
+.v3 h1, .v3 h2, .v3 h3 { font-family: var(--font-display); font-weight: 400; margin: 0; letter-spacing: -0.01em; }
 .v3 p { margin: 0; }
 .v3 img { display: block; max-width: 100%; }
 .v3 a { color: inherit; }
@@ -155,7 +155,7 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 .dial .ring { fill: none; stroke: var(--line); stroke-width: 1; }
 .dial .arc { fill: none; stroke: url(#arcg); stroke-width: 6; stroke-linecap: round; transform-origin: 50% 50%; will-change: transform; }
 .dial .rider { fill: var(--blue); stroke: #fff; stroke-width: 3; }
-.dial .num { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 64px; line-height: 1; color: var(--ink); }
+.dial .num { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font-family: var(--font-display); font-weight: 400; font-size: 64px; line-height: 1; color: var(--ink); }
 .dial .num > span { display: inline-block; }
 .dial .num small { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px; }
 .hilist { list-style: none; margin: 0; padding: 0 0 0 44px; position: relative; }
@@ -296,7 +296,7 @@ html.has-cursor body { cursor: none; }
 .cube .lx { background: linear-gradient(180deg, hsl(200 90% 60% / 0.55), hsl(260 85% 58% / 0.55)); filter: hue-rotate(var(--h)); transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); }
 .cube .ty { background: linear-gradient(135deg, hsl(340 95% 70% / 0.9), hsl(190 95% 70% / 0.9)); filter: hue-rotate(var(--h)); transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); }
 .cube .by { background: hsl(250 60% 30% / 0.6); transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
-.cube .fz b { font-family: var(--font-display); font-weight: 600; font-size: 14px; line-height: 1.05; letter-spacing: -0.02em; overflow-wrap: anywhere; text-shadow: 0 1px 6px rgba(0,0,0,0.35); }
+.cube .fz b { font-family: var(--font-display); font-weight: 400; font-size: 14px; line-height: 1.05; letter-spacing: -0.02em; overflow-wrap: anywhere; text-shadow: 0 1px 6px rgba(0,0,0,0.35); }
 .cube .fz small { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
 .cube.sealed .fz { background: repeating-linear-gradient(135deg, hsl(250 50% 40% / 0.85) 0 8px, hsl(250 50% 28% / 0.85) 8px 16px); }
 .cube.sealed .fz b::before { content: "6 "; opacity: 0.6; }
@@ -314,7 +314,7 @@ html.has-cursor body { cursor: none; }
 .specs2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 24px; margin: 0 auto; max-width: 1180px; }
 @media (min-width: 560px) { .specs2 { grid-template-columns: repeat(4, 1fr); } }
 .specs2 div { display: flex; flex-direction: column-reverse; gap: 8px; align-items: center; text-align: center; }
-.specs2 .fig { margin: 0; font-family: var(--font-display); font-weight: 600; letter-spacing: -0.04em; font-size: clamp(56px, 9vw, 128px); line-height: 1; color: var(--ink); display: flex; opacity: 0; }
+.specs2 .fig { margin: 0; font-family: var(--font-display); font-weight: 400; letter-spacing: -0.02em; font-size: clamp(56px, 9vw, 128px); line-height: 1; color: var(--ink); display: flex; opacity: 0; }
 .specs2 .ch { display: inline-block; }
 .specs2 .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .stage2 { display: none; } .specs2 .fig, .specs2 .lbl { opacity: 1; } }
@@ -329,7 +329,7 @@ html.has-cursor body { cursor: none; }
 .pane { position: absolute; inset: 0; border-radius: 14px; overflow: hidden; background: radial-gradient(120% 90% at 20% 10%, var(--a), transparent 55%), radial-gradient(90% 90% at 90% 90%, var(--b), transparent 50%), var(--navy-2); border: 1px solid rgba(255,255,255,0.18); backface-visibility: hidden; filter: brightness(var(--lit, 1)); transition: filter 200ms ease; }
 .pane img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
 .pane .idx { position: absolute; top: 14px; left: 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: #fff; background: rgba(15,23,51,0.55); padding: 4px 8px; border-radius: 999px; }
-.pane .ttl { position: absolute; left: 16px; right: 16px; bottom: 14px; font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: -0.03em; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+.pane .ttl { position: absolute; left: 16px; right: 16px; bottom: 14px; font-family: var(--font-display); font-weight: 400; font-size: 24px; letter-spacing: -0.03em; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
 .pane.on { border-color: rgba(255,255,255,0.6); box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7); }
 .rb-caption { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 40px; max-width: 640px; display: grid; gap: 6px; z-index: 200; padding: 18px 20px; border-radius: 12px; background: rgba(15,23,51,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--line-dark); }
 .rb-caption h3 { font-size: clamp(24px, 2.6vw, 34px); }
