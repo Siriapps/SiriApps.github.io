@@ -8,5 +8,8 @@ import { piece as adobe } from './adobe'
 import { piece as yc } from './yc'
 import { piece as deans } from './deans'
 import { piece as qcomet } from './qcomet'
+import { piece as hackai } from './hackai'
+import { piece as yale } from './yale'
+import { piece as acm } from './acm'
 
-export const pieces: Piece[] = [icpc, hackutd, qiskit, wtm, hackerrank, adobe, yc, deans, qcomet]
+export const pieces: Piece[] = [icpc, hackutd, qiskit, wtm, hackerrank, adobe, yc, deans, qcomet, hackai, yale, acm]

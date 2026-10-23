@@ -6,26 +6,25 @@ import { type Piece, spring, ramp, smooth, clamp, C, F } from './motion'
 const hash = (n: number) => { const x = Math.sin(n * 91.7 + 17.3) * 43758.5453; return x - Math.floor(x) }
 const HOLD = 5.2
 const COLS = 12, ROWS = 8
-const X0 = 112, Y0 = 118, DX = 44, DY = 44
+const X0 = 112, Y0 = 112, DX = 48, DY = 48
 const at = (c: number, r: number) => ({ x: X0 + c * DX, y: Y0 + r * DY })
 
 // decoder path from the left edge to the right edge
+const ROUTE = [5, 5, 3, 3, 3, 1, 1, 2, 4, 4, 4, 3] // row the decoder settles on in each column
 const PATH: [number, number][] = (() => {
-  let r = 4
-  const out: [number, number][] = [[0, r]]
+  const out: [number, number][] = [[0, ROUTE[0]]]
   for (let c = 1; c < COLS; c++) {
-    const v = hash(c * 7 + 3)
-    if (v < 0.34 && r > 1) { r--; out.push([c - 1, r]) }
-    else if (v > 0.62 && r < ROWS - 2) { r++; out.push([c - 1, r]) }
+    let r = ROUTE[c - 1]
+    while (r !== ROUTE[c]) { r += Math.sign(ROUTE[c] - r); out.push([c - 1, r]) }
     out.push([c, r])
   }
   return out
 })()
 const onPath = (c: number, r: number) => PATH.some(([pc, pr]) => pc === c && pr === r)
-// dead ends the decoder tries and abandons: [path index, dc, dr, length]
-const PROBES: [number, number, number, number][] = [[3, 0, 1, 2], [7, 0, -1, 2], [11, 1, 1, 1], [14, 0, 1, 2]]
+// dead ends the decoder tries and abandons: [path index, column offset, row offset], straight two-cell runs off the path
+const PROBES: [number, number, number][] = [[1, 2, 0], [5, 0, 2], [9, 0, 2], [15, 0, 2], [17, 0, 2]]
 
-const PATH_T0 = 1.15, PATH_T1 = 3.1
+const PATH_T0 = 1.1, PATH_T1 = 3.2
 
 function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
   const t = Math.min(t0, HOLD)
@@ -58,20 +57,17 @@ function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
 
   // probes: a short pink feeler that goes cold
   const head = clamp((t - PATH_T0) / (PATH_T1 - PATH_T0)) * (PATH.length - 1)
-  for (const [i, dc, dr, len] of PROBES) {
+  for (const [i, dc, dr] of PROBES) {
     const tStart = PATH_T0 + (i / (PATH.length - 1)) * (PATH_T1 - PATH_T0)
     const grow = smooth(ramp(t, tStart, tStart + 0.18))
     const cold = smooth(ramp(t, tStart + 0.22, tStart + 0.5))
     if (grow <= 0 || i >= PATH.length) continue
     const [pc, pr] = PATH[i]
-    let ec = pc + dc * len, er = pr + dr * len
-    if (dc && dr) { ec = pc + dc; er = pr + dr * len }
-    const A = at(pc, pr), B = at(dc && dr ? pc : ec, er)
-    ctx.strokeStyle = cold < 1 ? `rgba(240,106,176,${0.85 * (1 - cold) + 0.0})` : 'transparent'
-    ctx.lineWidth = 4
-    ctx.setLineDash([2, 6])
+    const B = at(pc + dc, pr + dr)
+    const A = at(pc, pr)
+    ctx.strokeStyle = `rgba(240,106,176,${0.9 * (1 - cold) + 0.12 * cold})`
+    ctx.lineWidth = 3
     ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(A.x + (B.x - A.x) * grow, A.y + (B.y - A.y) * grow); ctx.stroke()
-    ctx.setLineDash([])
     // a small cross where it gave up
     if (cold > 0 && cold < 1) {
       ctx.strokeStyle = `rgba(18,26,47,${0.5 * Math.sin(cold * Math.PI)})`; ctx.lineWidth = 2
@@ -124,7 +120,7 @@ function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
     const settleIn = spring(t - 3.6, 260, 14)
     ctx.save()
     ctx.globalAlpha = show
-    ctx.translate(712, 400)
+    ctx.translate(730, 400)
     ctx.scale(pop, pop)
     ctx.font = `230px ${F.display}`; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'
     ctx.fillStyle = C.navy
@@ -140,7 +136,7 @@ function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
     if (lab > 0) {
       ctx.globalAlpha = lab * clamp(settleIn)
       ctx.font = `400 20px ${F.mono}`; ctx.fillStyle = C.ink; ctx.textAlign = 'left'
-      ctx.fillText('faster decoding', 718, 448)
+      ctx.fillText('faster decoding', 736, 448)
       ctx.globalAlpha = 1
     }
   }

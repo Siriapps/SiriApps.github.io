@@ -31,8 +31,8 @@ function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
   ctx.setTransform(s, 0, 0, s, (W - 1280 * s) / 2, (H - 720 * s) / 2)
 
   const move = track(t, [[0, 0], [3.1, 1]], 80, 18)
-  const cx = 640 + 330 * move, cy = 320 + 40 * move
-  const R = 190 - 20 * move
+  const cx = 640 + 320 * move, cy = 320 + 30 * move
+  const R = 190 + 10 * move
   const line = (a: number) => `rgba(255,255,255,${a})`
   ctx.lineCap = 'round'; ctx.lineJoin = 'round'
 

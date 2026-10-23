@@ -61,7 +61,7 @@ export const piece: Piece = {
       const g = ctx.createConicGradient(a0, cx, cy)
       g.addColorStop(0, C.pink)
       g.addColorStop(0.75, C.violet)
-      g.addColorStop(1, C.violet)
+      g.addColorStop(0.99, C.pink)
       ctx.strokeStyle = g
       ctx.beginPath()
       const ae = a0 + (sweep * v) / 4

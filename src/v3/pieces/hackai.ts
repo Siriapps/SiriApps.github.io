@@ -4,15 +4,15 @@ import { type Piece, spring, track, ramp, smooth, clamp, C, F } from './motion'
 // then the graph steps aside and a serif "1st" stamps down onto the page.
 const hash = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x) }
 
-const LABELS = ['gradient', 'chain rule', 'entropy', 'priors', 'Bayes rule', 'eigenvector', 'loss', 'softmax', 'KL div', 'likelihood', 'Markov', 'attention', 'basis', 'variance']
-const COLS = 5, ROWS = 3
+const LABELS = ['gradient', 'chain rule', 'Bayes rule', 'priors', 'entropy', 'eigenvector', 'loss', 'softmax', 'KL div', 'likelihood', 'Markov', 'attention', 'basis', 'variance']
+const COLS = 5
 const NODES = LABELS.map((label, i) => {
   const c = i % COLS, r = Math.floor(i / COLS)
-  const x = 200 + c * 220 + (hash(i) - 0.5) * 110 + (r % 2) * 60
-  const y = 170 + r * 190 + (hash(i + 40) - 0.5) * 90
+  const x = 150 + c * 205 + (hash(i) - 0.5) * 100 + (r % 2) * 60
+  const y = 165 + r * 200 + (hash(i + 40) - 0.5) * 90
   return { x, y, label, rad: 9 + hash(i + 80) * 7, at: 0.1 + (x - 150) / 1100 * 1.3 }
 })
-const TARGET = 4 // 'Bayes rule'
+const TARGET = 2 // 'Bayes rule'
 // Each node joins its two nearest neighbours; edge appears once both ends exist.
 const EDGES: [number, number][] = []
 NODES.forEach((a, i) => {
@@ -34,11 +34,11 @@ function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
   // Graph camera: full frame, then it slides right and shrinks to make room for the stamp.
   const move = track(t, [[0, 0], [3.0, 1]], 90, 19)
   const gs = 1 - 0.47 * move
-  const gx = 0 + 590 * move, gy = 0 + 150 * move
+  const gx = 0 + 610 * move, gy = 0 + 130 * move
   const P = (n: { x: number; y: number }) => ({ x: gx + n.x * gs, y: gy + n.y * gs })
 
-  const forget = smooth(ramp(t, 1.5, 1.9))     // target node greys out
-  const back = smooth(ramp(t, 2.15, 2.55))     // and comes back
+  const forget = smooth(ramp(t, 1.3, 1.6))     // target node greys out
+  const back = smooth(ramp(t, 2.1, 2.45))     // and comes back
   const pink = forget * (1 - back) < 0.5 && back > 0
 
   // edges
@@ -101,7 +101,7 @@ function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
     ctx.globalAlpha = tagA
     ctx.font = `500 ${13 * gs}px ${F.mono}`
     ctx.textAlign = 'left'
-    const tx = T.x + 22 * gs, ty = T.y - 34 * gs
+    const tx = T.x + 30 * gs, ty = T.y - 52 * gs
     const w = ctx.measureText('RESURFACED 14d').width
     ctx.fillStyle = C.pink
     ctx.fillRect(tx - 8 * gs, ty - 13 * gs, w + 16 * gs, 26 * gs)
@@ -112,13 +112,13 @@ function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
 
   // the stamp: big serif "1st" drops from oversize, lands with a small recoil
   const st = t - 3.15
+  ctx.font = `300px ${F.display}`
+  const half = ctx.measureText('1st').width / 2
   if (st > 0) {
     const land = spring(st, 420, 22)
     const sc = 1 + 0.9 * (1 - land)
     const rot = (-0.06) * (1 - land) - 0.035
     const a = clamp(st / 0.08)
-    ctx.font = `300px ${F.display}`
-    const half = ctx.measureText('1st').width / 2
     ctx.save()
     ctx.translate(108 + half, 400)
     ctx.rotate(rot)
@@ -133,7 +133,7 @@ function seek(t0: number, ctx: CanvasRenderingContext2D, W: number, H: number) {
     const imp = ramp(t, 3.22, 3.6)
     if (imp > 0 && imp < 1) {
       ctx.strokeStyle = C.navy; ctx.globalAlpha = (1 - imp) * 0.35; ctx.lineWidth = 2
-      ctx.beginPath(); ctx.ellipse(250, 405, 150 + imp * 90, 10 + imp * 6, 0, 0, Math.PI * 2); ctx.stroke()
+      ctx.beginPath(); ctx.ellipse(108 + half, 405, 150 + imp * 90, 10 + imp * 6, 0, 0, Math.PI * 2); ctx.stroke()
       ctx.globalAlpha = 1
     }
   }
