@@ -1,0 +1,69 @@
+/* Reel styles, ported from the AI1 page. */
+/* WebGL surfaces: a noise-displaced gradient (after shadergradient) and plasma inside type (after liquid-logo) */
+.sg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.x-sgwrap { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.9; }
+.x-sgwrap::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(15,23,51,0.72), rgba(15,23,51,0.25) 55%, rgba(15,23,51,0.05)); }
+/* liquid glass chips (after liquid-glass-js): blur, saturate, light tint, rim highlight */
+.glass { backdrop-filter: blur(12px) saturate(1.5); -webkit-backdrop-filter: blur(12px) saturate(1.5); background: linear-gradient(180deg, rgba(255,255,255,0.26), rgba(255,255,255,0.08)); border: 1px solid rgba(255,255,255,0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(20,32,27,0.12), 0 18px 40px -18px rgba(20,32,27,0.5); border-radius: 18px; }
+
+
+/* ============ The reel: 15 seconds, every frame a pure function of time (window.seek) ============ */
+.reel { position: fixed; inset: 0; z-index: 30; background: var(--paper); display: grid; place-items: center; overflow: hidden; }
+.frame { position: relative; overflow: hidden; }
+.reel[hidden] { display: none; }
+html.reel-pending .reel[hidden] { display: grid; }
+html.reel-pending .reel-skip { visibility: hidden; }
+html.reel-pending body, body.reel-on { overflow: hidden; }
+.stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: top left; transform: scale(var(--s, 1)); overflow: hidden; background: var(--paper); font-family: var(--font-display); }
+.stage > .shot { position: absolute; inset: 0; display: none; }
+.stage .s1 { background: var(--navy); }
+.stage .s1 .sg { opacity: 0.55; mix-blend-mode: screen; }
+.stage .s1 .serif { color: #fff; }
+.stage .s1 .em { color: #e7c6ff; }
+.stage .s1 .mono { color: rgba(255,255,255,0.7); }
+.stage > .shot.on { display: block; }
+.stage .serif { font-family: var(--font-display); color: var(--ink); line-height: 0.98; letter-spacing: -0.015em; }
+.stage .em { color: var(--pink); font-style: italic; }
+.stage .mono { font-family: var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+/* shot 1: soft gradient field + icon grid + headline */
+.grid-ic { position: absolute; left: -400px; top: -400px; width: 2800px; height: 2000px; will-change: transform, opacity; }
+.h1wrap { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center; }
+.h1wrap .serif { font-size: 180px; }
+.wm { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.06em 0.1em; }
+.wm > span { display: inline-block; will-change: transform; }
+.sub { position: absolute; left: 0; right: 0; top: 50%; margin-top: 140px; text-align: center; font-size: 22px; }
+/* shot 2: cities */
+.city { position: absolute; inset: 0; background-size: cover; background-position: center; will-change: transform; }
+.strip { position: absolute; top: 0; bottom: 0; width: 25%; background-size: cover; background-position: center; will-change: transform, clip-path; overflow: hidden; }
+.strip::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(to top, rgba(20,32,27,0.8), rgba(20,32,27,0)); }
+.clabel { position: absolute; left: 26px; bottom: 30px; color: #fff; z-index: 2; padding: 16px 20px 18px; }
+.clabel .name { font-family: var(--font-display); font-size: 52px; line-height: 1; }
+.clabel .note { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 10px; max-width: 24ch; line-height: 1.5; }
+.corner { position: absolute; right: 56px; top: 48px; text-align: right; color: #fff; z-index: 3; padding: 18px 24px 20px; }
+.corner .big { font-family: var(--font-display); font-size: 64px; line-height: 1; }
+.corner .mono { color: #fff; font-size: 14px; margin-top: 10px; text-shadow: 0 1px 2px rgba(20,32,27,0.5); }
+.wipe { position: absolute; inset: 0; background: var(--paper); will-change: clip-path; }
+/* shot 3: one shape that never cuts */
+.pill { position: absolute; left: 50%; top: 50%; height: 220px; border-radius: 110px; background: var(--navy-2); transform: translate(-50%, -50%); will-change: width, transform, border-radius; display: grid; place-items: center; overflow: hidden; }
+.pill .word { position: absolute; white-space: nowrap; font-family: var(--font-display); font-size: 120px; color: #fff; line-height: 1; will-change: transform, opacity, filter; }
+.pill-note { position: absolute; left: 0; right: 0; top: 50%; margin-top: 150px; text-align: center; font-size: 20px; }
+/* shot 4: highlights */
+.hilist { position: absolute; left: 240px; top: 50%; transform: translateY(-50%); display: grid; gap: 54px; }
+.hi { display: grid; gap: 10px; will-change: transform, opacity, filter; }
+.hi .serif { font-size: 92px; }
+.hi .mono { font-size: 16px; color: var(--ink-soft); font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.hilist .dot { position: absolute; left: -96px; top: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--blue); will-change: transform; }
+/* shot 4 (old): the page itself, scrolling */
+/* shot 5: close */
+.endwrap { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
+.endwrap .serif { font-size: 132px; }
+.namebox { position: relative; width: 1600px; height: 200px; margin: 0 auto; }
+.namebox .serif { position: absolute; inset: 0; line-height: 200px; }
+.namebox canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.namebox.gl .serif { visibility: hidden; }
+.endwrap .tag { font-size: 26px; color: var(--ink-soft); font-family: var(--font-text); margin-top: 24px; }
+.endwrap .cta { display: inline-block; margin-top: 44px; padding: 26px 44px; border-radius: 999px; background: var(--navy); color: #fff; font-family: var(--font-text); font-weight: 500; font-size: 28px; }
+.endpool { display: none; }
+.reel-skip { position: absolute; right: 20px; bottom: 18px; font: 500 12px/1 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: rgba(255,255,255,0.55); border: 1px solid rgba(20,32,27,0.35); border-radius: 999px; padding: 10px 14px; cursor: pointer; z-index: 2; transition: transform 160ms var(--ease-out); backdrop-filter: blur(10px) saturate(1.4); -webkit-backdrop-filter: blur(10px) saturate(1.4); }
+.reel-skip:active { transform: scale(0.97); }
+html.render .reel-skip { display: none; }
