@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
    Scroll turns the ring one full circle; the pane facing you is lit, the ones behind fall into shade.
    A key light sweeps with the turn. CSS 3D so the type and screenshots stay sharp; a stacked list on phones. */
 const N = projects.length
-const SLUGS = ['cue', 'pondr', 'safeway', 'harmoniq', 'remix', 'rgnn', 'streamsign', 'matcha', 'reelskill', 'cabiniq', 'asl']
+const SLUGS = ['minq', 'cue', 'pondr', 'safeway', 'harmoniq', 'remix', 'rgnn', 'streamsign', 'matcha', 'reelskill', 'cabiniq', 'asl']
 const PAIRS: [string, string][] = [['#ff8a3d', '#7c5cff'], ['#f06ab0', '#2f5bff'], ['#7c5cff', '#ffd166'], ['#2f5bff', '#f06ab0']]
 
 export default function Ribbon() {

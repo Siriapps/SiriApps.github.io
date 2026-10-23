@@ -354,6 +354,6 @@ html.has-cursor body { cursor: none; }
 }
 
 /* The highlight piece: a small motion card under the dial, one per entry */
-.piece-wrap { margin-top: 22px; width: 300px; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--navy); display: none; }
+.piece-wrap { margin-top: 22px; width: 100%; max-width: 340px; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--navy); display: none; }
 @media (min-width: 1000px) { .piece-wrap { display: block; } }
 .piece { width: 100%; height: 100%; display: block; }

@@ -26,7 +26,7 @@ export const recent: Entry[] = [
     dates: 'July 25 - 26, 2026',
     role: 'YC AI Startup School',
     company: 'Y Combinator · San Francisco',
-    desc: 'Selected for the invite-only cohort at Chase Center alongside NeurIPS authors and Olympiad medalists. Two days with the people building the frontier, centered on the questions I care about most: how agents will reshape the web, how physics-informed models reach production, and where quantum computing fits next.',
+    desc: 'Two days at Chase Center with Jensen Huang, Boris Cherny, Dmitri Dolgov, Chelsea Finn, Alexandr Wang and Sam Altman on stage. Presented at YCML, YC's first research poster session, joined the female founders session, and left with a notebook of lessons: the demo is the first 1 percent and the nines are the product; your model is table stakes, eval is the moat; do not over-prompt, give it what to do and how to verify.',
     status: 'COMPLETE',
   },
   {
@@ -156,6 +156,15 @@ export const earlier: Entry[] = [
 export type Project = { title: string; subtitle: string; desc: string; tags: string[]; accent: string; github: string; live: string }
 export const projects: Project[] = [
   {
+    title: 'MinQ',
+    subtitle: 'HackMIT 2026, featured by Arduino',
+    desc: 'A tabletop quantum computer made of light. Lasers, polarizers and a half-wave plate cut into twelve pieces run the Bernstein-Vazirani algorithm on the table: a friend hides a key, the classical player asks one question at a time, then the lasers fire once and the light hands over the whole key in a single flash. My first hardware project.',
+    tags: ['Optics', 'Arduino', 'Bernstein-Vazirani', 'Hardware'],
+    accent: '#f06ab0',
+    github: 'https://github.com/Siriapps/MinQ-HackMIT-',
+    live: '#',
+  },
+  {
     title: 'Cue',
     subtitle: 'Intent-aware AI workspace agent',
     desc: 'Chrome extension that reads browsing context and uses a multi-agent Google ADK pipeline to predict your next five tasks. Actions execute autonomously across Google Workspace via MCP.',
@@ -257,7 +266,7 @@ export const projects: Project[] = [
 ]
 
 export const highlights = [
-  { slug: 'yc', big: true, t: 'YC AI Startup School', d: 'Selected for the invite-only cohort at Chase Center, San Francisco, July 2026.' },
+  { slug: 'yc', big: true, t: 'YC AI Startup School', d: 'Invite-only cohort at Chase Center, San Francisco, July 2026. Talks by Jensen Huang, Boris Cherny, Dmitri Dolgov, Chelsea Finn, Alexandr Wang and Sam Altman; presented at YCML, the first YC research poster session.' },
   { slug: 'deans', big: true, t: "Dean's List, Spring 2026", d: 'UT Dallas, Computer Science Honors, AES Merit Scholar.' },
   { slug: 'qcomet', big: true, t: 'Founding President, Quantum Comet', d: "Started UT Dallas's first quantum student organization in October 2026, with a faculty advisor and a six-officer board." },
   { slug: 'hackai', t: '1st Place, HackAI Dallas 2026', d: 'Pondr, adaptive learning on living knowledge graphs.' },
