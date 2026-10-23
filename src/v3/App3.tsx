@@ -31,7 +31,7 @@ export default function App3() {
     gsap.ticker.lagSmoothing(0)
     // section handoffs: each screen's content glides in as it arrives and lifts away as the next one takes over
     const ctx = gsap.context(() => {
-      document.querySelectorAll<HTMLElement>('.sec:not(.hero):not(.projects):not(.scrub) > .wrap').forEach(w => {
+      document.querySelectorAll<HTMLElement>('.sec:not(.hero):not(.projects):not(.scrub):not(.highlights) > .wrap').forEach(w => {
         gsap.fromTo(w, { y: 70, opacity: 0.2 }, { y: 0, opacity: 1, ease: 'none', scrollTrigger: { trigger: w, start: 'top 92%', end: 'top 45%', scrub: 0.4 } })
         gsap.to(w, { y: -50, opacity: 0.3, ease: 'none', scrollTrigger: { trigger: w, start: 'bottom 45%', end: 'bottom -5%', scrub: 0.4 } })
       })
