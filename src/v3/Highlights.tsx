@@ -3,34 +3,36 @@ import { gsap } from 'gsap'
 import { highlights } from './data'
 import { reduced, useReveals } from './hooks'
 
-/* Tile columns drift up and down with scroll; a dot springs with a bounce to the entry nearest the reading line. */
+/* A sticky dial turns one full circle over the section; a goo droplet slides to the entry under the reading line. */
 export default function Highlights() {
   const ref = useRef<HTMLElement>(null)
   const list = useRef<HTMLOListElement>(null)
-  const dot = useRef<HTMLSpanElement>(null)
+  const lead = useRef<HTMLElement>(null)
+  const tail = useRef<HTMLElement>(null)
+  const arc = useRef<SVGCircleElement>(null)
   const [on, setOn] = useState(0)
   useReveals(ref)
   useEffect(() => {
-    const sec = ref.current, ul = list.current, d = dot.current
-    if (!sec || !ul || !d) return
-    const cols = Array.from(sec.querySelectorAll<SVGGElement>('.tcol'))
-    const dotTo = reduced() ? null : gsap.quickTo(d, 'y', { duration: 0.75, ease: 'back.out(2.2)' })
+    const sec = ref.current, ul = list.current
+    if (!sec || !ul || !lead.current || !tail.current) return
+    const still = reduced()
+    const toLead = still ? null : gsap.quickTo(lead.current, 'y', { duration: 0.55, ease: 'back.out(1.6)' })
+    const toTail = still ? null : gsap.quickTo(tail.current, 'y', { duration: 0.95, ease: 'power3.out' })
     let last = -1, raf = 0
     const f = () => {
       raf = 0
       const r = sec.getBoundingClientRect(), vh = window.innerHeight
       if (r.bottom < -200 || r.top > vh + 200) return
-      const prog = (vh - r.top) / (vh + r.height)
-      if (!reduced()) cols.forEach((c, i) => { c.style.transform = `translateY(${(prog - 0.5) * (i % 2 ? -260 : 260)}px)` })
+      const prog = Math.min(1, Math.max(0, (vh * 0.5 - r.top) / (r.height - vh * 0.3)))
+      if (arc.current && !still) arc.current.style.transform = `rotate(${prog * 360 - 90}deg)`
       const items = Array.from(ul.children) as HTMLElement[]
       const line = vh * 0.45
       let best = -1, bd = Infinity
       items.forEach((li, i) => { const b = li.getBoundingClientRect(); const dd = Math.abs((b.top + b.bottom) / 2 - line); if (dd < bd) { bd = dd; best = i } })
       if (best !== last && best >= 0) {
         last = best; setOn(best)
-        const y = items[best].offsetTop + ul.offsetTop + 26
-        d.style.left = `${ul.offsetLeft + 4}px`
-        if (dotTo) dotTo(y); else d.style.transform = `translateY(${y}px)`
+        const y = items[best].offsetTop + 22
+        if (toLead && toTail) { toLead(y); toTail(y + 3) }
       }
     }
     const h = () => { if (!raf) raf = requestAnimationFrame(f) }
@@ -39,19 +41,30 @@ export default function Highlights() {
   }, [])
   return (
     <section id="highlights" className="sec light highlights" ref={ref}>
-      <svg className="tiles" aria-hidden="true" viewBox="0 0 1920 1400" preserveAspectRatio="xMidYMid slice">
-        <defs><pattern id="tp3" width="96" height="96" patternUnits="userSpaceOnUse"><rect x="14" y="14" width="68" height="68" rx="16" fill="none" stroke="#121a2f" /></pattern></defs>
-        {[0, 320, 640, 960, 1280, 1600].map(x => <g key={x} className="tcol"><rect x={x} y="-700" width="96" height="2800" fill="url(#tp3)" /></g>)}
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <defs>
+          <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b" /><feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" /></filter>
+          <linearGradient id="arcg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#ff8a3d" /><stop offset="0.5" stopColor="#f06ab0" /><stop offset="1" stopColor="#7c5cff" /></linearGradient>
+        </defs>
       </svg>
       <div className="wrap hi-grid">
-        <h2 className="masked">Highlights</h2>
+        <div className="hi-side">
+          <h2 className="masked">Highlights</h2>
+          <div className="dial" aria-hidden="true">
+            <svg viewBox="0 0 240 240">
+              <circle className="ring" cx="120" cy="120" r="112" />
+              <circle className="arc" ref={arc} cx="120" cy="120" r="112" strokeDasharray="352 704" />
+            </svg>
+            <div className="num">{String(on + 1).padStart(2, '0')}<small>of {highlights.length}</small></div>
+          </div>
+        </div>
         <div style={{ position: 'relative' }}>
           <ol className="hilist" ref={list}>
             {highlights.map((h, i) => (
               <li key={h.t} className={`${h.big ? 'big' : ''} ${on === i ? 'on' : ''}`}><span className="t">{h.t}</span><span className="d">{h.d}</span></li>
             ))}
           </ol>
-          <span className="hdot" ref={dot} aria-hidden="true" />
+          <div className="drop" aria-hidden="true"><i className="lead" ref={lead} /><i className="tail" ref={tail} /></div>
         </div>
       </div>
     </section>

@@ -111,10 +111,10 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean; scrubFram
 
     /* split the hook headline into masked words */
     var hook = document.getElementById('hookText');
-    var hookWords = ['Built', 'at', 'one', 'desk.'];
+    var hookWords = ['Live', 'in', 'the', 'future,', 'then', 'build', "what's", 'missing.'];
     var hookSpans = hookWords.map(function (w, i) {
       var m = document.createElement('span'); m.className = 'wm';
-      var s = document.createElement('span'); s.textContent = w; if (i === 3) s.className = 'em';
+      var s = document.createElement('span'); s.textContent = w; if (i === 7) s.className = 'em';
       m.appendChild(s); hook.appendChild(m); hook.appendChild(document.createTextNode(' '));
       return s;
     });
@@ -177,7 +177,7 @@ export function mountReel(opts: { onEnd?: () => void; force?: boolean; scrubFram
       if (t >= S1[0] && t < S1[1]) {
         if (sgHook) drawSG(sgHook, 2.0 + t, SG_DARK);
         hookSpans.forEach(function (s, i) {
-          var p = spring(t - (0.25 + i * 0.28), 120, 20);
+          var p = spring(t - (0.2 + i * 0.16), 120, 20);
           var lift = spring(t - 2.45, 200, 24);
           s.style.transform = 'translateY(' + (112 - 112 * p - 130 * lift) + '%)';
         });

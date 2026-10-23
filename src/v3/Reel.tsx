@@ -10,7 +10,6 @@ export function ReelScrub() {
     <section id="reel" className="sec dark scrub" aria-label="The reel, scrubbed by scrolling">
       <div className="track" id="scrubTrack">
         <div className="sticky">
-          <div className="cap"><h2>The reel, at your pace.</h2><p className="mono">Scroll to scrub it</p></div>
           <div className="frame" id="scrubFrame" />
           <div className="bar" aria-hidden="true"><i id="scrubBar" /></div>
         </div>

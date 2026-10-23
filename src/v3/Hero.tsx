@@ -10,7 +10,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       <Gradient className="gl" />
       <div className="wrap">
         <p className="mono" data-reveal>Lakshmi Siri Appalaneni</p>
-        <h1><span className="line masked">Built at</span><span className="line masked">one desk.</span></h1>
+        <h1><span className="line masked">Live in the future,</span><span className="line masked">then build what's missing.</span></h1>
         <p className="lede" data-reveal style={{ ['--n' as string]: 1 }}>Building intelligent systems across agentic AI, physics-informed ML, and quantum computing, from research papers to production deployments.</p>
         <div className="tags" data-reveal style={{ ['--n' as string]: 2 }}>
           <span className="mono">CS Honors, UT Dallas</span>
