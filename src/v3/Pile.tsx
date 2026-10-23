@@ -30,7 +30,7 @@ export default function Pile() {
     ]
     Composite.add(engine.world, walls)
     // the tilted faces draw above the box, so the floor sits a little below the edge
-    const onResize = () => { Body.setPosition(walls[0], { x: W() / 2, y: H() + 110 }); Body.setPosition(walls[2], { x: W() + 20, y: H() / 2 }) }
+    const onResize = () => { Body.setPosition(walls[0], { x: W() / 2, y: H() - 24 }); Body.setPosition(walls[2], { x: W() + 20, y: H() / 2 }) }
     const nodes: { body: Matter.Body; dom: HTMLElement }[] = []
     let started = false
     const drop = () => {

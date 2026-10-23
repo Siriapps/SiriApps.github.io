@@ -12,8 +12,8 @@ export default function Connect() {
         <Gradient className="gl" colors={['#3b2bb3', '#f06ab0', '#ff8a3d']} speed={0.25} />
         <Pile />
         <div className="wrap">
-          <h2 className="masked">Say hello.</h2>
-          <p className="lede" data-reveal>Open to AI/ML research, full-stack engineering, and quantum computing opportunities. I answer on LinkedIn first. The code lives on GitHub. The cubes are what I am building: the sealed ones are ideas still in the drawer.</p>
+          <h2 className="masked">Say hello!</h2>
+          <p className="lede" data-reveal>Open to AI/ML research, full-stack engineering, and quantum computing opportunities.</p>
           <div className="actions" data-reveal style={{ ['--n' as string]: 1 }}>
             <a className="btn btn-white" href="https://linkedin.com/in/a-lakshmi-siri" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
             <a className="btn btn-ghost" href="https://github.com/Siriapps" target="_blank" rel="noopener noreferrer">GitHub</a>

@@ -13,6 +13,7 @@
   --orange: #ff8a3d;
   --sun: #ffd166;
   --violet: #7c5cff;
+  /* Shader gradient colors: edit src/v3/Gradient.tsx (defaults) or the colors prop in Hero.tsx and Connect.tsx. Three colors: left, right, crest. */
   --line: #e2e5f0;
   --line-dark: rgba(255,255,255,0.14);
   /* single grotesk: headings and body share Inter. To go back to the serif headings, set --font-display to "Gloock", Georgia, serif. */
@@ -281,8 +282,9 @@ html.has-cursor body { cursor: none; }
 [data-reveal].row, [data-reveal].sketch { transform: translateY(26px) scale(0.96); }
 
 /* The pile: glass cubes with gradient faces. Matter.js moves the box; inside it a real 3D cube with six faces tilts a little as it goes. */
-.connect { overflow: hidden; }
-.pile { position: absolute; inset: 0; z-index: 1; pointer-events: auto; perspective: 1400px; }
+.pile { position: absolute; inset: 0; z-index: 1; pointer-events: auto; perspective: 1400px; overflow: visible; }
+.connect { overflow: visible; }
+.foot { position: relative; z-index: 0; }
 .connect .wrap { pointer-events: none; }
 .connect .wrap a { pointer-events: auto; }
 .cube { position: absolute; left: 0; top: 0; width: var(--s); height: var(--s); will-change: transform; transform-style: preserve-3d; }
