@@ -144,35 +144,27 @@ html.v3 :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
 @media (max-width: 859px) { .places-sticky { top: 64px; z-index: 1; padding: 10px 0; background: var(--navy); } }
 @media (prefers-reduced-motion: reduce) { .place { opacity: 1 !important; } .pframe img { transition: none; } }
 
-/* Highlights: a sticky dial on the left turns a full circle as you read; a droplet slides down the list to the entry under the reading line */
-.highlights { overflow: hidden; }
-@media (min-width: 1000px) { .highlights { padding: 0; height: 100vh; height: 100svh; align-content: start; } .highlights .wrap { padding-top: 110px; } .hilist { will-change: transform; } .hi-grid > div:last-child { height: calc(100svh - 110px); overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 12%, #000 80%, transparent); mask-image: linear-gradient(transparent, #000 12%, #000 80%, transparent); } }
-.hi-grid { display: grid; gap: 28px; }
-@media (min-width: 1000px) { .hi-grid { grid-template-columns: 340px 1fr; gap: 56px; align-items: start; } .hi-side { position: sticky; top: 96px; } }
-.hi-side h2 { margin-bottom: 26px; }
-.dial { position: relative; width: 240px; height: 240px; display: none; }
-@media (min-width: 1000px) { .dial { display: block; } }
-.dial svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.dial .ring { fill: none; stroke: var(--line); stroke-width: 1; }
-.dial .arc { fill: none; stroke: url(#arcg); stroke-width: 6; stroke-linecap: round; transform-origin: 50% 50%; will-change: transform; }
-.dial .rider { fill: var(--blue); stroke: #fff; stroke-width: 3; }
-.dial .num { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font-family: var(--font-display); font-weight: 400; font-size: 64px; line-height: 1; color: var(--ink); }
-.dial .num > span { display: inline-block; }
-.dial .num small { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px; }
-.hilist { list-style: none; margin: 0; padding: 0 0 0 44px; position: relative; }
-@media (min-width: 720px) { .hilist { padding-left: 60px; } }
-.hilist li { display: grid; gap: 4px; justify-items: start; padding: 20px 0; border-bottom: 1px solid var(--line); opacity: 0.6; transition: opacity 400ms ease, transform 500ms var(--ease-out); }
-.hilist li.on { opacity: 1; transform: translateX(6px); }
-.hilist .t { font-family: var(--font-display); font-size: 22px; line-height: 1.15; }
-.hilist li.big .t { font-size: clamp(30px, 3.6vw, 48px); display: inline; background: linear-gradient(transparent 64%, var(--pink) 64%, var(--orange)) no-repeat 0 0 / 0% 100%; transition: background-size 700ms var(--ease-out); }
-.hilist li.big.on .t { background-size: 100% 100%; }
-.hilist .d { font-size: 15px; color: var(--ink-soft); max-width: 70ch; }
-/* the droplet: two circles under a goo filter; the follower lags, so the blob stretches while it moves and rounds off when it lands */
-.drop { position: absolute; left: 0; top: 0; width: 60px; height: 100%; pointer-events: none; filter: url(#goo); }
-.drop i { position: absolute; left: 10px; top: 0; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--violet)); will-change: transform; }
-.drop .lead { width: 20px; height: 20px; }
-.drop .tail { width: 14px; height: 14px; left: 13px; }
-@media (prefers-reduced-motion: reduce) { .hilist li { opacity: 1; transform: none; } .drop { display: none; } .dial .arc { transform: none !important; } }
+/* Highlights: one pinned frame, one piece at a time */
+.highlights { padding: 0; }
+@media (min-width: 900px) { .highlights { height: 100vh; height: 100svh; } }
+.hi-frame { display: none; height: 100%; padding: 96px var(--gutter) 40px; box-sizing: border-box; grid-template-rows: auto 1fr auto auto; gap: 18px; max-width: 1180px; margin: 0 auto; width: 100%; }
+@media (min-width: 900px) { .hi-frame { display: grid; } }
+.hi-top { display: flex; justify-content: space-between; align-items: baseline; }
+.hi-stage { position: relative; min-height: 0; display: grid; place-items: center; }
+.hi-stage .piece { width: auto; height: auto; max-width: 100%; max-height: 100%; aspect-ratio: 16 / 9; border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 30px 60px -40px rgba(18,26,47,0.35); background: var(--navy); }
+.hi-cap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 8px 40px; align-items: start; }
+.hi-cap h2 { font-size: clamp(24px, 2.6vw, 36px); margin: 0; animation: cap-in 450ms var(--ease-out) both; }
+.hi-cap p { color: var(--ink-soft); font-size: 15px; max-width: 60ch; animation: cap-in 450ms var(--ease-out) 60ms both; }
+.hi-bar { height: 2px; background: var(--line); }
+.hi-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--orange), var(--pink), var(--violet)); transform: scaleX(0); transform-origin: left; }
+.hi-list-m { list-style: none; margin: 0; padding: 72px var(--gutter); display: grid; gap: 28px; }
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) { .hi-list-m { display: none; } }
+.hi-list-m li { display: grid; gap: 6px; }
+.hi-still { aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--navy); }
+.hi-still .piece { width: 100%; height: 100%; display: block; }
+.hi-list-m h3 { font-size: 22px; }
+.hi-list-m p { color: var(--ink-soft); font-size: 15px; }
+@media (prefers-reduced-motion: reduce) { .hi-frame { display: none; } .hi-list-m { display: grid; } }
 
 /* Experience */
 .xp-grid { display: grid; gap: 28px; }
@@ -354,6 +346,4 @@ html.has-cursor body { cursor: none; }
 }
 
 /* The highlight piece: a small motion card under the dial, one per entry */
-.piece-wrap { margin-top: 22px; width: 100%; max-width: 340px; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--navy); display: none; }
-@media (min-width: 1000px) { .piece-wrap { display: block; } }
 .piece { width: 100%; height: 100%; display: block; }

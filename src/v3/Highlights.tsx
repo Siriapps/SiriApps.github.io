@@ -2,97 +2,58 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { highlights } from './data'
-import { reduced, useReveals } from './hooks'
 import Player from './Player'
+import { useReveals } from './hooks'
 
-/* A sticky dial turns one full circle over the section; a goo droplet slides to the entry under the reading line. */
+gsap.registerPlugin(ScrollTrigger)
+
+/* Highlights is one pinned frame. Scrolling through the section steps from piece to piece: each 6 s piece
+   plays once as it arrives and holds its title frame until the next step. A thin progress bar and the index
+   are the only other furniture. On phones and under reduced motion the pieces stack as still title frames. */
 export default function Highlights() {
   const ref = useRef<HTMLElement>(null)
-  const list = useRef<HTMLOListElement>(null)
-  const lead = useRef<HTMLElement>(null)
-  const tail = useRef<HTMLElement>(null)
-  const arc = useRef<SVGCircleElement>(null)
-  const rider = useRef<SVGCircleElement>(null)
-  const num = useRef<HTMLSpanElement>(null)
+  const bar = useRef<HTMLElement>(null)
   const [on, setOn] = useState(0)
   useReveals(ref)
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
-    const sec = ref.current, ul = list.current
-    if (!sec || !ul) return
-    // desktop: the screen pins and the list glides up through it, so the dial and the droplet stay put
+    const sec = ref.current
+    if (!sec) return
     const mm = gsap.matchMedia()
-    mm.add('(min-width: 1000px) and (prefers-reduced-motion: no-preference)', () => {
-      const dist = () => Math.max(0, ul.scrollHeight - (window.innerHeight - 220))
-      const tw = gsap.to(ul, { y: () => -dist(), ease: 'none', scrollTrigger: { trigger: sec, start: 'top top', end: () => `+=${dist() + 200}`, pin: true, scrub: 0.5, invalidateOnRefresh: true } })
-      return () => { tw.scrollTrigger?.kill(); tw.kill() }
+    mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+      const st = ScrollTrigger.create({
+        trigger: sec, start: 'top top', end: () => `+=${highlights.length * 520}`, pin: true, scrub: true, invalidateOnRefresh: true,
+        onUpdate: self => {
+          const idx = Math.min(highlights.length - 1, Math.floor(self.progress * highlights.length))
+          setOn(idx)
+          if (bar.current) bar.current.style.transform = `scaleX(${self.progress})`
+        },
+      })
+      return () => st.kill()
     })
     return () => mm.revert()
   }, [])
-  useEffect(() => {
-    const sec = ref.current, ul = list.current
-    if (!sec || !ul || !lead.current || !tail.current) return
-    const still = reduced()
-    const toLead = still ? null : gsap.quickTo(lead.current, 'y', { duration: 0.55, ease: 'back.out(1.6)' })
-    const toTail = still ? null : gsap.quickTo(tail.current, 'y', { duration: 0.95, ease: 'power3.out' })
-    const toLeadX = gsap.quickTo(lead.current, 'x', { duration: 0.3 }), toTailX = gsap.quickTo(tail.current, 'x', { duration: 0.5 })
-    let last = -1, raf = 0
-    const f = () => {
-      raf = 0
-      const r = sec.getBoundingClientRect(), vh = window.innerHeight
-      if (r.bottom < -200 || r.top > vh + 200) return
-      const prog = Math.min(1, Math.max(0, (vh * 0.5 - r.top) / (r.height - vh * 0.3)))
-      if (arc.current && !still) arc.current.style.transform = `rotate(${prog * 360 - 90}deg)`
-      if (rider.current && !still) { const a = (prog * 360 - 90 + 180) * Math.PI / 180; rider.current.setAttribute('cx', String(120 + 112 * Math.cos(a))); rider.current.setAttribute('cy', String(120 + 112 * Math.sin(a))) }
-      const items = Array.from(ul.children) as HTMLElement[]
-      const line = vh * 0.45
-      let best = -1, bd = Infinity
-      items.forEach((li, i) => { const b = li.getBoundingClientRect(); const dd = Math.abs((b.top + b.bottom) / 2 - line); if (dd < bd) { bd = dd; best = i } })
-      if (best >= 0) {
-        if (best !== last) {
-          last = best; setOn(best)
-          if (num.current && !still) gsap.fromTo(num.current, { scale: 0.6, y: 14, opacity: 0 }, { scale: 1, y: 0, opacity: 1, duration: 0.45, ease: 'back.out(2.4)', overwrite: true })
-        }
-        // measured on screen, so it stays right while the pinned list glides under it
-        const wr = ul.parentElement!.getBoundingClientRect(), ir = items[best].getBoundingClientRect()
-        const y = ir.top - wr.top + 22, x = ir.left - wr.left - 44
-        if (toLead && toTail) { toLead(y); toTail(y + 3); toLeadX(x); toTailX(x + 3) }
-      }
-    }
-    const h = () => { if (!raf) raf = requestAnimationFrame(f) }
-    f(); window.addEventListener('scroll', h, { passive: true }); window.addEventListener('resize', h)
-    return () => { window.removeEventListener('scroll', h); window.removeEventListener('resize', h) }
-  }, [])
+  const h = highlights[on]
   return (
     <section id="highlights" className="sec light highlights" ref={ref}>
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-        <defs>
-          <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b" /><feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" /></filter>
-          <linearGradient id="arcg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#ff8a3d" /><stop offset="0.5" stopColor="#f06ab0" /><stop offset="1" stopColor="#7c5cff" /></linearGradient>
-        </defs>
-      </svg>
-      <div className="wrap hi-grid">
-        <div className="hi-side">
-          <h2 className="masked">Highlights</h2>
-          <div className="dial" aria-hidden="true">
-            <svg viewBox="0 0 240 240">
-              <circle className="ring" cx="120" cy="120" r="112" />
-              <circle className="arc" ref={arc} cx="120" cy="120" r="112" strokeDasharray="352 704" />
-              <circle className="rider" ref={rider} cx="120" cy="8" r="9" />
-            </svg>
-            <div className="num"><span ref={num}>{String(on + 1).padStart(2, '0')}</span><small>of {highlights.length}</small></div>
-          </div>
-          <div className="piece-wrap"><Player slug={highlights[on].slug} /></div>
+      <div className="hi-frame">
+        <div className="hi-top">
+          <p className="mono">[03] Highlights, {highlights.length}</p>
+          <p className="mono hi-idx">{String(on + 1).padStart(2, '0')} / {String(highlights.length).padStart(2, '0')}</p>
         </div>
-        <div style={{ position: 'relative' }}>
-          <ol className="hilist" ref={list}>
-            {highlights.map((h, i) => (
-              <li key={h.t} className={`${h.big ? 'big' : ''} ${on === i ? 'on' : ''}`}><span className="t">{h.t}</span><span className="d">{h.d}</span></li>
-            ))}
-          </ol>
-          <div className="drop" aria-hidden="true"><i className="lead" ref={lead} /><i className="tail" ref={tail} /></div>
+        <div className="hi-stage">
+          <Player slug={h.slug} />
         </div>
+        <div className="hi-cap" key={h.slug}>
+          <h2>{h.t}</h2>
+          <p>{h.d}</p>
+        </div>
+        <div className="hi-bar" aria-hidden="true"><i ref={bar} /></div>
       </div>
+      <ol className="hi-list-m">
+        {highlights.map(x => (
+          <li key={x.slug}><div className="hi-still"><Player slug={x.slug} still /></div><h3>{x.t}</h3><p>{x.d}</p></li>
+        ))}
+      </ol>
     </section>
   )
 }

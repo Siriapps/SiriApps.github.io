@@ -27,3 +27,7 @@ dist-ssr
 .agents/
 .claude/
 skills-lock.json
+
+# never published
+ai1-submission/
+.impeccable/
