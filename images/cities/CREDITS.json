@@ -1,0 +1,34 @@
+[
+  {
+    "city": "Hyderabad",
+    "file": "hyderabad.jpg",
+    "title": "File:Aerial view of Durgam cheruvu and Hitech CIty.jpg",
+    "author": "iMahesh",
+    "license": "CC BY-SA 4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Durgam_cheruvu_and_Hitech_CIty.jpg"
+  },
+  {
+    "city": "Toronto",
+    "file": "toronto.jpg",
+    "title": "File:Toronto skyline viewed from Trillium Park.jpg",
+    "author": "Maksim Sokolov (maxergon.com)",
+    "license": "CC BY-SA 4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Toronto_skyline_viewed_from_Trillium_Park.jpg"
+  },
+  {
+    "city": "Dallas",
+    "file": "dallas.jpg",
+    "title": "File:Dallas Texas skyline from Reunion Tower September 2025.png",
+    "author": "IcedCowboyCoffee",
+    "license": "CC0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Dallas_Texas_skyline_from_Reunion_Tower_September_2025.png"
+  },
+  {
+    "city": "San Francisco",
+    "file": "sanfrancisco.jpg",
+    "title": "File:Golden Gate Bridge, San Francisco, California LCCN2013633353.tif",
+    "author": "Carol M. Highsmith",
+    "license": "Public domain",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Golden_Gate_Bridge,_San_Francisco,_California_LCCN2013633353.tif"
+  }
+]
