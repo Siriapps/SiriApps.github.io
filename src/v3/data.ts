@@ -26,7 +26,7 @@ export const recent: Entry[] = [
     dates: 'July 25 - 26, 2026',
     role: 'YC AI Startup School',
     company: 'Y Combinator · San Francisco',
-    desc: 'Two days at Chase Center with Jensen Huang, Boris Cherny, Dmitri Dolgov, Chelsea Finn, Alexandr Wang and Sam Altman on stage. Presented at YCML, YC's first research poster session, joined the female founders session, and left with a notebook of lessons: the demo is the first 1 percent and the nines are the product; your model is table stakes, eval is the moat; do not over-prompt, give it what to do and how to verify.',
+    desc: 'Two days at Chase Center with Jensen Huang, Boris Cherny, Dmitri Dolgov, Chelsea Finn, Alexandr Wang and Sam Altman on stage. Presented at YCML, the first YC research poster session, joined the female founders session, and left with a notebook of lessons: the demo is the first 1 percent and the nines are the product; your model is table stakes, eval is the moat; do not over-prompt, give it what to do and how to verify.',
     status: 'COMPLETE',
   },
   {
